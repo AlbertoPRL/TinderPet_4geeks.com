@@ -17,7 +17,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-export default function SignInPage() {
+export default function SignInForm() {
   return (
     <Box>
       <Center>
