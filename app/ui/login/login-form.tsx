@@ -1,6 +1,5 @@
 "use client";
 
-import { Link } from "@chakra-ui/next-js";
 import {
   Box,
   Button,
@@ -17,9 +16,9 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { truncate } from "fs";
 import { useState } from "react";
 import { SiTinder } from "react-icons/si";
+import CardLoginForm from "./card";
 
 export default function LoginForm() {
   const [signup, setSignUp] = useState(false);
@@ -38,7 +37,7 @@ export default function LoginForm() {
               fontSize="24px"
               letterSpacing="-0.5px"
             >
-              Sign in to TinderPet
+              {!signup ? "Sign in" : "Sign up"} to TinderPet
             </Heading>
           </VStack>
           <Card bg="#f6f8fa" variant="outline" borderColor="#d8dee4" w="308px">
@@ -118,26 +117,18 @@ export default function LoginForm() {
           </Card>
 
           {!signup ? (
-            <Card variant="outline" borderColor="#d0d7de">
-              <CardBody>
-                <Center>
-                  <HStack fontSize="sm" spacing="1">
-                    <Text>New to TinderPet?</Text>
-                    <Button
-                      color="#0969da"
-                      fontSize={"sm"}
-                      bg={"transparent"}
-                      p={0}
-                      _hover={{ background: "none" }}
-                      onClick={() => setSignUp(true)}
-                    >
-                      Create an account.
-                    </Button>
-                  </HStack>
-                </Center>
-              </CardBody>
-            </Card>
-          ) : null}
+            <CardLoginForm
+              onClick={() => setSignUp(true)}
+              text="New to TinderPet?"
+              textLink="Create an account"
+            />
+          ) : (
+            <CardLoginForm
+              onClick={() => setSignUp(false)}
+              text="Have an account?"
+              textLink="Log in instead"
+            />
+          )}
         </Stack>
       </Center>
     </Box>
