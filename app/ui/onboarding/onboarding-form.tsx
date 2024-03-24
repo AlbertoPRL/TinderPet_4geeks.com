@@ -1,57 +1,21 @@
-"use client";
+export default function OnboardingForm({ step }: { step: number }) {
+  function RenderFormByStep() {
+    switch (step) {
+      case 0:
+        console.log("Render step one");
+        return <p>Step 1</p>;
 
-import {
-  Box,
-  Button,
-  Step,
-  StepDescription,
-  StepIcon,
-  StepIndicator,
-  StepNumber,
-  StepSeparator,
-  StepStatus,
-  StepTitle,
-  Stepper,
-  useSteps,
-} from "@chakra-ui/react";
+      case 1:
+        console.log('Render "Are you a company?" form');
+        return <p>Step 2</p>;
 
-const steps = [
-  { title: "First", description: "Contact Info" },
-  { title: "Second", description: "Date & Time" },
-  { title: "Third", description: "Select Rooms" },
-];
+      case 2:
+        console.log('Render "What is the name of your company?" field');
+        return <p>Step 3</p>;
 
-export default function OnboardingForm({
-  currentStep,
-  setCurrentStep,
-}: {
-  currentStep: number;
-  setCurrentStep: (step: number) => void;
-}) {
-  const { activeStep, setActiveStep } = useSteps({
-    index: 1,
-    count: steps.length,
-  });
-  return (
-    <Stepper index={activeStep} orientation="vertical" height="400px" gap="0">
-      {steps.map((step, index) => (
-        <Step as="button" key={index} onClick={() => setActiveStep(index)}>
-          <StepIndicator>
-            <StepStatus
-              complete={<StepIcon />}
-              incomplete={<StepNumber />}
-              active={<StepNumber />}
-            />
-          </StepIndicator>
-
-          <Box flexShrink="0">
-            <StepTitle>{step.title}</StepTitle>
-            <StepDescription>{step.description}</StepDescription>
-          </Box>
-
-          <StepSeparator />
-        </Step>
-      ))}
-    </Stepper>
-  );
+      default:
+        return null;
+    }
+  }
+  return <RenderFormByStep />;
 }
