@@ -17,9 +17,13 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { truncate } from "fs";
+import { useState } from "react";
 import { SiTinder } from "react-icons/si";
 
 export default function LoginForm() {
+  const [signup, setSignUp] = useState(false);
+
   return (
     <Box>
       <Center>
@@ -51,6 +55,7 @@ export default function LoginForm() {
                       borderRadius="6px"
                     />
                   </FormControl>
+
                   <FormControl>
                     <HStack justify="space-between">
                       <FormLabel size="sm">Password</FormLabel>
@@ -73,32 +78,66 @@ export default function LoginForm() {
                       borderRadius="6px"
                     />
                   </FormControl>
+                  {signup && (
+                    <FormControl>
+                      <HStack justify="space-between">
+                        <FormLabel size="sm">Confirm Password</FormLabel>
+                      </HStack>
+                      <Input
+                        type="password"
+                        bg="white"
+                        borderColor="#d8dee4"
+                        size="sm"
+                        borderRadius="6px"
+                      />
+                    </FormControl>
+                  )}
 
-                  <Button
-                    bg="red.500"
-                    _hover={{ background: "red.700", boxShadow: "none" }}
-                    color="white"
-                    size="sm"
-                  >
-                    Sign In
-                  </Button>
+                  {!signup ? (
+                    <Button
+                      bg="red.500"
+                      _hover={{ background: "red.700", boxShadow: "none" }}
+                      color="white"
+                      size="sm"
+                    >
+                      Sign In
+                    </Button>
+                  ) : (
+                    <Button
+                      bg="red.500"
+                      _hover={{ background: "red.700", boxShadow: "none" }}
+                      color="white"
+                      size="sm"
+                    >
+                      Sign Up
+                    </Button>
+                  )}
                 </Stack>
               </form>
             </CardBody>
           </Card>
 
-          <Card variant="outline" borderColor="#d0d7de">
-            <CardBody>
-              <Center>
-                <HStack fontSize="sm" spacing="1">
-                  <Text>New to TinderPet?</Text>
-                  <Link color="#0969da" href="/sign-up">
-                    Create an account.
-                  </Link>
-                </HStack>
-              </Center>
-            </CardBody>
-          </Card>
+          {!signup ? (
+            <Card variant="outline" borderColor="#d0d7de">
+              <CardBody>
+                <Center>
+                  <HStack fontSize="sm" spacing="1">
+                    <Text>New to TinderPet?</Text>
+                    <Button
+                      color="#0969da"
+                      fontSize={"sm"}
+                      bg={"transparent"}
+                      p={0}
+                      _hover={{ background: "none" }}
+                      onClick={() => setSignUp(true)}
+                    >
+                      Create an account.
+                    </Button>
+                  </HStack>
+                </Center>
+              </CardBody>
+            </Card>
+          ) : null}
         </Stack>
       </Center>
     </Box>
