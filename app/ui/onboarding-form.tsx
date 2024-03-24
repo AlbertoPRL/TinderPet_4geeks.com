@@ -21,7 +21,7 @@ const steps = [
   { title: "Third", description: "Select Rooms" },
 ];
 
-export default function SignUpForm({
+export default function OnboardingForm({
   currentStep,
   setCurrentStep,
 }: {

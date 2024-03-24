@@ -1,16 +1,16 @@
 import { Flex } from "@chakra-ui/react";
-import SignInForm from "../ui/sign-in-form";
+import LoginForm from "../ui/login-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Sign In",
+  title: "Login",
 };
 
 export default function Loginpage() {
   return (
     <div>
       <Flex height="100vh" alignItems={"center"} justifyContent={"center"}>
-        <SignInForm />
+        <LoginForm />
       </Flex>
     </div>
   );

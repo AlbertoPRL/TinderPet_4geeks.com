@@ -1,5 +1,4 @@
 import { Flex } from "@chakra-ui/react";
-import SignUpForm from "../ui/sign-up-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -9,9 +8,11 @@ export const metadata: Metadata = {
 export default function SignUpPage() {
   return (
     <div>
-      <Flex height="100vh" alignItems={"center"} justifyContent={"center"}>
-        <SignUpForm />
-      </Flex>
+      <Flex
+        height="100vh"
+        alignItems={"center"}
+        justifyContent={"center"}
+      ></Flex>
     </div>
   );
 }

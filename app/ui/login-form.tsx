@@ -11,19 +11,23 @@ import {
   FormLabel,
   Heading,
   HStack,
+  Icon,
   Input,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
+import { SiTinder } from "react-icons/si";
 
-export default function SignInForm() {
+export default function LoginForm() {
   return (
     <Box>
       <Center>
         <Stack spacing="4">
           <VStack as="header" spacing="6" mt="8">
             {/* TinderPet icon */}
+            <Icon as={SiTinder} boxSize={24} color={"red.500"} />
+
             <Heading
               as="h1"
               fontWeight="300"
@@ -50,7 +54,7 @@ export default function SignInForm() {
                   <FormControl>
                     <HStack justify="space-between">
                       <FormLabel size="sm">Password</FormLabel>
-                      <Button
+                      {/* <Button
                         as="a"
                         href="#"
                         variant="link"
@@ -59,7 +63,7 @@ export default function SignInForm() {
                         fontWeight="500"
                       >
                         Forgot password?
-                      </Button>
+                      </Button> */}
                     </HStack>
                     <Input
                       type="password"
@@ -71,13 +75,12 @@ export default function SignInForm() {
                   </FormControl>
 
                   <Button
-                    bg="#2da44e"
+                    bg="red.500"
+                    _hover={{ background: "red.700", boxShadow: "none" }}
                     color="white"
                     size="sm"
-                    _hover={{ bg: "#2c974b" }}
-                    _active={{ bg: "#298e46" }}
                   >
-                    Sign in
+                    Sign In
                   </Button>
                 </Stack>
               </form>
@@ -89,7 +92,7 @@ export default function SignInForm() {
               <Center>
                 <HStack fontSize="sm" spacing="1">
                   <Text>New to TinderPet?</Text>
-                  <Link isExternal color="#0969da" href="/sign-up">
+                  <Link color="#0969da" href="/sign-up">
                     Create an account.
                   </Link>
                 </HStack>
