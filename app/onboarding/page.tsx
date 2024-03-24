@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import OnboardingForm from "../ui/onboarding-form";
+import OnboardingForm from "../ui/onboarding/onboarding-form";
 
 export default function OnboardingPage() {
   return (
