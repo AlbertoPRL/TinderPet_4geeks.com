@@ -1,13 +1,14 @@
+import { Link } from "@chakra-ui/next-js";
 import { Button, Card, CardBody, Center, HStack, Text } from "@chakra-ui/react";
 
-export default function CardLoginForm({
+export default function BottomCardForm({
   text,
+  href,
   textLink,
-  onClick,
 }: {
   text: string;
+  href: string;
   textLink: string;
-  onClick: () => void;
 }) {
   return (
     <Card variant="outline" borderColor="#d0d7de" p={0}>
@@ -15,16 +16,9 @@ export default function CardLoginForm({
         <Center>
           <HStack fontSize="sm" spacing="1">
             <Text pe={1}>{text}</Text>
-            <Button
-              color="#0969da"
-              fontSize={"sm"}
-              bg={"transparent"}
-              p={0}
-              _hover={{ background: "none", boxShadow: "none" }}
-              onClick={onClick}
-            >
+            <Link color="#0969da" fontSize={"sm"} href={href}>
               {textLink}
-            </Button>
+            </Link>
           </HStack>
         </Center>
       </CardBody>
