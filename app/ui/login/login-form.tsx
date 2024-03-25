@@ -1,34 +1,54 @@
 "use client";
 
 import {
+  Alert,
+  AlertIcon,
   Box,
-  Button,
   Card,
   CardBody,
   Center,
+  CloseButton,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Heading,
-  HStack,
   Icon,
   Input,
   Stack,
-  Text,
   VStack,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { SiTinder } from "react-icons/si";
 import CardLoginForm from "./card";
+import { signInSchema, TSignInSchema } from "@/app/lib/types";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ButtonSubmitForm } from "../buttons";
+import SignUpForm from "./sign-up-form";
 
 export default function LoginForm() {
   const [signup, setSignUp] = useState(false);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+    reset,
+  } = useForm<TSignInSchema>({
+    resolver: zodResolver(signInSchema),
+  });
+
+  const onSubmit = async (data: TSignInSchema) => {
+    console.log("submitted", data);
+    await new Promise((r) => setTimeout(r, 1000)); //
+    reset();
+  };
 
   return (
     <Box>
       <Center>
         <Stack spacing="4">
           <VStack as="header" spacing="6" mt="8">
-            {/* TinderPet icon */}
             <Icon as={SiTinder} boxSize={24} color={"red.500"} />
 
             <Heading
@@ -42,89 +62,72 @@ export default function LoginForm() {
           </VStack>
           <Card bg="#f6f8fa" variant="outline" borderColor="#d8dee4" w="308px">
             <CardBody>
-              <form>
-                <Stack spacing="4">
-                  <FormControl>
-                    <FormLabel size="sm">Username or email address</FormLabel>
-                    <Input
-                      type="text"
-                      bg="white"
-                      borderColor="#d8dee4"
-                      size="sm"
-                      borderRadius="6px"
-                    />
-                  </FormControl>
-
-                  <FormControl>
-                    <HStack justify="space-between">
-                      <FormLabel size="sm">Password</FormLabel>
-                      {/* <Button
-                        as="a"
-                        href="#"
-                        variant="link"
-                        size="xs"
-                        color="#0969da"
-                        fontWeight="500"
-                      >
-                        Forgot password?
-                      </Button> */}
-                    </HStack>
-                    <Input
-                      type="password"
-                      bg="white"
-                      borderColor="#d8dee4"
-                      size="sm"
-                      borderRadius="6px"
-                    />
-                  </FormControl>
-                  {signup && (
-                    <FormControl>
-                      <HStack justify="space-between">
-                        <FormLabel size="sm">Confirm Password</FormLabel>
-                      </HStack>
+              {!signup ? (
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <Stack spacing="4">
+                    {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore */}
+                    <FormControl isInvalid={errors.email}>
+                      <FormLabel size="sm">Email address</FormLabel>
                       <Input
-                        type="password"
+                        type="email"
+                        {...register("email")}
                         bg="white"
                         borderColor="#d8dee4"
                         size="sm"
                         borderRadius="6px"
                       />
+                      <FormErrorMessage>
+                        {errors.email && <p>{`${errors.email.message}`}</p>}
+                      </FormErrorMessage>
                     </FormControl>
-                  )}
 
-                  {!signup ? (
-                    <Button
-                      bg="red.500"
-                      _hover={{ background: "red.700", boxShadow: "none" }}
-                      color="white"
-                      size="sm"
-                    >
-                      Sign In
-                    </Button>
-                  ) : (
-                    <Button
-                      bg="red.500"
-                      _hover={{ background: "red.700", boxShadow: "none" }}
-                      color="white"
-                      size="sm"
-                    >
-                      Sign Up
-                    </Button>
-                  )}
-                </Stack>
-              </form>
+                    {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore */}
+                    <FormControl isInvalid={errors.password}>
+                      <FormLabel size="sm">Password</FormLabel>
+                      <Input
+                        type="password"
+                        {...register("password")}
+                        bg="white"
+                        borderColor="#d8dee4"
+                        size="sm"
+                        borderRadius="6px"
+                      />
+                      <FormErrorMessage>
+                        {errors.password && (
+                          <p>{`${errors.password.message}`}</p>
+                        )}
+                      </FormErrorMessage>
+                    </FormControl>
+
+                    <ButtonSubmitForm
+                      disabled={isSubmitting}
+                      text={"Sign In"}
+                    />
+                  </Stack>
+                </form>
+              ) : (
+                <SignUpForm />
+              )}
             </CardBody>
           </Card>
 
           {!signup ? (
             <CardLoginForm
-              onClick={() => setSignUp(true)}
+              onClick={() => {
+                setSignUp(true);
+                reset();
+              }}
               text="New to TinderPet?"
               textLink="Create an account"
             />
           ) : (
             <CardLoginForm
-              onClick={() => setSignUp(false)}
+              onClick={() => {
+                setSignUp(false);
+                reset();
+              }}
               text="Have an account?"
               textLink="Log in instead"
             />
