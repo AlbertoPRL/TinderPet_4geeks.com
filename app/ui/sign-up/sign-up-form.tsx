@@ -69,7 +69,7 @@ export default function SignUpForm() {
                       borderRadius="6px"
                     />
                     <FormErrorMessage>
-                      {errors.email && <p>{`${errors.email.message}`}</p>}
+                      {errors.email && errors.email.message}
                     </FormErrorMessage>
                   </FormControl>
 
@@ -87,7 +87,7 @@ export default function SignUpForm() {
                       borderRadius="6px"
                     />
                     <FormErrorMessage>
-                      {errors.password && <p>{`${errors.password.message}`}</p>}
+                      {errors.password && errors.password.message}
                     </FormErrorMessage>
                   </FormControl>
 
@@ -104,9 +104,7 @@ export default function SignUpForm() {
                       borderRadius="6px"
                     />
                     <FormErrorMessage>
-                      {errors.confirmPassword && (
-                        <p>{`${errors.confirmPassword.message}`}</p>
-                      )}
+                      {errors.confirmPassword && errors.confirmPassword.message}
                     </FormErrorMessage>
                   </FormControl>
 
