@@ -10,6 +10,7 @@ import {
   StepTitle,
   Stepper,
 } from "@chakra-ui/react";
+import { MdPets } from "react-icons/md";
 
 export default function Steps({
   steps,
@@ -21,25 +22,34 @@ export default function Steps({
   setActiveStep: (step: number) => void;
 }) {
   return (
-    <Stepper index={activeStep} orientation="vertical" height="400px" gap="0">
-      {steps?.map((step, index) => (
-        <Step as="button" key={index} onClick={() => setActiveStep(index)}>
-          <StepIndicator>
-            <StepStatus
-              complete={<StepIcon />}
-              incomplete={<StepNumber />}
-              active={<StepNumber />}
-            />
-          </StepIndicator>
+    <Box background={"gray"} borderRadius="10px" p={6}>
+      <Stepper
+        index={activeStep}
+        colorScheme="pink"
+        orientation="vertical"
+        height="400px"
+        gap="0"
+      >
+        {steps?.map((step, index) => (
+          <Step as="button" key={index} onClick={() => setActiveStep(index)}>
+            <StepIndicator>
+              <StepStatus
+                // complete={<StepIcon />}
+                complete={<MdPets />}
+                incomplete={<StepNumber />}
+                active={<StepNumber />}
+              />
+            </StepIndicator>
 
-          <Box flexShrink="0">
-            <StepTitle>{step.title}</StepTitle>
-            <StepDescription>{step.description}</StepDescription>
-          </Box>
+            <Box ps={1} flexShrink="0" textAlign={"left"}>
+              <StepTitle>{step.title}</StepTitle>
+              <StepDescription>{step.description}</StepDescription>
+            </Box>
 
-          <StepSeparator />
-        </Step>
-      ))}
-    </Stepper>
+            <StepSeparator />
+          </Step>
+        ))}
+      </Stepper>
+    </Box>
   );
 }

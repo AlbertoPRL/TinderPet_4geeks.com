@@ -1,14 +1,14 @@
 "use client";
 
-import { Flex, useSteps } from "@chakra-ui/react";
+import { Box, Flex, useSteps } from "@chakra-ui/react";
 import Steps from "../ui/onboarding/steps";
 import OnboardingForm from "../ui/onboarding/onboarding-form";
 
 const steps = [
-  { title: "User Information", description: "Enter your user information" },
-  { title: "Pet Information", description: "Enter your pet's information" },
-  { title: "Preferences", description: "Set your search preferences" },
-  { title: "Confirmation", description: "Review and confirm your information" },
+  { title: "Step 1", description: "User Information" },
+  { title: "Step 2", description: "Pet Information" },
+  { title: "Step 3", description: "Preferences" },
+  { title: "Step 4", description: "Confirmation" },
 ];
 
 export default function OnboardingPage() {
@@ -20,12 +20,21 @@ export default function OnboardingPage() {
   return (
     <div>
       <Flex height="100vh" alignItems={"center"} justifyContent={"center"}>
-        <Steps
-          steps={steps}
-          activeStep={activeStep}
-          setActiveStep={setActiveStep}
-        />
-        <OnboardingForm step={activeStep} />
+        <Box
+          background={"gray.200"}
+          p={4}
+          borderRadius={6}
+          display={"flex"}
+          alignItems={"center"}
+          justifyContent={"center"}
+        >
+          <Steps
+            steps={steps}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+          />
+          <OnboardingForm step={activeStep} />
+        </Box>
       </Flex>
     </div>
   );

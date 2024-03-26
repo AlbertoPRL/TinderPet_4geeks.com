@@ -1,18 +1,21 @@
+import ConfirmationForm from "./confirmation-form";
+import PetInformationForm from "./pet-inforamtion-form";
+import PreferencesForm from "./preferences-form";
+import UserInformationForm from "./user-information-form";
+
 export default function OnboardingForm({ step }: { step: number }) {
   function RenderFormByStep() {
     switch (step) {
       case 0:
-        console.log("Render step one");
-        return <p>Step 1</p>;
+        return <UserInformationForm />;
 
       case 1:
-        console.log('Render "Are you a company?" form');
-        return <p>Step 2</p>;
+        return <PetInformationForm />;
 
       case 2:
-        console.log('Render "What is the name of your company?" field');
-        return <p>Step 3</p>;
-
+        return <PreferencesForm />;
+      case 3:
+        return <ConfirmationForm />;
       default:
         return null;
     }
