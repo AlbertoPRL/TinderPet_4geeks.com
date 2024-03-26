@@ -9,17 +9,17 @@ import {
   FormErrorMessage,
   FormLabel,
   Heading,
-  Icon,
   Input,
   Stack,
   VStack,
 } from "@chakra-ui/react";
-import { SiTinder } from "react-icons/si";
 import BottomCardForm from "../card";
 import { signInSchema, TSignInSchema } from "@/app/lib/types";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ButtonSubmitForm } from "../buttons";
+import tindog from "@/public/tindog.svg";
+import Image from "next/image";
 
 export default function SignInForm() {
   const {
@@ -42,7 +42,7 @@ export default function SignInForm() {
       <Center>
         <Stack spacing="4">
           <VStack as="header" spacing="6" mt="8">
-            <Icon as={SiTinder} boxSize={24} color={"red.500"} />
+            <Image src={tindog} alt="Logo de Tindog" width={80} height={80} />
 
             <Heading
               as="h1"

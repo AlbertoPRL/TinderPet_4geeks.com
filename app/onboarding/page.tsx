@@ -5,9 +5,10 @@ import Steps from "../ui/onboarding/steps";
 import OnboardingForm from "../ui/onboarding/onboarding-form";
 
 const steps = [
-  { title: "First", description: "Contact Info" },
-  { title: "Second", description: "Date & Time" },
-  { title: "Third", description: "Select Rooms" },
+  { title: "User Information", description: "Enter your user information" },
+  { title: "Pet Information", description: "Enter your pet's information" },
+  { title: "Preferences", description: "Set your search preferences" },
+  { title: "Confirmation", description: "Review and confirm your information" },
 ];
 
 export default function OnboardingPage() {
