@@ -42,7 +42,7 @@ export default function Steps({
               />
             </StepIndicator>
 
-            <Box ps={1} pe={3} flexShrink="0" textAlign={"left"}>
+            <Box ps={1} pe={6} flexShrink="0" textAlign={"left"}>
               <StepTitle>{step.title}</StepTitle>
               <StepDescription>{step.description}</StepDescription>
             </Box>
