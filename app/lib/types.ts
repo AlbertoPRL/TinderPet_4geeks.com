@@ -18,3 +18,8 @@ export const signInSchema = z.object({
 
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
 export type TSignInSchema = z.infer<typeof signInSchema>;
+
+export interface Steps {
+  title: string;
+  description?: string;
+}

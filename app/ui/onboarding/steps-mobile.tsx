@@ -4,33 +4,33 @@ import { Steps } from "@/app/lib/types";
 import {
   Box,
   Step,
-  StepDescription,
   StepIndicator,
   StepNumber,
   StepSeparator,
   StepStatus,
-  StepTitle,
   Stepper,
+  Text,
 } from "@chakra-ui/react";
 import { MdPets } from "react-icons/md";
 
-export default function Steps({
+export default function StepsMobile({
   steps,
   activeStep,
   setActiveStep,
 }: {
   steps: Steps[];
   activeStep: number;
-  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
+  setActiveStep: (step: number) => void;
 }) {
+  const activeStepText = steps[activeStep].description;
   return (
     <Box background={"gray"} borderRadius="10px" p={6}>
       <Stepper
         index={activeStep}
         colorScheme="pink"
-        orientation="vertical"
         height={{ base: "", lg: "400px" }}
         gap="0"
+        mb={2}
       >
         {steps?.map((step, index) => (
           <Step as="button" key={index} onClick={() => setActiveStep(index)}>
@@ -41,16 +41,13 @@ export default function Steps({
                 active={<StepNumber />}
               />
             </StepIndicator>
-
-            <Box ps={1} pe={3} flexShrink="0" textAlign={"left"}>
-              <StepTitle>{step.title}</StepTitle>
-              <StepDescription>{step.description}</StepDescription>
-            </Box>
-
             <StepSeparator />
           </Step>
         ))}
       </Stepper>
+      <Text>
+        Step {activeStep + 1}: <b>{activeStepText}</b>
+      </Text>
     </Box>
   );
 }

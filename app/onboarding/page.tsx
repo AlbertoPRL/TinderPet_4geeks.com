@@ -1,8 +1,9 @@
 "use client";
 
-import { Box, Flex, useSteps } from "@chakra-ui/react";
+import { Box, Flex, useMediaQuery, useSteps } from "@chakra-ui/react";
 import Steps from "../ui/onboarding/steps";
 import OnboardingForm from "../ui/onboarding/onboarding-form";
+import StepsMobile from "../ui/onboarding/steps-mobile";
 
 const steps = [
   { title: "Step 1", description: "User Information" },
@@ -16,6 +17,9 @@ export default function OnboardingPage() {
     index: 0,
     count: steps.length,
   });
+  const [isLargerThan992] = useMediaQuery("(min-width: 992px)", {
+    ssr: false,
+  });
 
   return (
     <div>
@@ -25,14 +29,25 @@ export default function OnboardingPage() {
           p={4}
           borderRadius={6}
           display={"flex"}
-          alignItems={"center"}
+          flexDirection={{ base: "column", lg: "row" }}
+          alignItems={"stretch"}
           justifyContent={"center"}
+          gap={4}
         >
-          <Steps
-            steps={steps}
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-          />
+          {isLargerThan992 ? (
+            <Steps
+              steps={steps}
+              activeStep={activeStep}
+              setActiveStep={setActiveStep}
+            />
+          ) : (
+            <StepsMobile
+              steps={steps}
+              activeStep={activeStep}
+              setActiveStep={setActiveStep}
+            />
+          )}
+
           <OnboardingForm step={activeStep} />
         </Box>
       </Flex>

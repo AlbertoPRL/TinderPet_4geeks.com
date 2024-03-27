@@ -1,5 +1,6 @@
+import { Box } from "@chakra-ui/react";
 import ConfirmationForm from "./confirmation-form";
-import PetInformationForm from "./pet-inforamtion-form";
+import PetInformationForm from "./pet-information-form";
 import PreferencesForm from "./preferences-form";
 import UserInformationForm from "./user-information-form";
 
@@ -17,8 +18,12 @@ export default function OnboardingForm({ step }: { step: number }) {
       case 3:
         return <ConfirmationForm />;
       default:
-        return null;
+        return <UserInformationForm />;
     }
   }
-  return <RenderFormByStep />;
+  return (
+    <Box background={"white"} borderRadius="md" p={6} boxShadow="lg" w="full">
+      <RenderFormByStep />
+    </Box>
+  );
 }
