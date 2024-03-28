@@ -19,7 +19,16 @@ export const signInSchema = z.object({
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
 export type TSignInSchema = z.infer<typeof signInSchema>;
 
-export interface Steps {
+export interface StepsInterface {
   title: string;
   description?: string;
+}
+
+export interface PropsForms {
+  step?: number | null;
+  activeStep: number;
+  nextStep: () => void;
+  prevStep: () => void;
+  isLastStep: boolean;
+  hasCompletedAllSteps: boolean;
 }

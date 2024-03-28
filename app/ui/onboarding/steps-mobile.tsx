@@ -1,6 +1,6 @@
 "use client";
 
-import { Steps } from "@/app/lib/types";
+import { StepsInterface } from "@/app/lib/types";
 import {
   Box,
   Step,
@@ -18,7 +18,7 @@ export default function StepsMobile({
   activeStep,
   setActiveStep,
 }: {
-  steps: Steps[];
+  steps: StepsInterface[];
   activeStep: number;
   setActiveStep: (step: number) => void;
 }) {
@@ -26,7 +26,7 @@ export default function StepsMobile({
   return (
     <Box background={"gray"} borderRadius="10px" p={6}>
       <Stepper index={activeStep} colorScheme="pink" gap="0" mb={2}>
-        {steps?.map((step, index) => (
+        {steps?.map((_, index) => (
           <Step as="button" key={index} onClick={() => setActiveStep(index)}>
             <StepIndicator>
               <StepStatus

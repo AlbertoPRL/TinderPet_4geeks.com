@@ -3,6 +3,7 @@ import ConfirmationForm from "./confirmation-form";
 import PetInformationForm from "./pet-information-form";
 import PreferencesForm from "./preferences-form";
 import UserInformationForm from "./user-information-form";
+import { PropsForms } from "@/app/lib/types";
 
 export default function OnboardingForm({
   step,
@@ -11,14 +12,7 @@ export default function OnboardingForm({
   prevStep,
   isLastStep,
   hasCompletedAllSteps,
-}: {
-  step: number;
-  activeStep: number;
-  nextStep: () => void;
-  prevStep: () => void;
-  isLastStep: boolean;
-  hasCompletedAllSteps: boolean;
-}) {
+}: PropsForms) {
   function RenderFormByStep() {
     switch (step) {
       case 0:

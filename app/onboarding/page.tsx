@@ -4,8 +4,9 @@ import { Box, Flex, useMediaQuery, useSteps } from "@chakra-ui/react";
 import Steps from "../ui/onboarding/steps";
 import OnboardingForm from "../ui/onboarding/onboarding-form";
 import StepsMobile from "../ui/onboarding/steps-mobile";
+import { StepsInterface } from "../lib/types";
 
-const steps = [
+const steps: Array<StepsInterface> = [
   { title: "Step 1", description: "User Information" },
   { title: "Step 2", description: "Pet Information" },
   { title: "Step 3", description: "Preferences" },
@@ -13,17 +14,17 @@ const steps = [
 ];
 
 export default function OnboardingPage() {
-  const { activeStep, setActiveStep, isActiveStep, goToNext, goToPrevious } =
-    useSteps({
-      index: 0,
-      count: steps.length,
-    });
+  const { activeStep, setActiveStep, goToNext, goToPrevious } = useSteps({
+    index: 0,
+    count: steps?.length,
+  });
+
+  const isLastStep = activeStep === steps?.length - 1;
+  const hasCompletedAllSteps = activeStep === steps?.length;
+
   const [isLargerThan992] = useMediaQuery("(min-width: 992px)", {
     ssr: false,
   });
-
-  const isLastStep = activeStep === steps.length - 1;
-  const hasCompletedAllSteps = activeStep === steps.length;
 
   return (
     <div>

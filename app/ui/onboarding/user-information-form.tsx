@@ -1,3 +1,4 @@
+import { PropsForms } from "@/app/lib/types";
 import {
   Box,
   Button,
@@ -19,13 +20,7 @@ export default function UserInformationForm({
   prevStep,
   isLastStep,
   hasCompletedAllSteps,
-}: {
-  activeStep: number;
-  nextStep: () => void;
-  prevStep: () => void;
-  isLastStep: boolean;
-  hasCompletedAllSteps: boolean;
-}) {
+}: PropsForms) {
   return (
     <Flex flexDirection={"column"} justifyContent={"space-between"}>
       <Box>

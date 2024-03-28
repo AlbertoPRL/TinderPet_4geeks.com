@@ -1,4 +1,5 @@
 "use client";
+import { PropsForms } from "@/app/lib/types";
 import {
   Avatar,
   Box,
@@ -9,7 +10,6 @@ import {
   FormLabel,
   GridItem,
   Icon,
-  Input,
   SimpleGrid,
   Stack,
   Text,
@@ -24,13 +24,7 @@ export default function PreferencesForm({
   prevStep,
   isLastStep,
   hasCompletedAllSteps,
-}: {
-  activeStep: number;
-  nextStep: () => void;
-  prevStep: () => void;
-  isLastStep: boolean;
-  hasCompletedAllSteps: boolean;
-}) {
+}: PropsForms) {
   return (
     <Flex h={"100%"} flexDir={"column"} justifyContent={"space-between"}>
       <Stack py={5} spacing={6}>

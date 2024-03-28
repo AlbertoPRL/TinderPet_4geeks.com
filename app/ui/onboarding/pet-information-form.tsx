@@ -1,3 +1,4 @@
+import { PropsForms } from "@/app/lib/types";
 import {
   Box,
   Button,
@@ -19,13 +20,7 @@ export default function PetInformationForm({
   prevStep,
   isLastStep,
   hasCompletedAllSteps,
-}: {
-  activeStep: number;
-  nextStep: () => void;
-  prevStep: () => void;
-  isLastStep: boolean;
-  hasCompletedAllSteps: boolean;
-}) {
+}: PropsForms) {
   return (
     <Flex h={"100%"} flexDir={"column"} justifyContent={"space-between"}>
       <Box>

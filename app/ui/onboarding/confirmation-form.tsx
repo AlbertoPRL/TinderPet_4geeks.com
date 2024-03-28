@@ -1,3 +1,4 @@
+import { PropsForms } from "@/app/lib/types";
 import { Box, Button, Flex, Heading } from "@chakra-ui/react";
 
 export default function ConfirmationForm({
@@ -6,13 +7,7 @@ export default function ConfirmationForm({
   prevStep,
   isLastStep,
   hasCompletedAllSteps,
-}: {
-  activeStep: number;
-  nextStep: () => void;
-  prevStep: () => void;
-  isLastStep: boolean;
-  hasCompletedAllSteps: boolean;
-}) {
+}: PropsForms) {
   return (
     <div>
       <p>Thank you for creating your pet profile!</p>
