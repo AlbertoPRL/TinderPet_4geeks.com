@@ -25,13 +25,7 @@ export default function StepsMobile({
   const activeStepText = steps[activeStep].description;
   return (
     <Box background={"gray"} borderRadius="10px" p={6}>
-      <Stepper
-        index={activeStep}
-        colorScheme="pink"
-        height={{ base: "", lg: "400px" }}
-        gap="0"
-        mb={2}
-      >
+      <Stepper index={activeStep} colorScheme="pink" gap="0" mb={2}>
         {steps?.map((step, index) => (
           <Step as="button" key={index} onClick={() => setActiveStep(index)}>
             <StepIndicator>

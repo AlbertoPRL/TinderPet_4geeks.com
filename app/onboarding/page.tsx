@@ -13,13 +13,17 @@ const steps = [
 ];
 
 export default function OnboardingPage() {
-  const { activeStep, setActiveStep } = useSteps({
-    index: 0,
-    count: steps.length,
-  });
+  const { activeStep, setActiveStep, isActiveStep, goToNext, goToPrevious } =
+    useSteps({
+      index: 0,
+      count: steps.length,
+    });
   const [isLargerThan992] = useMediaQuery("(min-width: 992px)", {
     ssr: false,
   });
+
+  const isLastStep = activeStep === steps.length - 1;
+  const hasCompletedAllSteps = activeStep === steps.length;
 
   return (
     <div>
@@ -48,7 +52,14 @@ export default function OnboardingPage() {
             />
           )}
 
-          <OnboardingForm step={activeStep} />
+          <OnboardingForm
+            step={activeStep}
+            activeStep={activeStep}
+            isLastStep={isLastStep}
+            nextStep={goToNext}
+            prevStep={goToPrevious}
+            hasCompletedAllSteps={hasCompletedAllSteps}
+          />
         </Box>
       </Flex>
     </div>

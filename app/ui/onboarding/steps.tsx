@@ -29,7 +29,7 @@ export default function Steps({
         index={activeStep}
         colorScheme="pink"
         orientation="vertical"
-        height={{ base: "", lg: "400px" }}
+        minH={{ base: "", lg: "430px" }}
         gap="0"
       >
         {steps?.map((step, index) => (
