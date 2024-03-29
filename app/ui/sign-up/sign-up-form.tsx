@@ -41,7 +41,12 @@ export default function SignUpForm() {
       <Center>
         <Stack spacing="4">
           <VStack as="header" spacing="6" mt="8">
-            <Image src={tindog} alt="Logo de Tindog" width={80} height={80} />
+            <Image
+              src={tindog}
+              alt="Logo de Tindog"
+              width={80}
+              priority={true}
+            />
 
             <Heading
               as="h1"

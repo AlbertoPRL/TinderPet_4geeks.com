@@ -82,7 +82,7 @@ export default function UserInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl as={GridItem} colSpan={[4, 3]}>
             <FormLabel
               htmlFor="country"
               fontSize="sm"
@@ -110,7 +110,7 @@ export default function UserInformationForm({
             </Select>
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[3, 6]}>
+          <FormControl as={GridItem} colSpan={[6, 6]}>
             <FormLabel
               m={0}
               htmlFor="street_address"
@@ -134,7 +134,7 @@ export default function UserInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[3, 2, null, 2]}>
+          <FormControl as={GridItem} colSpan={[2, 2]}>
             <FormLabel
               m={0}
               htmlFor="city"
@@ -158,7 +158,7 @@ export default function UserInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[3, 2, null, 2]}>
+          <FormControl as={GridItem} colSpan={[2, 2]}>
             <FormLabel
               m={0}
               htmlFor="state"
@@ -182,7 +182,7 @@ export default function UserInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[3, 2, null, 2]}>
+          <FormControl as={GridItem} colSpan={[2, 2]}>
             <FormLabel
               m={0}
               htmlFor="postal_code"
@@ -190,7 +190,7 @@ export default function UserInformationForm({
               fontWeight="md"
               color="gray.700"
             >
-              Postal Code
+              ZIP code
             </FormLabel>
             <Input
               type="text"
