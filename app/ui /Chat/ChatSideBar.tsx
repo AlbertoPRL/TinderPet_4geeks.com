@@ -1,4 +1,6 @@
 import { VStack, Flex, Avatar, AvatarBadge, Box, Divider, HStack, Heading, Text, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
+import SideBarMatches from "./SideBarMatches";
+import SideBarMessages from "./SideBarMessages";
 
 export default function ChatSideBar() {
 
@@ -19,11 +21,12 @@ export default function ChatSideBar() {
                 <Divider color='gray.100' />
             </Box>
             <Tabs position="relative" variant="unstyled">
-                <TabList>
+                <TabList justifyContent={"center"}>
                     <Tab>Matches</Tab>
                     <Tab>Messages</Tab>
                 </TabList>
                 <TabIndicator
+                    justifyContent={"center"}
                     mt="-1.5px"
                     height="2px"
                     bg="blue.500"
@@ -31,10 +34,10 @@ export default function ChatSideBar() {
                 />
                 <TabPanels>
                     <TabPanel>
-                        <p>Matches</p>
+                        <SideBarMatches></SideBarMatches>
                     </TabPanel>
                     <TabPanel>
-                        <p>Messages</p>
+                        <SideBarMessages></SideBarMessages>
                     </TabPanel>
                 </TabPanels>
             </Tabs>
