@@ -34,7 +34,7 @@ export default function PetInformationForm({
 
       <Stack py={5} spacing={6}>
         <SimpleGrid columns={6} spacing={6}>
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
               htmlFor="petName"
               m={0}
@@ -58,7 +58,7 @@ export default function PetInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
               htmlFor="petType"
               m={0}
@@ -110,7 +110,7 @@ export default function PetInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
               htmlFor="petAge"
               fontSize="sm"
@@ -138,7 +138,7 @@ export default function PetInformationForm({
             </Select>
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
               htmlFor="petGender"
               fontSize="sm"

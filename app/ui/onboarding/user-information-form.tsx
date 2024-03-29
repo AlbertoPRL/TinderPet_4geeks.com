@@ -34,7 +34,7 @@ export default function UserInformationForm({
 
       <Stack py={5} spacing={6}>
         <SimpleGrid columns={6} spacing={6}>
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
               m={0}
               htmlFor="first_name"
@@ -58,7 +58,7 @@ export default function UserInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
               m={0}
               htmlFor="last_name"
@@ -110,7 +110,7 @@ export default function UserInformationForm({
             </Select>
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={6}>
+          <FormControl as={GridItem} colSpan={[3, 6]}>
             <FormLabel
               m={0}
               htmlFor="street_address"
@@ -134,7 +134,7 @@ export default function UserInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 6, null, 2]}>
+          <FormControl as={GridItem} colSpan={[3, 2, null, 2]}>
             <FormLabel
               m={0}
               htmlFor="city"
@@ -158,7 +158,7 @@ export default function UserInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
+          <FormControl as={GridItem} colSpan={[3, 2, null, 2]}>
             <FormLabel
               m={0}
               htmlFor="state"
@@ -182,7 +182,7 @@ export default function UserInformationForm({
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3, null, 2]}>
+          <FormControl as={GridItem} colSpan={[3, 2, null, 2]}>
             <FormLabel
               m={0}
               htmlFor="postal_code"
@@ -190,7 +190,7 @@ export default function UserInformationForm({
               fontWeight="md"
               color="gray.700"
             >
-              ZIP / Postal
+              Postal Code
             </FormLabel>
             <Input
               type="text"

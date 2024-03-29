@@ -1,23 +1,18 @@
 "use client";
 import { PropsForms } from "@/app/lib/types";
 import {
-  Avatar,
   Box,
   Button,
-  Checkbox,
   Flex,
   FormControl,
   FormHelperText,
   FormLabel,
   GridItem,
   Heading,
-  Icon,
   Select,
   SimpleGrid,
   Stack,
   Text,
-  VisuallyHidden,
-  chakra,
 } from "@chakra-ui/react";
 import {
   AutoComplete,
@@ -62,7 +57,7 @@ export default function PreferencesForm({
 
       <Stack py={5} spacing={6}>
         <SimpleGrid columns={6} spacing={6}>
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
               htmlFor="petType"
               m={0}
@@ -90,7 +85,7 @@ export default function PreferencesForm({
             </Select>
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
               htmlFor="petAge"
               fontSize="sm"

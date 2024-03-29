@@ -1,4 +1,4 @@
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, Text } from "@chakra-ui/react";
 import ConfirmationForm from "./confirmation-form";
 import PetInformationForm from "./pet-information-form";
 import PreferencesForm from "./preferences-form";
@@ -89,13 +89,22 @@ export default function OnboardingForm({
       p={6}
       boxShadow="lg"
       w="full"
-      maxW={{ lg: "30em" }}
+      maxW={"30em"}
+      minH={"25em"}
     >
       {hasCompletedAllSteps ? (
-        <Box sx={{ my: 8, p: 8, rounded: "md" }}>
-          <Heading fontSize="xl" textAlign={"center"}>
+        <Box
+          h="100%"
+          sx={{ rounded: "md" }}
+          display={"flex"}
+          flexDir={"column"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
+          <Heading fontSize="xx-large" textAlign={"center"}>
             Woohoo! All steps completed! 🎉
           </Heading>
+          <Text>Thank you for creating your pet profile!</Text>
         </Box>
       ) : (
         <RenderFormByStep />

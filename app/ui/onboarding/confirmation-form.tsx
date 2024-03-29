@@ -9,12 +9,11 @@ export default function ConfirmationForm({
   hasCompletedAllSteps,
 }: PropsForms) {
   return (
-    <div>
-      <p>Thank you for creating your pet profile!</p>
-      <p>
-        An email with your pet's info and the next steps will be sent to you
-        shortly.
-      </p>
+    <Flex h={"100%"} flexDir={"column"} justifyContent={"space-between"}>
+      <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
+        Please review your pet's profile before submitting.
+      </Heading>
+
       <Flex width="100%" justify="flex-end" gap={4}>
         {!hasCompletedAllSteps ? (
           <>
@@ -32,6 +31,6 @@ export default function ConfirmationForm({
           </>
         ) : null}
       </Flex>
-    </div>
+    </Flex>
   );
 }

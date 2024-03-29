@@ -207,8 +207,8 @@ function TraitsInterestsForm({
             <Flex
               mt={1}
               justify="center"
-              px={4}
-              py={4}
+              px={2}
+              py={2}
               borderWidth={2}
               borderStyle="dashed"
               rounded="md"

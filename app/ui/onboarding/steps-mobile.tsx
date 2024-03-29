@@ -20,9 +20,25 @@ export default function StepsMobile({
 }: {
   steps: StepsInterface[];
   activeStep: number;
-  setActiveStep: (step: number) => void;
+  setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const activeStepText = steps[activeStep].description;
+  const textStep = () => {
+    if (activeStep <= steps?.length - 1) {
+      const activeStepText = steps[activeStep].description;
+
+      return (
+        <Text>
+          Step {activeStep + 1}: <b>{activeStepText}</b>
+        </Text>
+      );
+    }
+    return (
+      <Text>
+        Step {steps.length}: <b>{steps[steps.length - 1].description}</b>
+      </Text>
+    );
+  };
+
   return (
     <Box background={"gray"} borderRadius="10px" p={6}>
       <Stepper index={activeStep} colorScheme="pink" gap="0" mb={2}>
@@ -39,9 +55,7 @@ export default function StepsMobile({
           </Step>
         ))}
       </Stepper>
-      <Text>
-        Step {activeStep + 1}: <b>{activeStepText}</b>
-      </Text>
+      {textStep()}
     </Box>
   );
 }
