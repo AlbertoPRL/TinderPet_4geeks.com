@@ -4,6 +4,7 @@ import PetInformationForm from "./pet-information-form";
 import PreferencesForm from "./preferences-form";
 import UserInformationForm from "./user-information-form";
 import { PropsForms } from "@/app/lib/types";
+import TraitsInterestsForm from "./traits-interests-form";
 
 export default function OnboardingForm({
   step,
@@ -39,6 +40,17 @@ export default function OnboardingForm({
 
       case 2:
         return (
+          <TraitsInterestsForm
+            nextStep={nextStep}
+            prevStep={prevStep}
+            activeStep={activeStep}
+            isLastStep={isLastStep}
+            hasCompletedAllSteps={hasCompletedAllSteps}
+          />
+        );
+
+      case 3:
+        return (
           <PreferencesForm
             nextStep={nextStep}
             prevStep={prevStep}
@@ -47,7 +59,8 @@ export default function OnboardingForm({
             hasCompletedAllSteps={hasCompletedAllSteps}
           />
         );
-      case 3:
+
+      case 4:
         return (
           <ConfirmationForm
             nextStep={nextStep}

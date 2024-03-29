@@ -7,16 +7,27 @@ import {
   Checkbox,
   Flex,
   FormControl,
+  FormHelperText,
   FormLabel,
   GridItem,
+  Heading,
   Icon,
+  Select,
   SimpleGrid,
   Stack,
   Text,
   VisuallyHidden,
   chakra,
 } from "@chakra-ui/react";
-import { FaUser } from "react-icons/fa6";
+import {
+  AutoComplete,
+  AutoCompleteCreatable,
+  AutoCompleteInput,
+  AutoCompleteItem,
+  AutoCompleteList,
+  AutoCompleteTag,
+} from "@choc-ui/chakra-autocomplete";
+import { Key } from "react";
 
 export default function PreferencesForm({
   activeStep,
@@ -25,105 +36,178 @@ export default function PreferencesForm({
   isLastStep,
   hasCompletedAllSteps,
 }: PropsForms) {
+  const traits = [
+    "playful",
+    "affectionate",
+    "energetic",
+    "calm",
+    "intelligent",
+    "loyal",
+    "friendly",
+    "shy",
+    "stubborn",
+    "independent",
+  ];
+
   return (
     <Flex h={"100%"} flexDir={"column"} justifyContent={"space-between"}>
+      <Box>
+        <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
+          Preferences
+        </Heading>
+        <Text mt={1} fontSize="sm" color="gray.600">
+          Use a permanent address where you can receive mail.
+        </Text>
+      </Box>
+
       <Stack py={5} spacing={6}>
         <SimpleGrid columns={6} spacing={6}>
-          <FormControl as={GridItem} colSpan={[6]}>
-            <FormLabel fontSize="sm" fontWeight="md" color="gray.700" m={0}>
-              Preferred Play Styles:
-            </FormLabel>
-            <Checkbox
+          <FormControl as={GridItem} colSpan={[6, 3]}>
+            <FormLabel
+              htmlFor="petType"
+              m={0}
               fontSize="sm"
               fontWeight="md"
               color="gray.700"
-              value="playFetch"
             >
-              Likes to play fetch
-            </Checkbox>
-            <Checkbox value="walks">Enjoys walks</Checkbox>
-            <Checkbox value="cuddles">Likes cuddles</Checkbox>
-            <Checkbox value="other">Has other preferences</Checkbox>
-          </FormControl>
-
-          <FormControl as={GridItem} colSpan={[6]}>
-            <FormLabel m={0} fontSize="sm" fontWeight="md" color="gray.700">
-              Photo
+              Pet Type
             </FormLabel>
-            <Flex alignItems="center" mt={1}>
-              <Avatar
-                boxSize={12}
-                bg="gray.100"
-                icon={
-                  <Icon
-                    as={FaUser}
-                    boxSize={9}
-                    mt={3}
-                    rounded="full"
-                    color="gray.300"
-                  />
-                }
-              />
-              <Button type="button" ml={5} size="sm" fontWeight="medium">
-                Change
-              </Button>
-            </Flex>
-          </FormControl>
-
-          <FormControl as={GridItem} colSpan={[6]}>
-            <FormLabel fontSize="sm" fontWeight="md" color="gray.700">
-              Cover photo
-            </FormLabel>
-            <Flex
+            <Select
+              id="petType"
+              name="petType"
+              autoComplete="type"
+              placeholder="Select a pet type..."
               mt={1}
-              justify="center"
-              px={4}
-              py={4}
-              borderWidth={2}
-              borderStyle="dashed"
+              focusBorderColor="brand.400"
+              shadow="sm"
+              size="sm"
+              w="full"
               rounded="md"
             >
-              <Stack spacing={1} textAlign="center">
-                <Icon
-                  mx="auto"
-                  boxSize={10}
-                  color="gray.400"
-                  stroke="currentColor"
-                  fill="none"
-                  viewBox="0 0 48 48"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </Icon>
-                <Flex fontSize="sm" color="gray.600" alignItems="baseline">
-                  <chakra.label
-                    htmlFor="file-upload"
-                    cursor="pointer"
-                    rounded="md"
-                    fontSize="sm"
-                    color="brand.600"
-                    pos="relative"
-                    _hover={{
-                      color: "brand.400",
-                    }}
+              <option value="dog">Dog</option>
+              <option value="cat">Cat</option>
+              <option value="bird">Bird</option>
+            </Select>
+          </FormControl>
+
+          <FormControl as={GridItem} colSpan={[6, 3]}>
+            <FormLabel
+              htmlFor="petAge"
+              fontSize="sm"
+              fontWeight="md"
+              color="gray.700"
+              m={0}
+            >
+              Pet Age
+            </FormLabel>
+            <Select
+              id="petAge"
+              placeholder="Enter pet age"
+              autoComplete="age"
+              mt={1}
+              focusBorderColor="brand.400"
+              shadow="sm"
+              size="sm"
+              w="full"
+              rounded="md"
+            >
+              <option value="baby">Baby</option>
+              <option value="young">Young</option>
+              <option value="adult">Adult</option>
+              <option value="senior">Senior</option>
+            </Select>
+          </FormControl>
+
+          <FormControl as={GridItem} colSpan={[6, 3]}>
+            <FormLabel
+              htmlFor="petGender"
+              fontSize="sm"
+              fontWeight="md"
+              color="gray.700"
+              m={0}
+            >
+              Gender
+            </FormLabel>
+            <Select
+              id="petGender"
+              placeholder="Choose gender..."
+              autoComplete="gender"
+              mt={1}
+              focusBorderColor="brand.400"
+              shadow="sm"
+              size="sm"
+              w="full"
+              rounded="md"
+            >
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </Select>
+          </FormControl>
+
+          <FormControl as={GridItem} colSpan={[6]}>
+            <FormLabel
+              htmlFor="traits"
+              m={0}
+              fontSize="sm"
+              fontWeight="md"
+              color="gray.700"
+            >
+              Personality Traits
+            </FormLabel>
+            <AutoComplete
+              openOnFocus
+              multiple
+              creatable
+              onChange={(vals: any) => console.log(vals)}
+            >
+              <AutoCompleteInput
+                type="text"
+                id="traits"
+                mt={1}
+                focusBorderColor="brand.400"
+                shadow="sm"
+                size="sm"
+                w="full"
+                rounded="md"
+              >
+                {({ tags }: any) =>
+                  tags?.map(
+                    (
+                      tag: {
+                        label: string;
+                        onRemove: (() => void) | undefined;
+                      },
+                      tid: Key | null | undefined
+                    ) => (
+                      <AutoCompleteTag
+                        fontSize={"xs"}
+                        key={tid}
+                        label={tag.label}
+                        onRemove={tag.onRemove}
+                      />
+                    )
+                  )
+                }
+              </AutoCompleteInput>
+              <AutoCompleteList>
+                {traits.map((trait, cid) => (
+                  <AutoCompleteItem
+                    key={`option-${cid}`}
+                    value={trait}
+                    fontSize="xs"
+                    _selected={{ bg: "whiteAlpha.50" }}
+                    _focus={{ bg: "whiteAlpha.100" }}
                   >
-                    <span>Upload a file</span>
-                    <VisuallyHidden>
-                      <input id="file-upload" name="file-upload" type="file" />
-                    </VisuallyHidden>
-                  </chakra.label>
-                  <Text pl={1}>or drag and drop</Text>
-                </Flex>
-                <Text fontSize="xs" color="gray.500">
-                  PNG, JPG, GIF up to 10MB
-                </Text>
-              </Stack>
-            </Flex>
+                    {trait}
+                  </AutoCompleteItem>
+                ))}
+                <AutoCompleteCreatable fontSize="xs" />
+              </AutoCompleteList>
+            </AutoComplete>
+            <FormHelperText fontSize={"xs"}>
+              Please select 5 personality traits that best describe your
+              preferences for your pet:
+            </FormHelperText>
           </FormControl>
         </SimpleGrid>
       </Stack>

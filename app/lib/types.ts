@@ -24,11 +24,11 @@ export interface StepsInterface {
   description?: string;
 }
 
-export interface PropsForms {
+export type PropsForms = {
   step?: number | null;
   activeStep: number;
   nextStep: () => void;
   prevStep: () => void;
   isLastStep: boolean;
   hasCompletedAllSteps: boolean;
-}
+};

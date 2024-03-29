@@ -1,6 +1,6 @@
 "use client";
 
-import { Steps } from "@/app/lib/types";
+import { StepsInterface } from "@/app/lib/types";
 import {
   Box,
   Step,
@@ -19,7 +19,7 @@ export default function Steps({
   activeStep,
   setActiveStep,
 }: {
-  steps: Steps[];
+  steps: StepsInterface[];
   activeStep: number;
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }) {
@@ -42,7 +42,7 @@ export default function Steps({
               />
             </StepIndicator>
 
-            <Box ps={1} pe={6} flexShrink="0" textAlign={"left"}>
+            <Box ps={1} width={"120px"} flexShrink="0" textAlign={"left"}>
               <StepTitle>{step.title}</StepTitle>
               <StepDescription>{step.description}</StepDescription>
             </Box>

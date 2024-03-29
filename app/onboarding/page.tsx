@@ -9,8 +9,9 @@ import { StepsInterface } from "../lib/types";
 const steps: Array<StepsInterface> = [
   { title: "Step 1", description: "User Information" },
   { title: "Step 2", description: "Pet Information" },
-  { title: "Step 3", description: "Preferences" },
-  { title: "Step 4", description: "Confirmation" },
+  { title: "Step 3 ", description: "Personality Traits & Interests" },
+  { title: "Step 4", description: "Preferences" },
+  { title: "Step 5", description: "Review and Submit" },
 ];
 
 export default function OnboardingPage() {
