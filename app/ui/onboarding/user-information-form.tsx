@@ -1,5 +1,6 @@
-import { PropsForms } from "@/app/lib/types";
+import { FormDataType, PropsForms, UserInfoType } from "@/app/lib/schema";
 import {
+  Badge,
   Box,
   Button,
   Flex,
@@ -13,16 +14,29 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useController, useForm, useFormContext } from "react-hook-form";
+import ErrorMessage from "./error-message";
 
 export default function UserInformationForm({
   activeStep,
   nextStep,
   prevStep,
-  isLastStep,
-  hasCompletedAllSteps,
 }: PropsForms) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<UserInfoType>();
+
+  // const {
+  //   field,
+  //   formState: { errors },
+  // } = useController({
+  //   name: "userInfo",
+  //   control,
+  // });
+
   return (
-    <Flex flexDirection={"column"} justifyContent={"space-between"}>
+    <>
       <Box>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Personal Information
@@ -32,7 +46,7 @@ export default function UserInformationForm({
         </Text>
       </Box>
 
-      <Stack py={5} spacing={6}>
+      <Stack py={2} spacing={2}>
         <SimpleGrid columns={6} spacing={6}>
           <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
@@ -46,7 +60,6 @@ export default function UserInformationForm({
             </FormLabel>
             <Input
               type="text"
-              name="first_name"
               id="first_name"
               autoComplete="given-name"
               mt={1}
@@ -55,7 +68,12 @@ export default function UserInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("firstName")}
             />
+
+            {errors.firstName && (
+              <ErrorMessage message={errors.firstName.message} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[3]}>
@@ -70,7 +88,6 @@ export default function UserInformationForm({
             </FormLabel>
             <Input
               type="text"
-              name="last_name"
               id="last_name"
               autoComplete="family-name"
               mt={1}
@@ -79,6 +96,7 @@ export default function UserInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("lastName")}
             />
           </FormControl>
 
@@ -94,20 +112,26 @@ export default function UserInformationForm({
             </FormLabel>
             <Select
               id="country"
-              name="country"
               autoComplete="country"
-              placeholder="Select option"
               mt={1}
+              defaultValue=""
               focusBorderColor="brand.400"
               shadow="sm"
               size="sm"
               w="full"
               rounded="md"
+              {...register("country")}
             >
-              <option>United States</option>
-              <option>Canada</option>
-              <option>Mexico</option>
+              <option value="" disabled>
+                Select a country
+              </option>
+              <option value="USA">United States</option>
+              <option value="CA">Canada</option>
+              <option value="MX">Mexico</option>
             </Select>
+            {errors.country && (
+              <ErrorMessage message={errors.country.message || ""} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[6, 6]}>
@@ -122,7 +146,6 @@ export default function UserInformationForm({
             </FormLabel>
             <Input
               type="text"
-              name="street_address"
               id="street_address"
               autoComplete="street-address"
               mt={1}
@@ -131,7 +154,11 @@ export default function UserInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("address")}
             />
+            {errors.address && (
+              <ErrorMessage message={errors.address.message || ""} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[2, 2]}>
@@ -146,7 +173,6 @@ export default function UserInformationForm({
             </FormLabel>
             <Input
               type="text"
-              name="city"
               id="city"
               autoComplete="city"
               mt={1}
@@ -155,7 +181,11 @@ export default function UserInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("city")}
             />
+            {errors.city && (
+              <ErrorMessage message={errors.city.message || ""} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[2, 2]}>
@@ -170,7 +200,6 @@ export default function UserInformationForm({
             </FormLabel>
             <Input
               type="text"
-              name="state"
               id="state"
               autoComplete="state"
               mt={1}
@@ -179,7 +208,11 @@ export default function UserInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("state")}
             />
+            {errors.state && (
+              <ErrorMessage message={errors.state.message || ""} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[2, 2]}>
@@ -194,7 +227,6 @@ export default function UserInformationForm({
             </FormLabel>
             <Input
               type="text"
-              name="postal_code"
               id="postal_code"
               autoComplete="postal-code"
               mt={1}
@@ -203,28 +235,29 @@ export default function UserInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("postalCode")}
             />
+            {errors.postalCode && (
+              <ErrorMessage message={errors.postalCode.message} />
+            )}
           </FormControl>
         </SimpleGrid>
       </Stack>
 
       <Flex width="100%" justify="flex-end" gap={4}>
-        {!hasCompletedAllSteps ? (
-          <>
-            <Button
-              isDisabled={activeStep === 0}
-              onClick={prevStep}
-              size="sm"
-              variant="ghost"
-            >
-              Prev
-            </Button>
-            <Button size="sm" onClick={nextStep}>
-              {isLastStep ? "Finish" : "Next"}
-            </Button>
-          </>
-        ) : null}
+        <Button
+          type="button"
+          isDisabled={activeStep === 0}
+          onClick={prevStep}
+          size="sm"
+          variant="ghost"
+        >
+          Prev
+        </Button>
+        <Button type="button" onClick={nextStep} size="sm">
+          Next
+        </Button>
       </Flex>
-    </Flex>
+    </>
   );
 }

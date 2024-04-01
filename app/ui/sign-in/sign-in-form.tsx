@@ -14,7 +14,7 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import BottomCardForm from "../card";
-import { signInSchema, TSignInSchema } from "@/app/lib/types";
+import { signInSchema, TSignInSchema } from "@/app/lib/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ButtonSubmitForm } from "../buttons";

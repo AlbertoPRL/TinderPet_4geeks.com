@@ -1,5 +1,5 @@
 "use client";
-import { PropsForms } from "@/app/lib/types";
+import { PreferencesType, PropsForms } from "@/app/lib/schema";
 import {
   Box,
   Button,
@@ -23,26 +23,32 @@ import {
   AutoCompleteTag,
 } from "@choc-ui/chakra-autocomplete";
 import { Key } from "react";
+import { useFormContext } from "react-hook-form";
+import ErrorMessage from "./error-message";
 
-export default function PreferencesForm({
-  activeStep,
-  nextStep,
-  prevStep,
-  isLastStep,
-  hasCompletedAllSteps,
-}: PropsForms) {
-  const traits = [
-    "playful",
-    "affectionate",
-    "energetic",
-    "calm",
-    "intelligent",
-    "loyal",
-    "friendly",
-    "shy",
-    "stubborn",
-    "independent",
-  ];
+const traits = [
+  "playful",
+  "affectionate",
+  "energetic",
+  "calm",
+  "intelligent",
+  "loyal",
+  "friendly",
+  "shy",
+  "stubborn",
+  "independent",
+];
+
+export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
+  const {
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext<PreferencesType>();
+
+  const valuePreferencePetTraits = watch("preferencePetTraits");
+  const preferencePetTraits = register("preferencePetTraits");
 
   return (
     <Flex h={"100%"} flexDir={"column"} justifyContent={"space-between"}>
@@ -69,20 +75,26 @@ export default function PreferencesForm({
             </FormLabel>
             <Select
               id="petType"
-              name="petType"
               autoComplete="type"
-              placeholder="Select a pet type..."
+              defaultValue=""
               mt={1}
               focusBorderColor="brand.400"
               shadow="sm"
               size="sm"
               w="full"
               rounded="md"
+              {...register("preferencePetType")}
             >
+              <option value="" disabled>
+                Select a pet type...
+              </option>
               <option value="dog">Dog</option>
               <option value="cat">Cat</option>
               <option value="bird">Bird</option>
             </Select>
+            {errors.preferencePetType && (
+              <ErrorMessage message={errors.preferencePetType.message} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[3]}>
@@ -97,7 +109,7 @@ export default function PreferencesForm({
             </FormLabel>
             <Select
               id="petAge"
-              placeholder="Enter pet age"
+              defaultValue=""
               autoComplete="age"
               mt={1}
               focusBorderColor="brand.400"
@@ -105,12 +117,19 @@ export default function PreferencesForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("preferencePetAge")}
             >
+              <option value="" disabled>
+                Enter pet age
+              </option>
               <option value="baby">Baby</option>
               <option value="young">Young</option>
               <option value="adult">Adult</option>
               <option value="senior">Senior</option>
             </Select>
+            {errors.preferencePetAge && (
+              <ErrorMessage message={errors.preferencePetAge.message} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[6, 3]}>
@@ -125,7 +144,7 @@ export default function PreferencesForm({
             </FormLabel>
             <Select
               id="petGender"
-              placeholder="Choose gender..."
+              defaultValue=""
               autoComplete="gender"
               mt={1}
               focusBorderColor="brand.400"
@@ -133,10 +152,17 @@ export default function PreferencesForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("preferencePetGender")}
             >
+              <option value="" disabled>
+                Choose gender...
+              </option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </Select>
+            {errors.preferencePetGender && (
+              <ErrorMessage message={errors.preferencePetGender.message} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[6]}>
@@ -153,17 +179,19 @@ export default function PreferencesForm({
               openOnFocus
               multiple
               creatable
-              onChange={(vals: any) => console.log(vals)}
+              onChange={(val: string[]) => setValue("preferencePetTraits", val)}
+              value={valuePreferencePetTraits || []}
             >
               <AutoCompleteInput
                 type="text"
                 id="traits"
                 mt={1}
                 focusBorderColor="brand.400"
-                shadow="sm"
-                size="sm"
+                size="xs"
                 w="full"
                 rounded="md"
+                name={preferencePetTraits.name}
+                onBlur={preferencePetTraits.onBlur}
               >
                 {({ tags }: any) =>
                   tags?.map(
@@ -175,7 +203,7 @@ export default function PreferencesForm({
                       tid: Key | null | undefined
                     ) => (
                       <AutoCompleteTag
-                        fontSize={"xs"}
+                        fontSize={"xx-small"}
                         key={tid}
                         label={tag.label}
                         onRemove={tag.onRemove}
@@ -190,8 +218,6 @@ export default function PreferencesForm({
                     key={`option-${cid}`}
                     value={trait}
                     fontSize="xs"
-                    _selected={{ bg: "whiteAlpha.50" }}
-                    _focus={{ bg: "whiteAlpha.100" }}
                   >
                     {trait}
                   </AutoCompleteItem>
@@ -203,26 +229,20 @@ export default function PreferencesForm({
               Please select 5 personality traits that best describe your
               preferences for your pet:
             </FormHelperText>
+            {errors.preferencePetTraits && (
+              <ErrorMessage message={errors.preferencePetTraits.message} />
+            )}
           </FormControl>
         </SimpleGrid>
       </Stack>
 
       <Flex width="100%" justify="flex-end" gap={4}>
-        {!hasCompletedAllSteps ? (
-          <>
-            <Button
-              isDisabled={activeStep === 0}
-              onClick={prevStep}
-              size="sm"
-              variant="ghost"
-            >
-              Prev
-            </Button>
-            <Button size="sm" onClick={nextStep}>
-              {isLastStep ? "Finish" : "Next"}
-            </Button>
-          </>
-        ) : null}
+        <Button onClick={prevStep} size="sm" variant="ghost">
+          Prev
+        </Button>
+        <Button type="submit" onClick={nextStep} size="sm">
+          Next
+        </Button>
       </Flex>
     </Flex>
   );

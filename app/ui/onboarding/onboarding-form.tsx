@@ -3,7 +3,7 @@ import ConfirmationForm from "./confirmation-form";
 import PetInformationForm from "./pet-information-form";
 import PreferencesForm from "./preferences-form";
 import UserInformationForm from "./user-information-form";
-import { PropsForms } from "@/app/lib/types";
+import { PropsForms } from "@/app/lib/schema";
 import TraitsInterestsForm from "./traits-interests-form";
 
 export default function OnboardingForm({
@@ -11,7 +11,6 @@ export default function OnboardingForm({
   activeStep,
   nextStep,
   prevStep,
-  isLastStep,
   hasCompletedAllSteps,
 }: PropsForms) {
   function RenderFormByStep() {
@@ -22,8 +21,6 @@ export default function OnboardingForm({
             nextStep={nextStep}
             prevStep={prevStep}
             activeStep={activeStep}
-            isLastStep={isLastStep}
-            hasCompletedAllSteps={hasCompletedAllSteps}
           />
         );
 
@@ -33,8 +30,6 @@ export default function OnboardingForm({
             nextStep={nextStep}
             prevStep={prevStep}
             activeStep={activeStep}
-            isLastStep={isLastStep}
-            hasCompletedAllSteps={hasCompletedAllSteps}
           />
         );
 
@@ -44,7 +39,7 @@ export default function OnboardingForm({
             nextStep={nextStep}
             prevStep={prevStep}
             activeStep={activeStep}
-            isLastStep={isLastStep}
+            // isLastStep={isLastStep}
             hasCompletedAllSteps={hasCompletedAllSteps}
           />
         );
@@ -55,7 +50,7 @@ export default function OnboardingForm({
             nextStep={nextStep}
             prevStep={prevStep}
             activeStep={activeStep}
-            isLastStep={isLastStep}
+            // isLastStep={isLastStep}
             hasCompletedAllSteps={hasCompletedAllSteps}
           />
         );
@@ -66,7 +61,7 @@ export default function OnboardingForm({
             nextStep={nextStep}
             prevStep={prevStep}
             activeStep={activeStep}
-            isLastStep={isLastStep}
+            // isLastStep={isLastStep}
             hasCompletedAllSteps={hasCompletedAllSteps}
           />
         );
@@ -76,7 +71,7 @@ export default function OnboardingForm({
             nextStep={nextStep}
             prevStep={prevStep}
             activeStep={activeStep}
-            isLastStep={isLastStep}
+            // isLastStep={isLastStep}
             hasCompletedAllSteps={hasCompletedAllSteps}
           />
         );
@@ -90,7 +85,11 @@ export default function OnboardingForm({
       boxShadow="lg"
       w="full"
       maxW={"30em"}
-      minH={"25em"}
+      minH="500px"
+      display={"flex"}
+      flexDirection={"column"}
+      justifyContent="space-between"
+      alignItems="stretch"
     >
       {hasCompletedAllSteps ? (
         <Box

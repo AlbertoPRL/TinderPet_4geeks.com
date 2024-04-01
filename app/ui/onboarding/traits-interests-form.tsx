@@ -1,4 +1,4 @@
-import { PropsForms } from "@/app/lib/types";
+import { OtherInfoType, PropsForms } from "@/app/lib/schema";
 import {
   Box,
   Button,
@@ -24,38 +24,47 @@ import {
   AutoCompleteTag,
 } from "@choc-ui/chakra-autocomplete";
 import { Key } from "react";
+import { useFormContext } from "react-hook-form";
+import ErrorMessage from "./error-message";
 
-function TraitsInterestsForm({
-  activeStep,
-  nextStep,
-  prevStep,
-  isLastStep,
-  hasCompletedAllSteps,
-}: PropsForms) {
-  const traits = [
-    "playful",
-    "affectionate",
-    "energetic",
-    "calm",
-    "intelligent",
-    "loyal",
-    "friendly",
-    "shy",
-    "stubborn",
-    "independent",
-  ];
+const traits = [
+  "playful",
+  "affectionate",
+  "energetic",
+  "calm",
+  "intelligent",
+  "loyal",
+  "friendly",
+  "shy",
+  "stubborn",
+  "independent",
+];
 
-  const interests = [
-    "Playing fetch",
-    "Going for walks",
-    "Cuddling",
-    "Swimming",
-    "Hunting",
-    "Chasing toys",
-    "Watching birds",
-    "Socializing with other animals",
-    "Sleeping",
-  ];
+const interests = [
+  "playing fetch",
+  "going for walks",
+  "cuddling",
+  "swimming",
+  "hunting",
+  "chasing toys",
+  "watching birds",
+  "socializing with other animals",
+  "sleeping",
+];
+
+function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
+  const {
+    register,
+    setValue,
+    watch,
+    formState: { errors },
+  } = useFormContext<OtherInfoType>();
+
+  const valueOfPetTraits = watch("petTraits");
+  const valueOfPetInterests = watch("petInterests");
+
+  const petTraits = register("petTraits");
+  const petInterests = register("petInterests");
 
   return (
     <Flex h={"100%"} flexDir={"column"} justifyContent={"space-between"}>
@@ -68,7 +77,7 @@ function TraitsInterestsForm({
         </Text>
       </Box>
 
-      <Stack py={5} spacing={6}>
+      <Stack py={5} spacing={2}>
         <SimpleGrid columns={6} spacing={6}>
           <FormControl as={GridItem} colSpan={[6, 3]}>
             <FormLabel
@@ -84,17 +93,19 @@ function TraitsInterestsForm({
               openOnFocus
               multiple
               creatable
-              onChange={(vals: any) => console.log(vals)}
+              onChange={(val: string[]) => setValue("petTraits", val)}
+              value={valueOfPetTraits || []}
             >
               <AutoCompleteInput
                 type="text"
                 id="traits"
                 mt={1}
                 focusBorderColor="brand.400"
-                shadow="sm"
-                size="sm"
+                size="xs"
                 w="full"
                 rounded="md"
+                name={petTraits.name}
+                onBlur={petTraits.onBlur}
               >
                 {({ tags }: any) =>
                   tags?.map(
@@ -106,7 +117,7 @@ function TraitsInterestsForm({
                       tid: Key | null | undefined
                     ) => (
                       <AutoCompleteTag
-                        fontSize={"xs"}
+                        fontSize={"xx-small"}
                         key={tid}
                         label={tag.label}
                         onRemove={tag.onRemove}
@@ -121,8 +132,6 @@ function TraitsInterestsForm({
                     key={`option-${cid}`}
                     value={trait}
                     fontSize="xs"
-                    _selected={{ bg: "whiteAlpha.50" }}
-                    _focus={{ bg: "whiteAlpha.100" }}
                   >
                     {trait}
                   </AutoCompleteItem>
@@ -133,6 +142,9 @@ function TraitsInterestsForm({
             <FormHelperText fontSize={"xs"}>
               Please select 5 personality traits that best describe your pet:
             </FormHelperText>
+            {errors.petTraits && (
+              <ErrorMessage message={errors.petTraits.message} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[6, 3]}>
@@ -149,17 +161,19 @@ function TraitsInterestsForm({
               openOnFocus
               multiple
               creatable
-              onChange={(vals: any) => console.log(vals)}
+              onChange={(val: string[]) => setValue("petInterests", val)}
+              value={valueOfPetInterests || []}
             >
               <AutoCompleteInput
                 type="text"
                 id="interests"
                 mt={1}
                 focusBorderColor="brand.400"
-                shadow="sm"
-                size="sm"
+                size="xs"
                 w="full"
                 rounded="md"
+                name={petInterests.name}
+                onBlur={petInterests.onBlur}
               >
                 {({ tags }: any) =>
                   tags?.map(
@@ -171,7 +185,7 @@ function TraitsInterestsForm({
                       tid: Key | null | undefined
                     ) => (
                       <AutoCompleteTag
-                        fontSize={"xs"}
+                        fontSize="xx-small"
                         key={tid}
                         label={tag.label}
                         onRemove={tag.onRemove}
@@ -198,6 +212,9 @@ function TraitsInterestsForm({
             <FormHelperText fontSize={"xs"}>
               What are your pet's favorite activities? (Select all that apply)
             </FormHelperText>
+            {errors.petInterests && (
+              <ErrorMessage message={errors.petInterests.message} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[6]}>
@@ -259,21 +276,12 @@ function TraitsInterestsForm({
       </Stack>
 
       <Flex width="100%" justify="flex-end" gap={4}>
-        {!hasCompletedAllSteps ? (
-          <>
-            <Button
-              isDisabled={activeStep === 0}
-              onClick={prevStep}
-              size="sm"
-              variant="ghost"
-            >
-              Prev
-            </Button>
-            <Button size="sm" onClick={nextStep}>
-              {isLastStep ? "Finish" : "Next"}
-            </Button>
-          </>
-        ) : null}
+        <Button onClick={prevStep} size="sm" variant="ghost">
+          Prev
+        </Button>
+        <Button type="button" onClick={nextStep} size="sm">
+          Next
+        </Button>
       </Flex>
     </Flex>
   );

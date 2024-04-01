@@ -15,7 +15,7 @@ import {
 } from "@chakra-ui/react";
 import { ButtonSubmitForm } from "../buttons";
 import { useForm } from "react-hook-form";
-import { TSignUpSchema, signUpSchema } from "@/app/lib/types";
+import { TSignUpSchema, signUpSchema } from "@/app/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import BottomCardForm from "../card";
 import tindog from "@/public/tindog.svg";

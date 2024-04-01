@@ -1,4 +1,4 @@
-import { PropsForms } from "@/app/lib/types";
+import { FormDataType, PetInfoType, PropsForms } from "@/app/lib/schema";
 import {
   Box,
   Button,
@@ -13,16 +13,17 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
+import { useFormContext } from "react-hook-form";
+import ErrorMessage from "./error-message";
 
-export default function PetInformationForm({
-  activeStep,
-  nextStep,
-  prevStep,
-  isLastStep,
-  hasCompletedAllSteps,
-}: PropsForms) {
+export default function PetInformationForm({ nextStep, prevStep }: PropsForms) {
+  const {
+    register,
+    formState: { errors },
+  } = useFormContext<PetInfoType>();
+
   return (
-    <Flex h={"100%"} flexDir={"column"} justifyContent={"space-between"}>
+    <>
       <Box>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Pet Information
@@ -32,7 +33,7 @@ export default function PetInformationForm({
         </Text>
       </Box>
 
-      <Stack py={5} spacing={6}>
+      <Stack py={2} spacing={2}>
         <SimpleGrid columns={6} spacing={6}>
           <FormControl as={GridItem} colSpan={[3]}>
             <FormLabel
@@ -47,7 +48,6 @@ export default function PetInformationForm({
             <Input
               type="text"
               id="petName"
-              name="petName"
               autoComplete="pet-name"
               mt={1}
               focusBorderColor="brand.400"
@@ -55,7 +55,11 @@ export default function PetInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("petName")}
             />
+            {errors.petName && (
+              <ErrorMessage message={errors.petName.message} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[3]}>
@@ -70,20 +74,26 @@ export default function PetInformationForm({
             </FormLabel>
             <Select
               id="petType"
-              name="petType"
               autoComplete="type"
-              placeholder="Select a pet type..."
+              defaultValue=""
               mt={1}
               focusBorderColor="brand.400"
               shadow="sm"
               size="sm"
               w="full"
               rounded="md"
+              {...register("petType")}
             >
+              <option value="" disabled>
+                Select a pet type...
+              </option>
               <option value="dog">Dog</option>
               <option value="cat">Cat</option>
               <option value="bird">Bird</option>
             </Select>
+            {errors.petType && (
+              <ErrorMessage message={errors.petType.message} />
+            )}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[6, 3]}>
@@ -99,7 +109,6 @@ export default function PetInformationForm({
             <Input
               type="text"
               id="petBreed"
-              name="petBreed"
               autoComplete="breed"
               mt={1}
               focusBorderColor="brand.400"
@@ -107,6 +116,7 @@ export default function PetInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("petBreed")}
             />
           </FormControl>
 
@@ -122,7 +132,7 @@ export default function PetInformationForm({
             </FormLabel>
             <Select
               id="petAge"
-              placeholder="Enter pet age"
+              defaultValue=""
               autoComplete="age"
               mt={1}
               focusBorderColor="brand.400"
@@ -130,12 +140,17 @@ export default function PetInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("petAge")}
             >
+              <option value="" disabled>
+                Enter pet age
+              </option>
               <option value="baby">Baby</option>
               <option value="young">Young</option>
               <option value="adult">Adult</option>
               <option value="senior">Senior</option>
             </Select>
+            {errors.petAge && <ErrorMessage message={errors.petAge.message} />}
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[3]}>
@@ -150,7 +165,7 @@ export default function PetInformationForm({
             </FormLabel>
             <Select
               id="petGender"
-              placeholder="Choose gender..."
+              defaultValue=""
               autoComplete="gender"
               mt={1}
               focusBorderColor="brand.400"
@@ -158,31 +173,29 @@ export default function PetInformationForm({
               size="sm"
               w="full"
               rounded="md"
+              {...register("petGender")}
             >
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              <option value="" disabled>
+                Choose gender...
+              </option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </Select>
+            {errors.petGender && (
+              <ErrorMessage message={errors.petGender.message} />
+            )}
           </FormControl>
         </SimpleGrid>
       </Stack>
 
       <Flex width="100%" justify="flex-end" gap={4}>
-        {!hasCompletedAllSteps ? (
-          <>
-            <Button
-              isDisabled={activeStep === 0}
-              onClick={prevStep}
-              size="sm"
-              variant="ghost"
-            >
-              Prev
-            </Button>
-            <Button size="sm" onClick={nextStep}>
-              {isLastStep ? "Finish" : "Next"}
-            </Button>
-          </>
-        ) : null}
+        <Button onClick={prevStep} size="sm" variant="ghost">
+          Prev
+        </Button>
+        <Button type="button" onClick={nextStep} size="sm">
+          Next
+        </Button>
       </Flex>
-    </Flex>
+    </>
   );
 }
