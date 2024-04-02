@@ -1,7 +1,7 @@
 "use client";
 
 import { FormDataType, FormSchema } from "@/app/lib/schema";
-import { Box, Flex, useSteps } from "@chakra-ui/react";
+import { Box, Flex, useMediaQuery, useSteps } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import Steps from "./steps";
@@ -10,6 +10,7 @@ import ConfirmationForm from "./confirmation-form";
 import PetInformationForm from "./pet-information-form";
 import TraitsInterestsForm from "./traits-interests-form";
 import PreferencesForm from "./preferences-form";
+import StepsMobile from "./steps-mobile";
 
 const steps = [
   {
@@ -54,6 +55,10 @@ export default function Form() {
     count: steps?.length,
   });
 
+  const [isLargerThan992] = useMediaQuery("(min-width: 992px)");
+
+  const [isLowerThan992] = useMediaQuery("(max-width: 992px)");
+
   //   const isLastStep = activeStep === steps?.length - 1;
   //   const hasCompletedAllSteps = activeStep === steps?.length;
 
@@ -92,61 +97,68 @@ export default function Form() {
   };
 
   return (
-    <>
-      <Flex height="100vh" alignItems={"center"} justifyContent={"center"}>
-        <Box
-          background={"gray.200"}
-          p={4}
-          borderRadius={6}
-          display={"flex"}
-          flexDirection={{ base: "column", lg: "row" }}
-          alignItems={"stretch"}
-          justifyContent={"center"}
-          gap={4}
-        >
+    <Flex height="100vh" alignItems={"center"} justifyContent={"center"}>
+      <Box
+        background={"gray.200"}
+        p={4}
+        borderRadius={6}
+        display={"flex"}
+        flexDirection={{ base: "column", lg: "row" }}
+        alignItems={"stretch"}
+        justifyContent={"center"}
+        gap={4}
+      >
+        {isLargerThan992 && (
           <Steps
             steps={steps}
             activeStep={activeStep}
             setActiveStep={setActiveStep}
           />
-          <Box
-            background={"white"}
-            borderRadius="md"
-            p={6}
-            boxShadow="lg"
-            w="full"
-            maxW={"30em"}
-            display={"flex"}
-            flexDirection={"column"}
-            justifyContent="space-between"
-            alignItems="stretch"
-          >
-            <FormProvider {...methods}>
-              <form onSubmit={handleSubmit(onSubmit)}>
-                {activeStep === 0 && (
-                  <UserInformationForm
-                    nextStep={next}
-                    prevStep={prev}
-                    activeStep={activeStep}
-                  />
-                )}
-                {activeStep === 1 && (
-                  <PetInformationForm nextStep={next} prevStep={prev} />
-                )}
-                {activeStep === 2 && (
-                  <TraitsInterestsForm nextStep={next} prevStep={prev} />
-                )}
-                {activeStep === 3 && (
-                  <PreferencesForm nextStep={next} prevStep={prev} />
-                )}
-                {activeStep === 4 && (
-                  <ConfirmationForm nextStep={next} prevStep={prev} />
-                )}
-              </form>
-            </FormProvider>
-          </Box>
+        )}
+        {isLowerThan992 && (
+          <StepsMobile
+            steps={steps}
+            activeStep={activeStep}
+            setActiveStep={setActiveStep}
+          />
+        )}
+        <Box
+          background={"white"}
+          borderRadius="md"
+          p={6}
+          boxShadow="lg"
+          w="full"
+          maxW={"30em"}
+          display={"flex"}
+          flexDirection={"column"}
+          justifyContent="space-between"
+          alignItems="stretch"
+        >
+          <FormProvider {...methods}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              {activeStep === 0 && (
+                <UserInformationForm
+                  nextStep={next}
+                  prevStep={prev}
+                  activeStep={activeStep}
+                />
+              )}
+              {activeStep === 1 && (
+                <PetInformationForm nextStep={next} prevStep={prev} />
+              )}
+              {activeStep === 2 && (
+                <TraitsInterestsForm nextStep={next} prevStep={prev} />
+              )}
+              {activeStep === 3 && (
+                <PreferencesForm nextStep={next} prevStep={prev} />
+              )}
+              {activeStep === 4 && (
+                <ConfirmationForm nextStep={next} prevStep={prev} />
+              )}
+            </form>
+          </FormProvider>
         </Box>
-      </Flex>
-    </>
+      </Box>
+    </Flex>
   );
 }
