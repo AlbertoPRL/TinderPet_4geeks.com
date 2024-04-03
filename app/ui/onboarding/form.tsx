@@ -1,7 +1,7 @@
 "use client";
 
 import { FormDataType, FormSchema } from "@/app/lib/schema";
-import { Box, Flex, useMediaQuery, useSteps } from "@chakra-ui/react";
+import { Box, Flex, useSteps } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import Steps from "./steps";
@@ -10,7 +10,6 @@ import ConfirmationForm from "./confirmation-form";
 import PetInformationForm from "./pet-information-form";
 import TraitsInterestsForm from "./traits-interests-form";
 import PreferencesForm from "./preferences-form";
-import StepsMobile from "./steps-mobile";
 
 const steps = [
   {
@@ -54,10 +53,6 @@ export default function Form() {
     index: 0,
     count: steps?.length,
   });
-
-  const [isLargerThan992] = useMediaQuery("(min-width: 992px)");
-
-  const [isLowerThan992] = useMediaQuery("(max-width: 992px)");
 
   //   const isLastStep = activeStep === steps?.length - 1;
   //   const hasCompletedAllSteps = activeStep === steps?.length;
@@ -108,20 +103,12 @@ export default function Form() {
         justifyContent={"center"}
         gap={4}
       >
-        {isLargerThan992 && (
-          <Steps
-            steps={steps}
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-          />
-        )}
-        {isLowerThan992 && (
-          <StepsMobile
-            steps={steps}
-            activeStep={activeStep}
-            setActiveStep={setActiveStep}
-          />
-        )}
+        <Steps
+          steps={steps}
+          activeStep={activeStep}
+          setActiveStep={setActiveStep}
+        />
+
         <Box
           background={"white"}
           borderRadius="md"

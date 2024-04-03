@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import SignInForm from "../ui/sign-in/sign-in-form";
+import SignInForm from "../../ui/sign-in/sign-in-form";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
