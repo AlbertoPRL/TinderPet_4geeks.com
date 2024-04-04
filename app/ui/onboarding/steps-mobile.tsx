@@ -1,5 +1,3 @@
-"use client";
-
 import { StepsInterface } from "@/app/lib/schema";
 import {
   Box,

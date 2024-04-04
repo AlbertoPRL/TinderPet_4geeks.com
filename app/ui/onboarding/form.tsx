@@ -4,12 +4,12 @@ import { FormDataType, FormSchema } from "@/app/lib/schema";
 import { Box, Flex, useSteps } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import Steps from "./steps";
 import UserInformationForm from "./user-information-form";
 import ConfirmationForm from "./confirmation-form";
 import PetInformationForm from "./pet-information-form";
 import TraitsInterestsForm from "./traits-interests-form";
 import PreferencesForm from "./preferences-form";
+import ResponsiveSteps from "./responsive-steps";
 
 const steps = [
   {
@@ -103,7 +103,7 @@ export default function Form() {
         justifyContent={"center"}
         gap={4}
       >
-        <Steps
+        <ResponsiveSteps
           steps={steps}
           activeStep={activeStep}
           setActiveStep={setActiveStep}

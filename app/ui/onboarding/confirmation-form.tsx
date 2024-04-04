@@ -11,7 +11,7 @@ export default function ConfirmationForm({ nextStep, prevStep }: PropsForms) {
         Please review your pet's profile before submitting.
       </Heading>
 
-      <Box as="pre" rounded="md" width="100%" p={4} mt={8} fontSize={"xs"}>
+      <Box as="pre" rounded="md" width="100%" p={2} fontSize={"xs"}>
         <code>{JSON.stringify(watch(), null, 2)}</code>
       </Box>
 
