@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+"use client";
+
+import React, { useEffect, useRef, useState } from 'react';
 import Message from './Message';
 import MessageInput from './MessageInput';
 import { Flex, Stat, StatLabel, StatNumber, VStack } from '@chakra-ui/react';
+import { MessageItem } from '../../lib/types';
+import Connector from '../../services/signalRConnection'
 
-const messages = [
+const MockMessages = [
     {
         message: "Hey Travis! Would you like to go out for a coffee?",
         from: "others",
@@ -55,29 +59,74 @@ const messages = [
         dateSent: "20:25"
     }
 ];
+
+const containerStyle: React.CSSProperties = {
+    overflowY: 'scroll', // Enable vertical scrolling
+    msOverflowStyle: 'none', // IE and Edge
+    scrollbarWidth: 'none', // Firefox
+    // '&::-webkit-scrollbar': {
+    //     display: 'none',
+    // }
+};
 export default function Chat() {
+    const { newMessage, events } = Connector();
+    const [message, setMessage] = useState("");
+    const [messages, setMessages] = useState(MockMessages);
+    const containerRef = useRef<HTMLDivElement>(null);
 
+    const handleSendMessage = () => {
+        newMessage(message);
+        const newMessageObj = {
+            message: message,
+            from: "me",
+            dateSent: new Date().toLocaleTimeString()
+        };
+        setMessages(prevMessages => [...prevMessages, newMessageObj]);
+        console.log(messages);
+        setMessage("");
+    };
 
+    useEffect(() => {
+        events((message) => {
+            const newMessageObj = {
+                message: message,
+                from: "others",
+                dateSent: new Date().toLocaleTimeString()
+            };
+            setMessages(prevMessages => [...prevMessages, newMessageObj]);
+            console.log("message received: ", message);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (containerRef.current) {
+            containerRef.current.scrollTop = containerRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setMessage(event.target.value);
+    };
 
     return (
         <Flex w='full' flexDirection='column'>
-            <Flex w='full' overflowY="scroll" flexDirection="column" flex={1} alignSelf={"flex-start"}>
+            <Flex ref={containerRef} style={containerStyle} w='full' overflowY="scroll" flexDirection="column" flex={1} alignSelf={"flex-start"}>
                 <Stat mt={1}>
                     <StatLabel color="gray.500">Chatting with</StatLabel>
                     <StatNumber>user2.Name</StatNumber>
                     <StatLabel color="gray.500">Owner of</StatLabel>
                     <StatNumber>user2.Pet.Name</StatNumber>
                 </Stat>
-                {messages.map(({ message, from, dateSent }, index) => (
+                {messages.map(({ message, from, dateSent }: MessageItem, index) => (
                     <Message
                         key={index}
                         message={message}
-                        from={from as "me" | "others"} // Cast 'from' as "me" | "others"
+                        from={from as "me" | "others"} // me : others
                         dateSent={dateSent}
                     />
                 ))}
             </Flex>
-            <MessageInput></MessageInput>
+            <MessageInput message={message} onInputChange={handleInputChange} onSendMessage={handleSendMessage} />
         </Flex>
     );
 }

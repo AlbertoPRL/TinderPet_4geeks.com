@@ -38,6 +38,10 @@ export default function ChatSideBar() {
                     </TabPanel>
                     <TabPanel>
                         <SideBarMessages></SideBarMessages>
+                        <SideBarMessages></SideBarMessages>
+                        <SideBarMessages></SideBarMessages>
+                        <SideBarMessages></SideBarMessages>
+                        <SideBarMessages></SideBarMessages>
                     </TabPanel>
                 </TabPanels>
             </Tabs>

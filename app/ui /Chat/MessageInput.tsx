@@ -1,17 +1,22 @@
+import { Input, Button, HStack } from "@chakra-ui/react";
+import { MessageInputProps } from "@/app/lib/types";
 
-{ /* A message input with a send button component*/ }
-{ /* The input should have a placeholder that says "Type a message" */ }
-{ /* The send button should have the text "Send" */ }
-{ /* There should be another button that allows the user to attach a picture, video, or file */ }
-{ /* The button should have an icon that represents attaching a file */ }
-{ /* All that using react-chakra-ui */ }
-import { Input, Button, IconButton, HStack } from "@chakra-ui/react";
+export default function MessageInput({ message, onInputChange, onSendMessage }: MessageInputProps) {
 
-export default function MessageInput() {
+    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if(event.key === 'Enter'){
+            onSendMessage(event as any);
+        }
+    };
     return (
         <HStack>
-            <Input placeholder="Type a message" />
-            <Button colorScheme="blue">Send</Button>
+            <Input
+                placeholder="Type a message"
+                value={message}
+                onChange={onInputChange}
+                onKeyDown={handleKeyPress}
+            />
+            <Button onClick={onSendMessage} colorScheme="blue">Send</Button>
         </HStack>
     );
 };

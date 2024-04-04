@@ -13,14 +13,6 @@ export default function SideBarMatches() {
                     alt='Chakra UI'
                 />
             </Card>
-            <Card maxW='md' w={"40%"} borderWidth="0.3rem" borderColor="gray.500" >
-                <Image
-                    objectFit='cover'
-                    src={userImgUrl}
-                    alt='Chakra UI'
-                />
-            </Card>
-            
         </Flex >
     )
 }
