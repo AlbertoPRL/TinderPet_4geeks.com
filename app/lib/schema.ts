@@ -18,6 +18,7 @@ export type TSignInSchema = z.infer<typeof signInSchema>;
 export interface StepsInterface {
   title: string;
   description?: string;
+  fields?: string[];
 }
 
 export type PropsForms = {
@@ -29,17 +30,17 @@ export type PropsForms = {
   hasCompletedAllSteps?: boolean;
 };
 
-export const userInformationSchema = z.object({
-  firstName: z.string().min(3, "First name must be at least 3 characters."),
-  lastName: z.string().optional(),
-  country: z.string().min(1, "Please select a country"),
-  address: z.string().min(1, "Address field can't be empty."),
-  city: z.string().min(1, "City field can't be empty."),
-  state: z.string().min(1, "State field can't be empty."),
-  postalCode: z.string().length(5, "Postal code should have exactly 5 digits."),
-});
+// export const userInformationSchema = z.object({
+//   firstName: z.string().min(3, "First name must be at least 3 characters."),
+//   lastName: z.string().optional(),
+//   country: z.string().min(1, "Please select a country"),
+//   address: z.string().min(1, "Address field can't be empty."),
+//   city: z.string().min(1, "City field can't be empty."),
+//   state: z.string().min(1, "State field can't be empty."),
+//   postalCode: z.string().length(5, "Postal code should have exactly 5 digits."),
+// });
 
-export type UserInfoType = z.infer<typeof userInformationSchema>;
+// export type UserInfoType = z.infer<typeof userInformationSchema>;
 
 export const petInfoSchema = z.object({
   petName: z.string().min(1, "Pet name is mandatory."),
@@ -68,8 +69,7 @@ export const preferencesSchema = z.object({
 
 export type PreferencesType = z.infer<typeof preferencesSchema>;
 
-export const FormSchema = userInformationSchema
-  .extend(petInfoSchema.shape)
+export const FormSchema = petInfoSchema
   .extend(petOtherInfoSchema.shape)
   .extend(preferencesSchema.shape);
 

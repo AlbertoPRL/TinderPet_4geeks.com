@@ -1,9 +1,10 @@
-"use client";
 import { PreferencesType, PropsForms } from "@/app/lib/schema";
 import {
-  Box,
   Button,
-  Flex,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   FormControl,
   FormHelperText,
   FormLabel,
@@ -11,7 +12,6 @@ import {
   Heading,
   Select,
   SimpleGrid,
-  Stack,
   Text,
 } from "@chakra-ui/react";
 import {
@@ -51,34 +51,32 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
   const preferencePetTraits = register("preferencePetTraits");
 
   return (
-    <Flex h={"100%"} flexDir={"column"} justifyContent={"space-between"}>
-      <Box>
+    <Card h={"full"} w={"100%"}>
+      <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Preferences
         </Heading>
         <Text mt={1} fontSize="sm" color="gray.600">
           Use a permanent address where you can receive mail.
         </Text>
-      </Box>
+      </CardHeader>
 
-      <Stack py={5} spacing={6}>
-        <SimpleGrid columns={6} spacing={6}>
-          <FormControl as={GridItem} colSpan={[3]}>
-            <FormLabel
-              htmlFor="petType"
-              m={0}
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-            >
-              Pet Type
+      <CardBody>
+        <SimpleGrid height={"full"} columns={6} spacing={4}>
+          <FormControl
+            as={GridItem}
+            colSpan={[3]}
+            isInvalid={errors.preferencePetType ? true : false}
+          >
+            <FormLabel htmlFor="petType" m={0} size={"sm"}>
+              Pet Type *
             </FormLabel>
             <Select
               id="petType"
               autoComplete="type"
               defaultValue=""
               mt={1}
-              focusBorderColor="brand.400"
+              borderColor="#d8dee4"
               shadow="sm"
               size="sm"
               w="full"
@@ -97,22 +95,20 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
             )}
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[3]}>
-            <FormLabel
-              htmlFor="petAge"
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              m={0}
-            >
-              Pet Age
+          <FormControl
+            as={GridItem}
+            colSpan={[3]}
+            isInvalid={errors.preferencePetAge ? true : false}
+          >
+            <FormLabel htmlFor="petAge" size={"sm"} m={0}>
+              Pet Age *
             </FormLabel>
             <Select
               id="petAge"
               defaultValue=""
               autoComplete="age"
+              borderColor="#d8dee4"
               mt={1}
-              focusBorderColor="brand.400"
               shadow="sm"
               size="sm"
               w="full"
@@ -132,22 +128,20 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
             )}
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3]}>
-            <FormLabel
-              htmlFor="petGender"
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              m={0}
-            >
-              Gender
+          <FormControl
+            as={GridItem}
+            colSpan={[6, 3]}
+            isInvalid={errors.preferencePetGender ? true : false}
+          >
+            <FormLabel htmlFor="petGender" size={"sm"} m={0}>
+              Gender *
             </FormLabel>
             <Select
               id="petGender"
               defaultValue=""
               autoComplete="gender"
               mt={1}
-              focusBorderColor="brand.400"
+              borderColor="#d8dee4"
               shadow="sm"
               size="sm"
               w="full"
@@ -165,15 +159,13 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
             )}
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6]}>
-            <FormLabel
-              htmlFor="traits"
-              m={0}
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-            >
-              Personality Traits
+          <FormControl
+            as={GridItem}
+            colSpan={[6]}
+            isInvalid={errors.preferencePetTraits ? true : false}
+          >
+            <FormLabel htmlFor="traits" m={0} size={"sm"}>
+              Personality Traits *
             </FormLabel>
             <AutoComplete
               openOnFocus
@@ -234,16 +226,16 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
             )}
           </FormControl>
         </SimpleGrid>
-      </Stack>
+      </CardBody>
 
-      <Flex width="100%" justify="flex-end" gap={4}>
+      <CardFooter justifyContent={"flex-end"}>
         <Button onClick={prevStep} size="sm" variant="ghost">
           Prev
         </Button>
         <Button type="submit" onClick={nextStep} size="sm">
           Next
         </Button>
-      </Flex>
-    </Flex>
+      </CardFooter>
+    </Card>
   );
 }

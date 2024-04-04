@@ -1,7 +1,10 @@
 import { OtherInfoType, PropsForms } from "@/app/lib/schema";
 import {
-  Box,
   Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   Flex,
   FormControl,
   FormHelperText,
@@ -67,27 +70,25 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
   const petInterests = register("petInterests");
 
   return (
-    <Flex h={"100%"} flexDir={"column"} justifyContent={"space-between"}>
-      <Box>
+    <Card h={"full"} w={"100%"}>
+      <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Personality Traits, Interests & Profile Picture
         </Heading>
         <Text mt={1} fontSize="sm" color="gray.600">
           Use a permanent address where you can receive mail.
         </Text>
-      </Box>
+      </CardHeader>
 
-      <Stack py={5} spacing={2}>
-        <SimpleGrid columns={6} spacing={6}>
-          <FormControl as={GridItem} colSpan={[6, 3]}>
-            <FormLabel
-              htmlFor="traits"
-              m={0}
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-            >
-              Personality Traits
+      <CardBody>
+        <SimpleGrid height={"full"} columns={6} spacing={4}>
+          <FormControl
+            as={GridItem}
+            colSpan={[6, 3]}
+            isInvalid={errors.petTraits ? true : false}
+          >
+            <FormLabel htmlFor="traits" m={0} size="sm">
+              Personality Traits *
             </FormLabel>
             <AutoComplete
               openOnFocus
@@ -126,7 +127,7 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
                   )
                 }
               </AutoCompleteInput>
-              <AutoCompleteList>
+              <AutoCompleteList m={0}>
                 {traits.map((trait, cid) => (
                   <AutoCompleteItem
                     key={`option-${cid}`}
@@ -147,15 +148,13 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
             )}
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3]}>
-            <FormLabel
-              htmlFor="interests"
-              m={0}
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-            >
-              Interests
+          <FormControl
+            as={GridItem}
+            colSpan={[6, 3]}
+            isInvalid={errors.petInterests ? true : false}
+          >
+            <FormLabel htmlFor="interests" m={0} size={"sm"}>
+              Interests *
             </FormLabel>
             <AutoComplete
               openOnFocus
@@ -218,7 +217,7 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[6]}>
-            <FormLabel fontSize="sm" fontWeight="md" color="gray.700">
+            <FormLabel m={0} size="sm">
               Please upload a profile picture for your pet.
             </FormLabel>
             <Flex
@@ -273,17 +272,17 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
             </Flex>
           </FormControl>
         </SimpleGrid>
-      </Stack>
+      </CardBody>
 
-      <Flex width="100%" justify="flex-end" gap={4}>
+      <CardFooter justifyContent={"flex-end"}>
         <Button onClick={prevStep} size="sm" variant="ghost">
           Prev
         </Button>
         <Button type="button" onClick={nextStep} size="sm">
           Next
         </Button>
-      </Flex>
-    </Flex>
+      </CardFooter>
+    </Card>
   );
 }
 

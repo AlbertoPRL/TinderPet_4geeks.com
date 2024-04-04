@@ -5,22 +5,18 @@ import dynamic from "next/dynamic";
 
 const StepsMobile = dynamic(() => import("./steps-mobile"), {
   loading: () => (
-    <div>
-      <Skeleton borderRadius="10px" p={12} w={"full"}>
-        Loading...
-      </Skeleton>
-    </div>
+    <Skeleton borderRadius="10px" p={12} w={{ base: "80%" }}>
+      Loading...
+    </Skeleton>
   ),
   ssr: false,
 });
 
 const Steps = dynamic(() => import("./steps"), {
   loading: () => (
-    <div>
-      <Skeleton borderRadius="10px" p={12} h={"full"}>
-        Loading...
-      </Skeleton>
-    </div>
+    <Skeleton borderRadius="10px" p={12} w={{ base: "80%", lg: "20%" }}>
+      Loading...
+    </Skeleton>
   ),
   ssr: false,
 });

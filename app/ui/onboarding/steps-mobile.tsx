@@ -1,6 +1,8 @@
 import { StepsInterface } from "@/app/lib/schema";
 import {
   Box,
+  Card,
+  CardBody,
   Step,
   StepIndicator,
   StepNumber,
@@ -38,22 +40,24 @@ export default function StepsMobile({
   };
 
   return (
-    <Box background={"gray"} borderRadius="10px" p={6}>
-      <Stepper index={activeStep} colorScheme="pink" gap="0" mb={2}>
-        {steps?.map((_, index) => (
-          <Step as="button" key={index} onClick={() => setActiveStep(index)}>
-            <StepIndicator>
-              <StepStatus
-                complete={<MdPets />}
-                incomplete={<StepNumber />}
-                active={<StepNumber />}
-              />
-            </StepIndicator>
-            <StepSeparator />
-          </Step>
-        ))}
-      </Stepper>
-      {textStep()}
-    </Box>
+    <Card bg="#f6f8fa" variant="outline" borderColor="#d8dee4" w={"80%"}>
+      <CardBody>
+        <Stepper index={activeStep} colorScheme="pink" mb={2}>
+          {steps?.map((_, index) => (
+            <Step as="button" key={index} onClick={() => setActiveStep(index)}>
+              <StepIndicator>
+                <StepStatus
+                  complete={<MdPets />}
+                  incomplete={<StepNumber />}
+                  active={<StepNumber />}
+                />
+              </StepIndicator>
+              <StepSeparator />
+            </Step>
+          ))}
+        </Stepper>
+        {textStep()}
+      </CardBody>
+    </Card>
   );
 }

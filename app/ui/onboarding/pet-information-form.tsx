@@ -1,8 +1,10 @@
-import { FormDataType, PetInfoType, PropsForms } from "@/app/lib/schema";
+import { PetInfoType, PropsForms } from "@/app/lib/schema";
 import {
-  Box,
   Button,
-  Flex,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
   FormControl,
   FormLabel,
   GridItem,
@@ -10,47 +12,48 @@ import {
   Input,
   Select,
   SimpleGrid,
-  Stack,
   Text,
 } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
 import ErrorMessage from "./error-message";
 
-export default function PetInformationForm({ nextStep, prevStep }: PropsForms) {
+export default function PetInformationForm({
+  activeStep,
+  nextStep,
+  prevStep,
+}: PropsForms) {
   const {
     register,
     formState: { errors },
   } = useFormContext<PetInfoType>();
 
   return (
-    <>
-      <Box>
+    <Card h={"full"} w={"100%"}>
+      <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Pet Information
         </Heading>
         <Text mt={1} fontSize="sm" color="gray.600">
           Use a permanent address where you can receive mail.
         </Text>
-      </Box>
+      </CardHeader>
 
-      <Stack py={2} spacing={2}>
-        <SimpleGrid columns={6} spacing={6}>
-          <FormControl as={GridItem} colSpan={[3]}>
-            <FormLabel
-              htmlFor="petName"
-              m={0}
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-            >
-              Pet Name
+      <CardBody>
+        <SimpleGrid height={"full"} columns={6} gap={4}>
+          <FormControl
+            as={GridItem}
+            colSpan={[3]}
+            isInvalid={errors.petName ? true : false}
+          >
+            <FormLabel htmlFor="petName" m={0} size="sm">
+              Pet Name *
             </FormLabel>
             <Input
               type="text"
               id="petName"
               autoComplete="pet-name"
               mt={1}
-              focusBorderColor="brand.400"
+              borderColor="#d8dee4"
               shadow="sm"
               size="sm"
               w="full"
@@ -62,22 +65,20 @@ export default function PetInformationForm({ nextStep, prevStep }: PropsForms) {
             )}
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[3]}>
-            <FormLabel
-              htmlFor="petType"
-              m={0}
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-            >
-              Pet Type
+          <FormControl
+            as={GridItem}
+            colSpan={[3]}
+            isInvalid={errors.petType ? true : false}
+          >
+            <FormLabel htmlFor="petType" m={0} size="sm">
+              Pet Type *
             </FormLabel>
             <Select
               id="petType"
               autoComplete="type"
               defaultValue=""
               mt={1}
-              focusBorderColor="brand.400"
+              borderColor="#d8dee4"
               shadow="sm"
               size="sm"
               w="full"
@@ -97,13 +98,7 @@ export default function PetInformationForm({ nextStep, prevStep }: PropsForms) {
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[6, 3]}>
-            <FormLabel
-              htmlFor="petBreed"
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              m={0}
-            >
+            <FormLabel htmlFor="petBreed" size="sm" m={0}>
               Pet Breed
             </FormLabel>
             <Input
@@ -111,7 +106,7 @@ export default function PetInformationForm({ nextStep, prevStep }: PropsForms) {
               id="petBreed"
               autoComplete="breed"
               mt={1}
-              focusBorderColor="brand.400"
+              borderColor="#d8dee4"
               shadow="sm"
               size="sm"
               w="full"
@@ -120,15 +115,13 @@ export default function PetInformationForm({ nextStep, prevStep }: PropsForms) {
             />
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[3]}>
-            <FormLabel
-              htmlFor="petAge"
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              m={0}
-            >
-              Pet Age
+          <FormControl
+            as={GridItem}
+            colSpan={[3]}
+            isInvalid={errors.petAge ? true : false}
+          >
+            <FormLabel htmlFor="petAge" size="sm" m={0}>
+              Pet Age *
             </FormLabel>
             <Select
               id="petAge"
@@ -153,15 +146,13 @@ export default function PetInformationForm({ nextStep, prevStep }: PropsForms) {
             {errors.petAge && <ErrorMessage message={errors.petAge.message} />}
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[3]}>
-            <FormLabel
-              htmlFor="petGender"
-              fontSize="sm"
-              fontWeight="md"
-              color="gray.700"
-              m={0}
-            >
-              Gender
+          <FormControl
+            as={GridItem}
+            colSpan={[3]}
+            isInvalid={errors.petGender ? true : false}
+          >
+            <FormLabel htmlFor="petGender" size="sm" m={0}>
+              Gender *
             </FormLabel>
             <Select
               id="petGender"
@@ -186,16 +177,21 @@ export default function PetInformationForm({ nextStep, prevStep }: PropsForms) {
             )}
           </FormControl>
         </SimpleGrid>
-      </Stack>
+      </CardBody>
 
-      <Flex width="100%" justify="flex-end" gap={4}>
-        <Button onClick={prevStep} size="sm" variant="ghost">
+      <CardFooter justifyContent={"flex-end"}>
+        <Button
+          isDisabled={activeStep === 0}
+          onClick={prevStep}
+          size="sm"
+          variant="ghost"
+        >
           Prev
         </Button>
         <Button type="button" onClick={nextStep} size="sm">
           Next
         </Button>
-      </Flex>
-    </>
+      </CardFooter>
+    </Card>
   );
 }
