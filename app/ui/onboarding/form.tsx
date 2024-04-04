@@ -87,7 +87,7 @@ export default function Form() {
         alignItems={{ base: "center", lg: "stretch" }}
         flexDirection={{ base: "column", lg: "row" }}
         gap={4}
-        minH={"50%"}
+        minH={"55%"}
         w={"full"}
       >
         <ResponsiveSteps
@@ -96,7 +96,7 @@ export default function Form() {
           setActiveStep={setActiveStep}
         />
 
-        <Box width={{ base: "80%", lg: "60%" }}>
+        <Box width={{ base: "95%", sm: "80%", lg: "600px" }}>
           <FormProvider {...methods}>
             <form onSubmit={handleSubmit(onSubmit)} style={{ height: "100%" }}>
               {activeStep === 0 && (

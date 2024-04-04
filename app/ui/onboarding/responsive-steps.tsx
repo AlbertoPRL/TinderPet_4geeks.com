@@ -14,7 +14,7 @@ const StepsMobile = dynamic(() => import("./steps-mobile"), {
 
 const Steps = dynamic(() => import("./steps"), {
   loading: () => (
-    <Skeleton borderRadius="10px" p={12} w={{ base: "80%", lg: "20%" }}>
+    <Skeleton borderRadius="10px" p={12} w={{ base: "80%", lg: "200px" }}>
       Loading...
     </Skeleton>
   ),
