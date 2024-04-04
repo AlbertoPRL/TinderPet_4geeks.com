@@ -1,15 +1,11 @@
 import { z } from "zod";
 
-export const signUpSchema = z
-  .object({
-    email: z.string().email(),
-    password: z.string().min(10, "Password must be at least 10 characters"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords must match",
-    path: ["confirmPassword"],
-  });
+export const signUpSchema = z.object({
+  firstName: z.string().min(3, "First name must be at least 3 characters."),
+  lastName: z.string().optional(), // Last name is optional for now
+  email: z.string().email(),
+  password: z.string().min(10, "Password must be at least 10 characters"),
+});
 
 export const signInSchema = z.object({
   email: z.string().email(),

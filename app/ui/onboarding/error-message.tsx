@@ -6,7 +6,7 @@ export default function ErrorMessage({
   message: string | undefined;
 }) {
   return (
-    <Text p={1} fontSize="xx-small" color="red.400">
+    <Text mt={2} fontSize="x-small" color="red.500">
       {message}
     </Text>
   );

@@ -5,6 +5,7 @@ import {
   Card,
   CardBody,
   Center,
+  Flex,
   FormControl,
   FormErrorMessage,
   FormLabel,
@@ -20,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import BottomCardForm from "../card";
 import tindog from "@/public/tindog.svg";
 import Image from "next/image";
+import ErrorMessage from "../onboarding/error-message";
 
 export default function SignUpForm() {
   const {
@@ -36,6 +38,7 @@ export default function SignUpForm() {
     await new Promise((r) => setTimeout(r, 1000)); //
     reset();
   };
+
   return (
     <Box>
       <Center>
@@ -61,27 +64,68 @@ export default function SignUpForm() {
             <CardBody>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing="4">
-                  {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore */}
-                  <FormControl isInvalid={errors.email}>
-                    <FormLabel size="sm">Email address</FormLabel>
+                  <Box>
+                    <Flex gap={4}>
+                      <FormControl isInvalid={errors.firstName ? true : false}>
+                        <FormLabel m={0} size="sm">
+                          First Name
+                        </FormLabel>
+                        <Input
+                          type="text"
+                          {...register("firstName")}
+                          bg="white"
+                          borderColor="#d8dee4"
+                          size="sm"
+                          rounded="md"
+                          shadow="sm"
+                          mt={1}
+                        />
+                      </FormControl>
+
+                      <FormControl>
+                        <FormLabel m={0} size="sm">
+                          Last Name
+                        </FormLabel>
+                        <Input
+                          type="text"
+                          {...register("lastName")}
+                          bg="white"
+                          borderColor="#d8dee4"
+                          size="sm"
+                          rounded="md"
+                          shadow="sm"
+                          mt={1}
+                        />
+                      </FormControl>
+                    </Flex>
+                    {errors.firstName && (
+                      <ErrorMessage message={errors.firstName.message} />
+                    )}
+                  </Box>
+
+                  <FormControl isInvalid={errors.email ? true : false}>
+                    <FormLabel m={0} size="sm">
+                      Email address
+                    </FormLabel>
                     <Input
                       type="email"
                       {...register("email")}
                       bg="white"
                       borderColor="#d8dee4"
                       size="sm"
-                      borderRadius="6px"
+                      rounded="md"
+                      shadow="sm"
+                      mt={1}
                     />
-                    <FormErrorMessage>
-                      {errors.email && errors.email.message}
-                    </FormErrorMessage>
+                    {errors.email && (
+                      <ErrorMessage message={errors.email.message} />
+                    )}
                   </FormControl>
 
-                  {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore */}
-                  <FormControl isInvalid={errors.password}>
-                    <FormLabel size="sm">Password</FormLabel>
+                  <FormControl isInvalid={errors.password ? true : false}>
+                    <FormLabel m={0} size="sm">
+                      Password
+                    </FormLabel>
 
                     <Input
                       type="password"
@@ -89,28 +133,14 @@ export default function SignUpForm() {
                       bg="white"
                       borderColor="#d8dee4"
                       size="sm"
-                      borderRadius="6px"
+                      rounded="md"
+                      shadow="sm"
+                      mt={1}
                     />
-                    <FormErrorMessage>
-                      {errors.password && errors.password.message}
-                    </FormErrorMessage>
-                  </FormControl>
 
-                  {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore */}
-                  <FormControl isInvalid={errors.confirmPassword}>
-                    <FormLabel size="sm">Confirm Password</FormLabel>
-                    <Input
-                      type="password"
-                      {...register("confirmPassword")}
-                      bg="white"
-                      borderColor="#d8dee4"
-                      size="sm"
-                      borderRadius="6px"
-                    />
-                    <FormErrorMessage>
-                      {errors.confirmPassword && errors.confirmPassword.message}
-                    </FormErrorMessage>
+                    {errors.password && (
+                      <ErrorMessage message={errors.password.message} />
+                    )}
                   </FormControl>
 
                   <ButtonSubmitForm disabled={isSubmitting} text={"Sign Up"} />

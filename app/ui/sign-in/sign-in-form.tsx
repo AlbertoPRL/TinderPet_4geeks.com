@@ -62,36 +62,40 @@ export default function SignInForm() {
             <CardBody>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing="4">
-                  {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore */}
-                  <FormControl isInvalid={errors.email}>
-                    <FormLabel size="sm">Email address</FormLabel>
+                  <FormControl isInvalid={errors.email ? true : false}>
+                    <FormLabel m={0} size="sm">
+                      Email address
+                    </FormLabel>
                     <Input
                       type="email"
                       {...register("email")}
                       bg="white"
                       borderColor="#d8dee4"
                       size="sm"
-                      borderRadius="6px"
+                      rounded="md"
+                      shadow="sm"
+                      mt={1}
                     />
-                    <FormErrorMessage>
+                    <FormErrorMessage fontSize="x-small">
                       {errors.email && errors.email.message}
                     </FormErrorMessage>
                   </FormControl>
 
-                  {/* // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore */}
-                  <FormControl isInvalid={errors.password}>
-                    <FormLabel size="sm">Password</FormLabel>
+                  <FormControl isInvalid={errors.password ? true : false}>
+                    <FormLabel m={0} size="sm">
+                      Password
+                    </FormLabel>
                     <Input
                       type="password"
                       {...register("password")}
                       bg="white"
                       borderColor="#d8dee4"
                       size="sm"
-                      borderRadius="6px"
+                      rounded="md"
+                      shadow="sm"
+                      mt={1}
                     />
-                    <FormErrorMessage>
+                    <FormErrorMessage fontSize="x-small">
                       {errors.password && errors.password.message}
                     </FormErrorMessage>
                   </FormControl>

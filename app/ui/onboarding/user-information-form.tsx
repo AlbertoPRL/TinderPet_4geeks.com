@@ -1,6 +1,5 @@
-import { FormDataType, PropsForms, UserInfoType } from "@/app/lib/schema";
+import { PropsForms, UserInfoType } from "@/app/lib/schema";
 import {
-  Badge,
   Box,
   Button,
   Flex,
@@ -14,7 +13,7 @@ import {
   Stack,
   Text,
 } from "@chakra-ui/react";
-import { useController, useForm, useFormContext } from "react-hook-form";
+import { useFormContext } from "react-hook-form";
 import ErrorMessage from "./error-message";
 
 export default function UserInformationForm({
@@ -26,14 +25,6 @@ export default function UserInformationForm({
     register,
     formState: { errors },
   } = useFormContext<UserInfoType>();
-
-  // const {
-  //   field,
-  //   formState: { errors },
-  // } = useController({
-  //   name: "userInfo",
-  //   control,
-  // });
 
   return (
     <>
