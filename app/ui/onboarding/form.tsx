@@ -80,7 +80,6 @@ export default function Form() {
   return (
     <Flex height="100vh" alignItems={"center"} justifyContent={"center"}>
       <Box
-        background={"gray.200"}
         p={4}
         display={"flex"}
         justifyContent="center"

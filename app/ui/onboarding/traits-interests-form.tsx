@@ -70,7 +70,13 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
   const petInterests = register("petInterests");
 
   return (
-    <Card h={"full"} w={"100%"}>
+    <Card
+      h={"full"}
+      w={"100%"}
+      bg="#f6f8fa"
+      variant="outline"
+      borderColor="#d8dee4"
+    >
       <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Personality Traits, Interests & Profile Picture
@@ -107,6 +113,7 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
                 rounded="md"
                 name={petTraits.name}
                 onBlur={petTraits.onBlur}
+                bg="white"
               >
                 {({ tags }: any) =>
                   tags?.map(
@@ -132,16 +139,16 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
                   <AutoCompleteItem
                     key={`option-${cid}`}
                     value={trait}
-                    fontSize="xs"
+                    fontSize="x-small"
                   >
                     {trait}
                   </AutoCompleteItem>
                 ))}
-                <AutoCompleteCreatable fontSize="xs" />
+                <AutoCompleteCreatable fontSize="x-small" />
               </AutoCompleteList>
             </AutoComplete>
-            <FormHelperText fontSize={"xs"}>
-              Please select 5 personality traits that best describe your pet:
+            <FormHelperText fontSize={"x-small"}>
+              Please select 3 personality traits that best describe your pet:
             </FormHelperText>
             {errors.petTraits && (
               <ErrorMessage message={errors.petTraits.message} />
@@ -173,6 +180,7 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
                 rounded="md"
                 name={petInterests.name}
                 onBlur={petInterests.onBlur}
+                bg="white"
               >
                 {({ tags }: any) =>
                   tags?.map(
@@ -198,18 +206,18 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
                   <AutoCompleteItem
                     key={`option-${cid}`}
                     value={interest}
-                    fontSize="xs"
+                    fontSize="x-small"
                     _selected={{ bg: "whiteAlpha.50" }}
                     _focus={{ bg: "whiteAlpha.100" }}
                   >
                     {interest}
                   </AutoCompleteItem>
                 ))}
-                <AutoCompleteCreatable fontSize="xs" />
+                <AutoCompleteCreatable fontSize="x-small" />
               </AutoCompleteList>
             </AutoComplete>
-            <FormHelperText fontSize={"xs"}>
-              What are your pet's favorite activities? (Select all that apply)
+            <FormHelperText fontSize={"x-small"}>
+              What are your pet's favorite activities? (Select 3)
             </FormHelperText>
             {errors.petInterests && (
               <ErrorMessage message={errors.petInterests.message} />
@@ -228,6 +236,7 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
               borderWidth={2}
               borderStyle="dashed"
               rounded="md"
+              bg="white"
             >
               <Stack spacing={1} textAlign="center">
                 <Icon

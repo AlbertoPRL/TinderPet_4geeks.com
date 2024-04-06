@@ -24,7 +24,7 @@ export default function Steps({
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }) {
   return (
-    <Card bg="#f6f8fa" variant="outline" borderColor="#d8dee4" w={"200px"}>
+    <Card w={"200px"} variant="outline" borderColor="#d0d7de">
       <CardBody>
         <Stepper
           h={"full"}

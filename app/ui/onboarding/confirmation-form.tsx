@@ -14,7 +14,13 @@ export default function ConfirmationForm({ nextStep, prevStep }: PropsForms) {
   const { watch } = useFormContext();
 
   return (
-    <Card h={"full"} w={"100%"}>
+    <Card
+      h={"full"}
+      w={"100%"}
+      bg="#f6f8fa"
+      variant="outline"
+      borderColor="#d8dee4"
+    >
       <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Please review your pet's profile before submitting.

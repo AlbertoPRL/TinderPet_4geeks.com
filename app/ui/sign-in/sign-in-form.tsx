@@ -71,6 +71,7 @@ export default function SignInForm() {
                       {...register("email")}
                       bg="white"
                       borderColor="#d8dee4"
+                      autoComplete="email"
                       size="sm"
                       rounded="md"
                       shadow="sm"

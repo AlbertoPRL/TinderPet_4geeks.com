@@ -28,7 +28,13 @@ export default function PetInformationForm({
   } = useFormContext<PetInfoType>();
 
   return (
-    <Card h={"full"} w={"100%"}>
+    <Card
+      h={"full"}
+      w={"100%"}
+      bg="#f6f8fa"
+      variant="outline"
+      borderColor="#d8dee4"
+    >
       <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Pet Information
@@ -53,6 +59,7 @@ export default function PetInformationForm({
               id="petName"
               autoComplete="pet-name"
               mt={1}
+              bg="white"
               borderColor="#d8dee4"
               shadow="sm"
               size="sm"
@@ -78,6 +85,7 @@ export default function PetInformationForm({
               autoComplete="type"
               defaultValue=""
               mt={1}
+              bg="white"
               borderColor="#d8dee4"
               shadow="sm"
               size="sm"
@@ -106,6 +114,7 @@ export default function PetInformationForm({
               id="petBreed"
               autoComplete="breed"
               mt={1}
+              bg="white"
               borderColor="#d8dee4"
               shadow="sm"
               size="sm"
@@ -128,7 +137,8 @@ export default function PetInformationForm({
               defaultValue=""
               autoComplete="age"
               mt={1}
-              focusBorderColor="brand.400"
+              bg="white"
+              borderColor="#d8dee4"
               shadow="sm"
               size="sm"
               w="full"
@@ -159,7 +169,8 @@ export default function PetInformationForm({
               defaultValue=""
               autoComplete="gender"
               mt={1}
-              focusBorderColor="brand.400"
+              bg="white"
+              borderColor="#d8dee4"
               shadow="sm"
               size="sm"
               w="full"

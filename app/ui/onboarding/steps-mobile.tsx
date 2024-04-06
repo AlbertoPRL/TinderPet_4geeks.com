@@ -1,6 +1,5 @@
 import { StepsInterface } from "@/app/lib/schema";
 import {
-  Box,
   Card,
   CardBody,
   Step,
@@ -27,13 +26,13 @@ export default function StepsMobile({
       const activeStepText = steps[activeStep].description;
 
       return (
-        <Text>
+        <Text mt={8}>
           Step {activeStep + 1}: <b>{activeStepText}</b>
         </Text>
       );
     }
     return (
-      <Text>
+      <Text mt={8}>
         Step {steps.length}: <b>{steps[steps.length - 1].description}</b>
       </Text>
     );
@@ -41,10 +40,10 @@ export default function StepsMobile({
 
   return (
     <Card
-      bg="#f6f8fa"
       variant="outline"
-      borderColor="#d8dee4"
+      borderColor="#d0d7de"
       w={{ base: "95%", sm: "80%" }}
+      h={32}
     >
       <CardBody>
         <Stepper index={activeStep} colorScheme="pink" mb={2}>

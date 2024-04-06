@@ -21,14 +21,14 @@ export interface StepsInterface {
   fields?: string[];
 }
 
-export type PropsForms = {
+export interface PropsForms {
   step?: number | null;
   activeStep?: number;
   nextStep: () => void;
   prevStep: () => void;
   isLastStep?: boolean;
   hasCompletedAllSteps?: boolean;
-};
+}
 
 // export const userInformationSchema = z.object({
 //   firstName: z.string().min(3, "First name must be at least 3 characters."),
@@ -53,9 +53,9 @@ export const petInfoSchema = z.object({
 export type PetInfoType = z.infer<typeof petInfoSchema>;
 
 export const petOtherInfoSchema = z.object({
-  petTraits: z.string().array().length(5, "5 traits required"),
-  petInterests: z.string().array().min(1, "At least one interest is required"),
-  // petPicture: z.string().min(1, "Please upload a photo of your pet"),
+  petTraits: z.string().array().length(3, "3 traits required"),
+  petInterests: z.string().array().length(3, " 3 interests required"),
+  // petPicture: z.string().min(1, "Please upload a photo of your pet"), traits required"),
 });
 
 export type OtherInfoType = z.infer<typeof petOtherInfoSchema>;
@@ -64,7 +64,7 @@ export const preferencesSchema = z.object({
   preferencePetType: z.string().min(1, "Please select the type"),
   preferencePetAge: z.string().min(1, "Please select the age"),
   preferencePetGender: z.string().min(1, "Please specify the gender"),
-  preferencePetTraits: z.string().array().length(5, "5 traits required"),
+  preferencePetTraits: z.string().array().length(3, "3 traits required"),
 });
 
 export type PreferencesType = z.infer<typeof preferencesSchema>;

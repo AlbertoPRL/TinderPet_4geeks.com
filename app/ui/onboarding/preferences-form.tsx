@@ -51,7 +51,13 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
   const preferencePetTraits = register("preferencePetTraits");
 
   return (
-    <Card h={"full"} w={"100%"}>
+    <Card
+      h={"full"}
+      w={"100%"}
+      bg="#f6f8fa"
+      variant="outline"
+      borderColor="#d8dee4"
+    >
       <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Preferences
@@ -76,6 +82,7 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
               autoComplete="type"
               defaultValue=""
               mt={1}
+              bg="white"
               borderColor="#d8dee4"
               shadow="sm"
               size="sm"
@@ -107,6 +114,7 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
               id="petAge"
               defaultValue=""
               autoComplete="age"
+              bg="white"
               borderColor="#d8dee4"
               mt={1}
               shadow="sm"
@@ -141,6 +149,7 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
               defaultValue=""
               autoComplete="gender"
               mt={1}
+              bg="white"
               borderColor="#d8dee4"
               shadow="sm"
               size="sm"
@@ -151,8 +160,8 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
               <option value="" disabled>
                 Choose gender...
               </option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
             </Select>
             {errors.preferencePetGender && (
               <ErrorMessage message={errors.preferencePetGender.message} />
@@ -184,6 +193,7 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
                 rounded="md"
                 name={preferencePetTraits.name}
                 onBlur={preferencePetTraits.onBlur}
+                bg="white"
               >
                 {({ tags }: any) =>
                   tags?.map(
@@ -209,16 +219,16 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
                   <AutoCompleteItem
                     key={`option-${cid}`}
                     value={trait}
-                    fontSize="xs"
+                    fontSize="x-small"
                   >
                     {trait}
                   </AutoCompleteItem>
                 ))}
-                <AutoCompleteCreatable fontSize="xs" />
+                <AutoCompleteCreatable fontSize="x-small" />
               </AutoCompleteList>
             </AutoComplete>
-            <FormHelperText fontSize={"xs"}>
-              Please select 5 personality traits that best describe your
+            <FormHelperText fontSize={"x-small"}>
+              Please select 3 personality traits that best describe your
               preferences for your pet:
             </FormHelperText>
             {errors.preferencePetTraits && (
