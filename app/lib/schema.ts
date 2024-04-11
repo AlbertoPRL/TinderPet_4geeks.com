@@ -45,7 +45,15 @@ export interface PropsForms {
 export const petInfoSchema = z.object({
   petName: z.string().min(1, "Pet name is mandatory."),
   petType: z.string().min(1, "Please select the type of your pet"),
-  petAge: z.string().min(1, "Please select the age of your pet"),
+  petAge: z
+    .date({
+      required_error: "Please select a date and time",
+      invalid_type_error: "That's not a date!",
+    })
+    .refine((date) => {
+      const now = new Date();
+      return date < now;
+    }, "Please select a date in the future"),
   petBreed: z.string().optional(),
   petGender: z.string().min(1, "Please specify the gender of your pet"),
 });
@@ -62,7 +70,10 @@ export type OtherInfoType = z.infer<typeof petOtherInfoSchema>;
 
 export const preferencesSchema = z.object({
   preferencePetType: z.string().min(1, "Please select the type"),
-  preferencePetAge: z.string().min(1, "Please select the age"),
+  preferencePetAge: z.date({
+    required_error: "Please select a date and time",
+    invalid_type_error: "That's not a date!",
+  }),
   preferencePetGender: z.string().min(1, "Please specify the gender"),
   preferencePetTraits: z.string().array().length(3, "3 traits required"),
 });

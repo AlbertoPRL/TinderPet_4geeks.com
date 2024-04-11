@@ -14,16 +14,22 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react";
-import { useFormContext } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import ErrorMessage from "./error-message";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { useState } from "react";
 
 export default function PetInformationForm({
   activeStep,
   nextStep,
   prevStep,
 }: PropsForms) {
+  const [startDate, setStartDate] = useState(null);
+
   const {
     register,
+    control,
     formState: { errors },
   } = useFormContext<PetInfoType>();
 
@@ -132,7 +138,54 @@ export default function PetInformationForm({
             <FormLabel htmlFor="petAge" size="sm" m={0}>
               Pet Age *
             </FormLabel>
-            <Select
+
+            <Controller
+              name="petAge"
+              control={control}
+              render={({ field }) => (
+                // @ts-ignore
+                <DatePicker
+                  {...field}
+                  selected={field.value || null}
+                  onChange={(date) => field.onChange(date)}
+                  dateFormat="MM/dd/yyyy"
+                  className="datepicker"
+                  customInput={
+                    <Input
+                      id="petAge"
+                      mt={1}
+                      bg="white"
+                      borderColor="#d8dee4"
+                      shadow="sm"
+                      size="sm"
+                      w="full"
+                      rounded="md"
+                      // {...register("petAge")}
+                    />
+                  }
+                />
+              )}
+            />
+            {/* 
+            <DatePicker
+              selected={startDate}
+              onChange={(date) => field.onChange(date)}
+              dateFormat="MM/dd/yyyy"
+              customInput={
+                <Input
+                  id="petAge"
+                  mt={1}
+                  bg="white"
+                  borderColor="#d8dee4"
+                  shadow="sm"
+                  size="sm"
+                  w="full"
+                  rounded="md"
+                  {...register("petAge")}
+                />
+              }
+            /> */}
+            {/* <Select
               id="petAge"
               defaultValue=""
               autoComplete="age"
@@ -152,7 +205,7 @@ export default function PetInformationForm({
               <option value="young">Young</option>
               <option value="adult">Adult</option>
               <option value="senior">Senior</option>
-            </Select>
+            </Select> */}
             {errors.petAge && <ErrorMessage message={errors.petAge.message} />}
           </FormControl>
 
