@@ -70,10 +70,6 @@ export type OtherInfoType = z.infer<typeof petOtherInfoSchema>;
 
 export const preferencesSchema = z.object({
   preferencePetType: z.string().min(1, "Please select the type"),
-  preferencePetAge: z.date({
-    required_error: "Please select a date and time",
-    invalid_type_error: "That's not a date!",
-  }),
   preferencePetGender: z.string().min(1, "Please specify the gender"),
   preferencePetTraits: z.string().array().length(3, "3 traits required"),
 });

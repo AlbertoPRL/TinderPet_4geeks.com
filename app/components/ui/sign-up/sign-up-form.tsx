@@ -7,7 +7,6 @@ import {
   Center,
   Flex,
   FormControl,
-  FormErrorMessage,
   FormLabel,
   Heading,
   Input,
@@ -16,12 +15,13 @@ import {
 } from "@chakra-ui/react";
 import { ButtonSubmitForm } from "../buttons";
 import { useForm } from "react-hook-form";
-import { TSignUpSchema, signUpSchema } from "@/app/lib/schema";
+import { TSignUpSchema, signUpSchema } from "@/app/lib/types/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import BottomCardForm from "../card";
 import tindog from "@/public/tindog.svg";
 import Image from "next/image";
 import ErrorMessage from "../onboarding/error-message";
+import { signUp } from "@/app/lib/actions/auth";
 
 export default function SignUpForm() {
   const {
@@ -34,9 +34,8 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: TSignUpSchema) => {
-    console.log("submitted", data);
-    await new Promise((r) => setTimeout(r, 1000)); //
-    reset();
+    const res = await signUp(data);
+    console.log(res);
   };
 
   return (

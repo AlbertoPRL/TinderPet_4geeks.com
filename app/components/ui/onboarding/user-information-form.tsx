@@ -1,4 +1,4 @@
-import { PropsForms, UserInfoType } from "@/app/lib/schema";
+import { PropsForms, UserInfoType } from "@/app/lib/types/schema";
 import {
   Box,
   Button,

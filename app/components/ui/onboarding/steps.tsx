@@ -1,18 +1,20 @@
-import { StepsInterface } from "@/app/lib/schema";
+import { StepsInterface } from "@/app/lib/types/schema";
 import {
+  Box,
   Card,
   CardBody,
   Step,
+  StepDescription,
   StepIndicator,
   StepNumber,
   StepSeparator,
   StepStatus,
+  StepTitle,
   Stepper,
-  Text,
 } from "@chakra-ui/react";
 import { MdPets } from "react-icons/md";
 
-export default function StepsMobile({
+export default function Steps({
   steps,
   activeStep,
   setActiveStep,
@@ -21,33 +23,16 @@ export default function StepsMobile({
   activeStep: number;
   setActiveStep: React.Dispatch<React.SetStateAction<number>>;
 }) {
-  const textStep = () => {
-    if (activeStep <= steps?.length - 1) {
-      const activeStepText = steps[activeStep].description;
-
-      return (
-        <Text mt={8}>
-          Step {activeStep + 1}: <b>{activeStepText}</b>
-        </Text>
-      );
-    }
-    return (
-      <Text mt={8}>
-        Step {steps.length}: <b>{steps[steps.length - 1].description}</b>
-      </Text>
-    );
-  };
-
   return (
-    <Card
-      variant="outline"
-      borderColor="#d0d7de"
-      w={{ base: "95%", sm: "80%" }}
-      h={32}
-    >
+    <Card w={"200px"} variant="outline" borderColor="#d0d7de">
       <CardBody>
-        <Stepper index={activeStep} colorScheme="pink" mb={2}>
-          {steps?.map((_, index) => (
+        <Stepper
+          h={"full"}
+          index={activeStep}
+          colorScheme="pink"
+          orientation="vertical"
+        >
+          {steps?.map((step, index) => (
             <Step as="button" key={index} onClick={() => setActiveStep(index)}>
               <StepIndicator>
                 <StepStatus
@@ -56,11 +41,16 @@ export default function StepsMobile({
                   active={<StepNumber />}
                 />
               </StepIndicator>
+
+              <Box flexShrink="0" ps={1} textAlign={"left"}>
+                <StepTitle>{step.title}</StepTitle>
+                <StepDescription>{step.description}</StepDescription>
+              </Box>
+
               <StepSeparator />
             </Step>
           ))}
         </Stepper>
-        {textStep()}
       </CardBody>
     </Card>
   );

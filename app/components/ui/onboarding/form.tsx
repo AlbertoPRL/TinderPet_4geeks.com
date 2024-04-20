@@ -1,6 +1,6 @@
 "use client";
 
-import { FormDataType, FormSchema } from "@/app/lib/schema";
+import { FormDataType, FormSchema } from "@/app/lib/types/schema";
 import { Box, Flex, useSteps } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";

@@ -1,4 +1,4 @@
-import { OtherInfoType, PropsForms } from "@/app/lib/schema";
+import { OtherInfoType, PropsForms } from "@/app/lib/types/schema";
 import {
   Button,
   Card,

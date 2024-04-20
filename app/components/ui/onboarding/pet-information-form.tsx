@@ -1,4 +1,4 @@
-import { PetInfoType, PropsForms } from "@/app/lib/schema";
+import { PetInfoType, PropsForms } from "@/app/lib/types/schema";
 import {
   Button,
   Card,
@@ -104,7 +104,6 @@ export default function PetInformationForm({
               </option>
               <option value="dog">Dog</option>
               <option value="cat">Cat</option>
-              <option value="bird">Bird</option>
             </Select>
             {errors.petType && (
               <ErrorMessage message={errors.petType.message} />

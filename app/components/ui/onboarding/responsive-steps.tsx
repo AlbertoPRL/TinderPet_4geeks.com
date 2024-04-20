@@ -1,5 +1,5 @@
 import { Skeleton, useMediaQuery } from "@chakra-ui/react";
-import { StepsInterface } from "@/app/lib/schema";
+import { StepsInterface } from "@/app/lib/types/schema";
 
 import dynamic from "next/dynamic";
 

@@ -1,4 +1,4 @@
-import { PreferencesType, PropsForms } from "@/app/lib/schema";
+import { PreferencesType, PropsForms } from "@/app/lib/types/schema";
 import {
   Button,
   Card,
@@ -71,7 +71,7 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
         <SimpleGrid height={"full"} columns={6} spacing={4}>
           <FormControl
             as={GridItem}
-            colSpan={[3]}
+            colSpan={[6, 3]}
             isInvalid={errors.preferencePetType ? true : false}
           >
             <FormLabel htmlFor="petType" m={0} size={"sm"}>
@@ -95,44 +95,9 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
               </option>
               <option value="dog">Dog</option>
               <option value="cat">Cat</option>
-              <option value="bird">Bird</option>
             </Select>
             {errors.preferencePetType && (
               <ErrorMessage message={errors.preferencePetType.message} />
-            )}
-          </FormControl>
-
-          <FormControl
-            as={GridItem}
-            colSpan={[3]}
-            isInvalid={errors.preferencePetAge ? true : false}
-          >
-            <FormLabel htmlFor="petAge" size={"sm"} m={0}>
-              Pet Age *
-            </FormLabel>
-            <Select
-              id="petAge"
-              defaultValue=""
-              autoComplete="age"
-              bg="white"
-              borderColor="#d8dee4"
-              mt={1}
-              shadow="sm"
-              size="sm"
-              w="full"
-              rounded="md"
-              {...register("preferencePetAge")}
-            >
-              <option value="" disabled>
-                Enter pet age
-              </option>
-              <option value="baby">Baby</option>
-              <option value="young">Young</option>
-              <option value="adult">Adult</option>
-              <option value="senior">Senior</option>
-            </Select>
-            {errors.preferencePetAge && (
-              <ErrorMessage message={errors.preferencePetAge.message} />
             )}
           </FormControl>
 
