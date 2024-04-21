@@ -1,6 +1,6 @@
 import * as signalR from "@microsoft/signalr";
 
-const URL = process.env.HUB_ADDRESS ?? "https://localhost:7149/chatHub"; //or whatever your backend port is
+const URL = process.env.HUB_ADDRESS ?? "http://129.213.181.186/chatHub"; //or whatever your backend port is
 
 class Connector {
     private connection: signalR.HubConnection;
