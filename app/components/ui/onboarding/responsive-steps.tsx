@@ -1,7 +1,7 @@
-import { Skeleton, useMediaQuery } from "@chakra-ui/react";
-import { StepsInterface } from "@/app/lib/types/schema";
-
 import dynamic from "next/dynamic";
+import { Skeleton, useMediaQuery } from "@chakra-ui/react";
+
+import { StepsInterface } from "@/app/lib/types/schema";
 
 const StepsMobile = dynamic(() => import("./steps-mobile"), {
   loading: () => (

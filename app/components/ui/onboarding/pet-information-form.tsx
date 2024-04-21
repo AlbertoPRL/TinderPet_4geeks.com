@@ -34,19 +34,13 @@ export default function PetInformationForm({
   } = useFormContext<PetInfoType>();
 
   return (
-    <Card
-      h={"full"}
-      w={"100%"}
-      bg="#f6f8fa"
-      variant="outline"
-      borderColor="#d8dee4"
-    >
+    <Card h={"full"} w={"100%"} shadow={"none"}>
       <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Pet Information
         </Heading>
         <Text mt={1} fontSize="sm" color="gray.600">
-          Use a permanent address where you can receive mail.
+          Please enter your pet's name, type, breed, age and gender.
         </Text>
       </CardHeader>
 
@@ -165,46 +159,7 @@ export default function PetInformationForm({
                 />
               )}
             />
-            {/* 
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => field.onChange(date)}
-              dateFormat="MM/dd/yyyy"
-              customInput={
-                <Input
-                  id="petAge"
-                  mt={1}
-                  bg="white"
-                  borderColor="#d8dee4"
-                  shadow="sm"
-                  size="sm"
-                  w="full"
-                  rounded="md"
-                  {...register("petAge")}
-                />
-              }
-            /> */}
-            {/* <Select
-              id="petAge"
-              defaultValue=""
-              autoComplete="age"
-              mt={1}
-              bg="white"
-              borderColor="#d8dee4"
-              shadow="sm"
-              size="sm"
-              w="full"
-              rounded="md"
-              {...register("petAge")}
-            >
-              <option value="" disabled>
-                Enter pet age
-              </option>
-              <option value="baby">Baby</option>
-              <option value="young">Young</option>
-              <option value="adult">Adult</option>
-              <option value="senior">Senior</option>
-            </Select> */}
+
             {errors.petAge && <ErrorMessage message={errors.petAge.message} />}
           </FormControl>
 
@@ -242,7 +197,7 @@ export default function PetInformationForm({
         </SimpleGrid>
       </CardBody>
 
-      <CardFooter justifyContent={"flex-end"}>
+      <CardFooter justifyContent={"flex-end"} pt={0}>
         <Button
           isDisabled={activeStep === 0}
           onClick={prevStep}

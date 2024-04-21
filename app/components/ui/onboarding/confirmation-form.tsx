@@ -8,6 +8,7 @@ import {
   CardHeader,
   Code,
   Divider,
+  Flex,
   HStack,
   Heading,
   Tag,
@@ -21,90 +22,23 @@ export default function ConfirmationForm({ nextStep, prevStep }: PropsForms) {
   const allData = watch();
 
   return (
-    <Card
-      h={"full"}
-      w={"100%"}
-      bg="#f6f8fa"
-      variant="outline"
-      borderColor="#d8dee4"
-    >
+    <Card h={"full"} w={"100%"} shadow={"none"}>
       <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
-          Please review your pet's profile before submitting.
+          Confirmation
         </Heading>
+        <Text mt={1} fontSize="sm" color="gray.600">
+          Please review your pet's profile before submitting.
+        </Text>
       </CardHeader>
-      <CardBody display={"flex"}>
-        <Box>
-          <HStack>
-            <Heading as={"h2"} fontWeight="medium" fontSize="md" lineHeight="6">
-              Pet Name:
-            </Heading>
-            <Text>{allData?.petName || "Pet name is not specified"}</Text>
-          </HStack>
-
-          <HStack>
-            <Heading as={"h2"} fontWeight="medium" fontSize="md" lineHeight="6">
-              Pet Type:
-            </Heading>
-            <Text>{allData?.petType || "Pet type is not specified"}</Text>
-          </HStack>
-
-          <HStack>
-            <Heading as={"h2"} fontWeight="medium" fontSize="md" lineHeight="6">
-              Pet Breed:
-            </Heading>
-            <Text>{allData?.petBreed || "Pet breed is not specified"}</Text>
-          </HStack>
-
-          <HStack>
-            <Heading as={"h2"} fontWeight="medium" fontSize="md" lineHeight="6">
-              Pet Age:
-            </Heading>
-            <Text>
-              {allData.petAge?.toLocaleDateString() ||
-                "Pet age is not specified"}
-            </Text>
-          </HStack>
-
-          <HStack>
-            <Heading as={"h2"} fontWeight="medium" fontSize="md" lineHeight="6">
-              Pet Gender:
-            </Heading>
-            <Text>{allData?.petGender || "Pet gender is not specified"}</Text>
-          </HStack>
-
-          <HStack>
-            <Heading as={"h2"} fontWeight="medium" fontSize="md" lineHeight="6">
-              Pet Traits:
-            </Heading>
-            {allData?.petTraits?.map((trait) => (
-              <Tag key={trait} colorScheme="pink" size="sm">
-                {trait}
-              </Tag>
-            ))}
-          </HStack>
-
-          <HStack>
-            <Heading as={"h2"} fontWeight="medium" fontSize="md" lineHeight="6">
-              Pet Interests:
-            </Heading>
-            {allData?.petInterests?.map((interest) => (
-              <Tag key={interest} colorScheme="pink" size="sm">
-                {interest}
-              </Tag>
-            ))}
-          </HStack>
-        </Box>
-        <Box>
-          <Divider
-            orientation="vertical"
-            borderColor="pink.500"
-            borderWidth={1}
-          />
-        </Box>
+      <CardBody>
+        <Code
+          display={"flex"}
+          children={<pre>{JSON.stringify(allData, null, 2)}</pre>}
+        />
       </CardBody>
 
-      <CardFooter justifyContent={"flex-end"}>
+      <CardFooter justifyContent={"flex-end"} pt={0}>
         <Button onClick={prevStep} size="sm" variant="ghost">
           Prev
         </Button>

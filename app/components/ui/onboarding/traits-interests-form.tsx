@@ -70,19 +70,14 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
   const petInterests = register("petInterests");
 
   return (
-    <Card
-      h={"full"}
-      w={"100%"}
-      bg="#f6f8fa"
-      variant="outline"
-      borderColor="#d8dee4"
-    >
+    <Card h={"full"} w={"100%"} shadow={"none"}>
       <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Personality Traits, Interests & Profile Picture
         </Heading>
         <Text mt={1} fontSize="sm" color="gray.600">
-          Use a permanent address where you can receive mail.
+          Please enter your pet's personality traits, interests and profile
+          picture.
         </Text>
       </CardHeader>
 
@@ -283,7 +278,7 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
         </SimpleGrid>
       </CardBody>
 
-      <CardFooter justifyContent={"flex-end"}>
+      <CardFooter justifyContent={"flex-end"} pt={0}>
         <Button onClick={prevStep} size="sm" variant="ghost">
           Prev
         </Button>

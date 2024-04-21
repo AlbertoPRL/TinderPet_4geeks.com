@@ -39,12 +39,7 @@ export default function StepsMobile({
   };
 
   return (
-    <Card
-      variant="outline"
-      borderColor="#d0d7de"
-      w={{ base: "95%", sm: "80%" }}
-      h={32}
-    >
+    <Card shadow={"none"} w={{ base: "95%", sm: "80%" }} h={32}>
       <CardBody>
         <Stepper index={activeStep} colorScheme="pink" mb={2}>
           {steps?.map((_, index) => (

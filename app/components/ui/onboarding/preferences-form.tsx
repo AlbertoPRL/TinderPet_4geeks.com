@@ -51,19 +51,13 @@ export default function PreferencesForm({ nextStep, prevStep }: PropsForms) {
   const preferencePetTraits = register("preferencePetTraits");
 
   return (
-    <Card
-      h={"full"}
-      w={"100%"}
-      bg="#f6f8fa"
-      variant="outline"
-      borderColor="#d8dee4"
-    >
+    <Card h={"full"} w={"100%"} shadow={"none"}>
       <CardHeader>
         <Heading fontSize="lg" fontWeight="medium" lineHeight="6">
           Preferences
         </Heading>
         <Text mt={1} fontSize="sm" color="gray.600">
-          Use a permanent address where you can receive mail.
+          Please select your pet's preferences.
         </Text>
       </CardHeader>
 
