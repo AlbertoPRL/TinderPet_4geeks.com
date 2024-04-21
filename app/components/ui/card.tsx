@@ -11,7 +11,7 @@ export default function BottomCardForm({
   textLink: string;
 }) {
   return (
-    <Card variant="outline" borderColor="#d0d7de" p={0}>
+    <Card shadow={"none"} p={0}>
       <CardBody>
         <Center>
           <HStack fontSize="sm" spacing="1">

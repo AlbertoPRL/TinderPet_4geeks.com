@@ -59,7 +59,7 @@ export default function SignUpForm() {
               Sign up to TinderPet
             </Heading>
           </VStack>
-          <Card bg="#f6f8fa" variant="outline" borderColor="#d8dee4" w="308px">
+          <Card shadow={"none"} w="308px">
             <CardBody>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <Stack spacing="4">

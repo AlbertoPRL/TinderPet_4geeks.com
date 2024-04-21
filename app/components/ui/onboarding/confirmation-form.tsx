@@ -1,17 +1,12 @@
 import { FormDataType, PropsForms } from "@/app/lib/types/schema";
 import {
-  Box,
   Button,
   Card,
   CardBody,
   CardFooter,
   CardHeader,
   Code,
-  Divider,
-  Flex,
-  HStack,
   Heading,
-  Tag,
   Text,
 } from "@chakra-ui/react";
 import { useFormContext } from "react-hook-form";
