@@ -20,6 +20,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ButtonSubmitForm } from "../buttons";
 import tindog from "@/public/tindog.svg";
 import Image from "next/image";
+import { signIn } from "@/app/lib/actions/auth";
 
 export default function SignInForm() {
   const {
@@ -32,9 +33,7 @@ export default function SignInForm() {
   });
 
   const onSubmit = async (data: TSignInSchema) => {
-    console.log("submitted", data);
-    await new Promise((r) => setTimeout(r, 1000)); //
-    reset();
+    const res = await signIn(data);
   };
 
   return (
