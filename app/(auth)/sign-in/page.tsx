@@ -2,6 +2,7 @@ import { Flex } from "@chakra-ui/react";
 import { Metadata } from "next";
 
 import SignInForm from "@/app/components/ui/sign-in/sign-in-form";
+import { cookies } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Sign In",

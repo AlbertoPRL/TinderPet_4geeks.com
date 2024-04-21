@@ -21,6 +21,7 @@ import { ButtonSubmitForm } from "../buttons";
 import tindog from "@/public/tindog.svg";
 import Image from "next/image";
 import { signIn } from "@/app/lib/actions/auth";
+import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
 
 export default function SignInForm() {
   const {
@@ -34,6 +35,10 @@ export default function SignInForm() {
 
   const onSubmit = async (data: TSignInSchema) => {
     const res = await signIn(data);
+
+    if (res) {
+      reset();
+    }
   };
 
   return (
