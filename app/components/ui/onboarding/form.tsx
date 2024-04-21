@@ -1,6 +1,5 @@
 "use client";
 
-import { FormDataType, FormSchema } from "@/app/lib/types/schema";
 import { Box, Flex, useSteps } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
@@ -9,6 +8,7 @@ import PetInformationForm from "./pet-information-form";
 import TraitsInterestsForm from "./traits-interests-form";
 import PreferencesForm from "./preferences-form";
 import ResponsiveSteps from "./responsive-steps";
+import { FormDataType, FormSchema } from "@/app/lib/types/schema";
 
 const steps = [
   {
