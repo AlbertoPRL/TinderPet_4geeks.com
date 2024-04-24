@@ -1,4 +1,4 @@
-import Form from "../components/ui/onboarding/form";
+import Form from "../components/onboarding/form";
 
 function page() {
   return (
