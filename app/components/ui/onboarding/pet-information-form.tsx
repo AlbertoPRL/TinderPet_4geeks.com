@@ -187,8 +187,8 @@ export default function PetInformationForm({
               <option value="" disabled>
                 Choose gender...
               </option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              <option value="0">Male</option>
+              <option value="1">Female</option>
             </Select>
             {errors.petGender && (
               <ErrorMessage message={errors.petGender.message} />

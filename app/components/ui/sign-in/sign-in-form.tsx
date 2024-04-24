@@ -21,9 +21,13 @@ import { ButtonSubmitForm } from "../buttons";
 import tindog from "@/public/tindog.svg";
 import Image from "next/image";
 import { signIn } from "@/app/lib/actions/auth";
-import { RequestCookie } from "next/dist/compiled/@edge-runtime/cookies";
+import { useUserStore } from "@/app/lib/stores/user";
+import { useRouter } from "next/navigation";
 
 export default function SignInForm() {
+  const route = useRouter();
+  const setUserToken = useUserStore((state) => state.setTokenUser);
+
   const {
     register,
     handleSubmit,
@@ -34,10 +38,12 @@ export default function SignInForm() {
   });
 
   const onSubmit = async (data: TSignInSchema) => {
-    const res = await signIn(data);
+    const token = await signIn(data);
 
-    if (res) {
+    if (token) {
       reset();
+      setUserToken(token);
+      route.push("/");
     }
   };
 

@@ -26,36 +26,40 @@ import {
   AutoCompleteList,
   AutoCompleteTag,
 } from "@choc-ui/chakra-autocomplete";
-import { Key } from "react";
+import { Key, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 import ErrorMessage from "./error-message";
+import { fetchInterests, fetchTraits } from "@/app/lib/actions/onboarding";
 
-const traits = [
-  "playful",
-  "affectionate",
-  "energetic",
-  "calm",
-  "intelligent",
-  "loyal",
-  "friendly",
-  "shy",
-  "stubborn",
-  "independent",
-];
+// const traits = [
+//   "playful",
+//   "affectionate",
+//   "energetic",
+//   "calm",
+//   "intelligent",
+//   "loyal",
+//   "friendly",
+//   "shy",
+//   "stubborn",
+//   "independent",
+// ];
 
-const interests = [
-  "playing fetch",
-  "going for walks",
-  "cuddling",
-  "swimming",
-  "hunting",
-  "chasing toys",
-  "watching birds",
-  "socializing with other animals",
-  "sleeping",
-];
+// const interests = [
+//   "playing fetch",
+//   "going for walks",
+//   "cuddling",
+//   "swimming",
+//   "hunting",
+//   "chasing toys",
+//   "watching birds",
+//   "socializing with other animals",
+//   "sleeping",
+// ];
 
 function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
+  const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+
   const {
     register,
     setValue,
@@ -68,6 +72,29 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
 
   const petTraits = register("petTraits");
   const petInterests = register("petInterests");
+
+  useEffect(() => {
+    fetchTraitsHandler();
+    fetchInterestsHandler();
+  }, []);
+
+  async function fetchTraitsHandler() {
+    const result = await fetchTraits();
+    const traits = result?.map((item: { name: string }) =>
+      item.name.toLowerCase()
+    );
+    // console.log("traits", traits);
+    setSelectedTraits(traits);
+  }
+
+  async function fetchInterestsHandler() {
+    const result = await fetchInterests();
+    const interests = result?.map((item: { name: string }) =>
+      item.name.toLowerCase()
+    );
+    // console.log("interest", interests);
+    setSelectedInterests(interests);
+  }
 
   return (
     <Card h={"full"} w={"100%"} shadow={"none"}>
@@ -130,7 +157,7 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
                 }
               </AutoCompleteInput>
               <AutoCompleteList m={0}>
-                {traits.map((trait, cid) => (
+                {selectedTraits?.map((trait, cid) => (
                   <AutoCompleteItem
                     key={`option-${cid}`}
                     value={trait}
@@ -197,7 +224,7 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
                 }
               </AutoCompleteInput>
               <AutoCompleteList>
-                {interests.map((interest, cid) => (
+                {selectedInterests?.map((interest, cid) => (
                   <AutoCompleteItem
                     key={`option-${cid}`}
                     value={interest}

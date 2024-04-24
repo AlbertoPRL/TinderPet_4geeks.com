@@ -9,6 +9,7 @@ import TraitsInterestsForm from "./traits-interests-form";
 import PreferencesForm from "./preferences-form";
 import ResponsiveSteps from "./responsive-steps";
 import { FormDataType, FormSchema } from "@/app/lib/types/schema";
+import { render } from "react-dom";
 
 const steps = [
   {
@@ -35,13 +36,20 @@ const steps = [
 ];
 
 export default function Form() {
-  const { activeStep, setActiveStep, goToNext, goToPrevious } = useSteps({
+  const {
+    activeStep,
+    setActiveStep,
+    goToNext,
+    goToPrevious,
+    isCompleteStep,
+    getStatus,
+  } = useSteps({
     index: 0,
     count: steps?.length,
   });
 
   //   const isLastStep = activeStep === steps?.length - 1;
-  //   const hasCompletedAllSteps = activeStep === steps?.length;
+  const hasCompletedAllSteps = activeStep === steps?.length;
 
   const methods = useForm<FormDataType>({
     resolver: zodResolver(FormSchema),
@@ -68,6 +76,7 @@ export default function Form() {
     }
     if (activeStep === steps.length - 1) {
       await handleSubmit(onSubmit)();
+      setActiveStep(4);
     }
   };
 

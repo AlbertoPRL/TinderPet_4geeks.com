@@ -1,7 +1,6 @@
 "use server";
 
 import { TSignInSchema, TSignUpSchema } from "../types/schema";
-import { redirect } from "next/navigation";
 
 export async function signUp(data: TSignUpSchema) {
   if (!data) {
@@ -28,9 +27,9 @@ export async function signUp(data: TSignUpSchema) {
   } catch (error) {
     throw new Error("Failed to fetch data");
   }
-
-  console.log(await response.text());
-  redirect("/onboarding");
+  const userId = await response.text();
+  console.log(userId);
+  return userId;
 }
 
 export async function signIn(data: TSignInSchema) {
@@ -57,7 +56,7 @@ export async function signIn(data: TSignInSchema) {
   if (!response.ok) {
     throw new Error("Failed to sign in with password");
   }
+  const token = await response.text();
 
-  console.log(await response.text());
-  return redirect("/");
+  return token;
 }

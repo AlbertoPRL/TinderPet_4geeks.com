@@ -22,8 +22,14 @@ import tindog from "@/public/tindog.svg";
 import Image from "next/image";
 import ErrorMessage from "../onboarding/error-message";
 import { signUp } from "@/app/lib/actions/auth";
+import { useUserStore } from "@/app/lib/stores/user";
+import { useRouter } from "next/navigation";
 
 export default function SignUpForm() {
+  const route = useRouter();
+  const setUser = useUserStore((state) => state.setUser);
+  const setUserId = useUserStore((state) => state.setUserId);
+
   const {
     register,
     handleSubmit,
@@ -34,8 +40,14 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: TSignUpSchema) => {
-    const res = await signUp(data);
-    console.log(res);
+    const userId = await signUp(data);
+
+    if (userId) {
+      reset();
+      setUser(data);
+      setUserId(userId);
+      route.push("/onboarding");
+    }
   };
 
   return (
