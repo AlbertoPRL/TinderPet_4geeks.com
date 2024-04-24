@@ -68,6 +68,7 @@ const containerStyle: React.CSSProperties = {
     //     display: 'none',
     // }
 };
+
 export default function Chat() {
     const { newMessage, events } = Connector();
     const [message, setMessage] = useState("");
@@ -107,6 +108,8 @@ export default function Chat() {
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(event.target.value);
     };
+
+
 
     return (
         <Flex w='full' flexDirection='column'>
