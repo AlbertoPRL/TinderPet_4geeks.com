@@ -2,9 +2,9 @@
 
 import React from "react";
 import { HStack, Flex } from "@chakra-ui/react";
-import Chat from "../ui/Chat/Chat";
-import ChatFiles from "../ui/Chat/ChatFiles";
-import ChatSideBar from "../ui/Chat/ChatSideBar";
+import Chat from "../components/Chat/Chat";
+import ChatFiles from "../components/Chat/ChatFiles";
+import ChatSideBar from "../components/Chat/ChatSideBar";
 import { useUserStore } from "../services/ZStores/userStore";
 import { usePetStore } from "../services/ZStores/petStore";
 

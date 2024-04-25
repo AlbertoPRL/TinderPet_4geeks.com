@@ -13,7 +13,7 @@ export const useUserStore = create<UserState>((set) => ({
     fetchUser: async () => {
         // get token from local storage 
         //**const { token } = get(useTokenStore);**
-        const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1YjhkYWI1Yi03YjhhLTQyY2ItOGY5OC1iZjBlMzVhOWY4MGQiLCJ1bmlxdWVfbmFtZSI6ImFkZWNyb2NrZXQzQGdtYWlsLmNvbSIsIm5iZiI6MTcxMzg5NzgzMSwiZXhwIjoxNzEzOTg0MjMxLCJpYXQiOjE3MTM4OTc4MzF9.tL2yzV_9WZD-SdoZ3HcTBisPO7Q20aC-GphN2yFvstpL81152ROLI8GZj-tdZZadnt8fgmOKUvhd_CtpPclw-g";
+        const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1YjhkYWI1Yi03YjhhLTQyY2ItOGY5OC1iZjBlMzVhOWY4MGQiLCJ1bmlxdWVfbmFtZSI6ImFkZWNyb2NrZXQzQGdtYWlsLmNvbSIsIm5iZiI6MTcxNDAwMjIwMywiZXhwIjoxNzE0MDg4NjAzLCJpYXQiOjE3MTQwMDIyMDN9.R4Yijob-oS4dmF_bunBDJQ6m1ZkvEd0BQ9ObMfhjrSzhIKdOCB0edLmWFngtUTp4S4u9DeoYipF1iYT2WlsOJQ";
 
         const response = await fetch(`http://129.213.181.186/api/User/api/User/GetUserById`, {
             headers: {
