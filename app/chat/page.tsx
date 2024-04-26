@@ -6,17 +6,11 @@ import Chat from "../components/Chat/Chat";
 import ChatFiles from "../components/Chat/ChatFiles";
 import ChatSideBar from "../components/Chat/ChatSideBar";
 import { useUserStore } from "../services/ZStores/userStore";
-import { usePetStore } from "../services/ZStores/petStore";
 
 export default function ChatView() {
     const user = useUserStore((state) => state.user )
-    const pets = usePetStore((state) => state.pets)
-
-    const fetchUser = useUserStore((state) => state.fetchUser);
     
-
     React.useEffect(() => {
-        console.log(pets);
         console.log(user);
     }, []);
 

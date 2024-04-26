@@ -11,23 +11,15 @@ export default function SwipeablePetCard() {
         onSwipedLeft: () => console.log('swiped left'),
         trackMouse: true
     })
-    const myRef = React.useRef();
 
-    const refPassthrough = (el: any) => {
-        // call useSwipeable ref prop with el
-        handlers.ref(el);
-
-
-        // set myRef el so you can access it yourself
-        myRef.current = el;
-    }
     return (
-        <Card maxW='md' {...handlers} ref={refPassthrough}>
+        <Card maxW='md' {...handlers}>
             <CardBody>
                 <Image
                     src='https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
                     alt='Pictures showing the pet'
                     borderRadius='lg'
+                    style={{ pointerEvents: 'none'}}
                 />
                 <Stack mt='6' spacing='3'>
                     <Heading size='md'>Pet.Name</Heading>
