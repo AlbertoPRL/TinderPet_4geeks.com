@@ -1,4 +1,3 @@
-import { useUserStore } from "@/app/lib/stores/user";
 import { FormDataType, PropsForms } from "@/app/lib/types/schema";
 import {
   Button,
@@ -13,8 +12,6 @@ import {
 import { useFormContext } from "react-hook-form";
 
 export default function ConfirmationForm({ nextStep, prevStep }: PropsForms) {
-  const userId = useUserStore((state) => state.userId);
-
   const { watch } = useFormContext<FormDataType>();
   const allData = watch();
 
@@ -27,7 +24,6 @@ export default function ConfirmationForm({ nextStep, prevStep }: PropsForms) {
         <Text mt={1} fontSize="sm" color="gray.600">
           Please review your pet's profile before submitting.
           <br />
-          UserId = {userId}
         </Text>
       </CardHeader>
       <CardBody>

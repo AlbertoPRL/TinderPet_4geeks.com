@@ -27,9 +27,7 @@ export async function signUp(data: TSignUpSchema) {
   } catch (error) {
     throw new Error("Failed to fetch data");
   }
-  const userId = await response.text();
-  console.log(userId);
-  return userId;
+  return response.json();
 }
 
 export async function signIn(data: TSignInSchema) {

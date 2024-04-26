@@ -1,18 +1,16 @@
 import { create } from "zustand";
-import { User } from "@/app/lib/types/Dtos/userDto";
+import { User } from "../types/Dtos/userDto";
 
-type UserState = {
-  user: User | null;
-  fetchUser: () => void;
-};
+interface UserState {
+  user: null | User;
+   fetchUser: () => Promise<void>;
+}
 
-export const useUserStore = create<UserState>((set) => ({
+export const useUserStore = create<UserState>()((set) => ({
   user: null,
+
   fetchUser: async () => {
-    // get token from local storage
-    //**const { token } = get(useTokenStore);**
-    const token =
-      "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1YjhkYWI1Yi03YjhhLTQyY2ItOGY5OC1iZjBlMzVhOWY4MGQiLCJ1bmlxdWVfbmFtZSI6ImFkZWNyb2NrZXQzQGdtYWlsLmNvbSIsIm5iZiI6MTcxMzg5NzgzMSwiZXhwIjoxNzEzOTg0MjMxLCJpYXQiOjE3MTM4OTc4MzF9.tL2yzV_9WZD-SdoZ3HcTBisPO7Q20aC-GphN2yFvstpL81152ROLI8GZj-tdZZadnt8fgmOKUvhd_CtpPclw-g";
+    const token = sessionStorage.getItem("auth");
 
     const response = await fetch(
       `http://129.213.181.186/api/User/api/User/GetUserById`,
@@ -22,10 +20,7 @@ export const useUserStore = create<UserState>((set) => ({
         },
       }
     );
-
     const user = await response.json();
-    console.log(user);
     set({ user });
   },
 }));
-useUserStore.getState().fetchUser();

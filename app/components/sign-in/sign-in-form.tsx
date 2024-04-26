@@ -20,13 +20,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ButtonSubmitForm } from "../buttons";
 import tindog from "@/public/tindog.svg";
 import Image from "next/image";
-import { signIn } from "@/app/lib/actions/auth";
-import { useUserStore } from "@/app/lib/stores/user";
+
 import { useRouter } from "next/navigation";
+
+import { useStore } from "@/app/lib/hooks/zustandHook";
+import useAuthStore from "@/app/lib/stores/authStore";
 
 export default function SignInForm() {
   const route = useRouter();
-  const setUserToken = useUserStore((state) => state.setTokenUser);
+  const store = useStore(useAuthStore, (state) => state);
 
   const {
     register,
@@ -38,13 +40,10 @@ export default function SignInForm() {
   });
 
   const onSubmit = async (data: TSignInSchema) => {
-    const token = await signIn(data);
+    store?.login(data);
 
-    if (token) {
-      reset();
-      setUserToken(token);
-      route.push("/");
-    }
+    reset();
+    route.push("/tinderpet/chat");
   };
 
   return (

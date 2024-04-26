@@ -21,14 +21,13 @@ import BottomCardForm from "../card";
 import tindog from "@/public/tindog.svg";
 import Image from "next/image";
 import ErrorMessage from "../onboarding/error-message";
-import { signUp } from "@/app/lib/actions/auth";
-import { useUserStore } from "@/app/lib/stores/user";
 import { useRouter } from "next/navigation";
+import { useStore } from "@/app/lib/hooks/zustandHook";
+import useAuthStore from "@/app/lib/stores/authStore";
 
 export default function SignUpForm() {
   const route = useRouter();
-  const setUser = useUserStore((state) => state.setUser);
-  const setUserId = useUserStore((state) => state.setUserId);
+  const store = useStore(useAuthStore, (state) => state);
 
   const {
     register,
@@ -40,14 +39,9 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: TSignUpSchema) => {
-    const userId = await signUp(data);
+    store?.register(data);
 
-    if (userId) {
-      reset();
-      setUser(data);
-      setUserId(userId);
-      route.push("/onboarding");
-    }
+    reset();
   };
 
   return (
