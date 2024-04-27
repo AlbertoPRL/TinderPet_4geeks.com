@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from 'react';
-import Message from './Message';
-import MessageInput from './MessageInput';
 import { Flex, Stat, StatLabel, StatNumber, VStack } from '@chakra-ui/react';
 import { MessageItem } from '../../lib/types';
 import Connector from '../../services/signalRConnection'
 import { usePetStore } from '@/app/services/ZStores/petStore';
+import Message from './Message';
+import MessageInput from './MessageInput';
 
 const MockMessages = [
     {
