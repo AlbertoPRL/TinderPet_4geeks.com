@@ -18,14 +18,36 @@ import { Controller, useFormContext } from "react-hook-form";
 import ErrorMessage from "./error-message";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { useState } from "react";
+import { Key, useEffect, useState } from "react";
+import { fetchBreeds } from "@/app/lib/actions/onboarding";
+
+export const petTypes = [
+  {
+    id: "279e7d3b-c3d2-408b-a199-41a6f0d487ca",
+    name: "Dog",
+  },
+  {
+    id: "ded655c5-7fbe-411a-aa3f-0bad35a8d589",
+    name: "Cat",
+  },
+];
 
 export default function PetInformationForm({
   activeStep,
   nextStep,
   prevStep,
 }: PropsForms) {
-  const [startDate, setStartDate] = useState(null);
+  const [selectedBreeds, setSelectedBreeds] = useState<[]>([]);
+
+  useEffect(() => {
+    fetchBreedsHandler();
+  }, []);
+
+  async function fetchBreedsHandler() {
+    const response = await fetchBreeds();
+
+    setSelectedBreeds(response);
+  }
 
   const {
     register,
@@ -96,22 +118,29 @@ export default function PetInformationForm({
               <option value="" disabled>
                 Select a pet type...
               </option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
+              {petTypes?.map((type, index) => (
+                <option key={index} value={type.id}>
+                  {type.name}
+                </option>
+              ))}
             </Select>
             {errors.petType && (
               <ErrorMessage message={errors.petType.message} />
             )}
           </FormControl>
 
-          <FormControl as={GridItem} colSpan={[6, 3]}>
+          <FormControl
+            as={GridItem}
+            colSpan={[6, 3]}
+            isInvalid={errors.petBreed ? true : false}
+          >
             <FormLabel htmlFor="petBreed" size="sm" m={0}>
-              Pet Breed
+              Pet Breed *
             </FormLabel>
-            <Input
-              type="text"
+            <Select
               id="petBreed"
               autoComplete="breed"
+              defaultValue=""
               mt={1}
               bg="white"
               borderColor="#d8dee4"
@@ -120,20 +149,37 @@ export default function PetInformationForm({
               w="full"
               rounded="md"
               {...register("petBreed")}
-            />
+            >
+              <option value="" disabled>
+                Select a pet breed...
+              </option>
+              {selectedBreeds?.map(
+                (
+                  breed: { name: string; id: string },
+                  index: Key | null | undefined
+                ) => (
+                  <option key={index} value={breed.id}>
+                    {breed.name}
+                  </option>
+                )
+              )}
+            </Select>
+            {errors.petBreed && (
+              <ErrorMessage message={errors.petBreed.message} />
+            )}
           </FormControl>
 
           <FormControl
             as={GridItem}
             colSpan={[3]}
-            isInvalid={errors.petAge ? true : false}
+            isInvalid={errors.birthday ? true : false}
           >
             <FormLabel htmlFor="petAge" size="sm" m={0}>
-              Pet Age *
+              Birthday *
             </FormLabel>
 
             <Controller
-              name="petAge"
+              name="birthday"
               control={control}
               render={({ field }) => (
                 // @ts-ignore
@@ -145,7 +191,7 @@ export default function PetInformationForm({
                   className="datepicker"
                   customInput={
                     <Input
-                      id="petAge"
+                      id="birthday"
                       mt={1}
                       bg="white"
                       borderColor="#d8dee4"
@@ -160,7 +206,9 @@ export default function PetInformationForm({
               )}
             />
 
-            {errors.petAge && <ErrorMessage message={errors.petAge.message} />}
+            {errors.birthday && (
+              <ErrorMessage message={errors.birthday.message} />
+            )}
           </FormControl>
 
           <FormControl

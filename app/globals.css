@@ -19,8 +19,10 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+.react-datepicker-wrapper {
+  width: 100%;
+
+  .datepicker {
+    width: 100%;
   }
 }

@@ -9,30 +9,29 @@ import TraitsInterestsForm from "./traits-interests-form";
 import PreferencesForm from "./preferences-form";
 import ResponsiveSteps from "./responsive-steps";
 import { FormDataType, FormSchema } from "@/app/lib/types/schema";
-import { render } from "react-dom";
 
 const steps = [
   {
     title: "Step 1",
     description: "Pet Information",
-    fields: ["petName", "petType", "petBreed", "petAge", "petGender"],
+    fields: ["petName", "petType", "petBreed", "birthday", "petGender"],
   },
   {
     title: "Step 2 ",
     description: "Traits & Interests",
     fields: ["petTraits", "petInterests", "petPicture"],
   },
-  {
-    title: "Step 3",
-    description: "Preferences",
-    fields: [
-      "preferencePetType",
-      "preferencePetAge",
-      "preferencePetGender",
-      "preferencePetTraits",
-    ],
-  },
-  { title: "Step 4", description: "Confirmation" },
+  // {
+  //   title: "Step 3",
+  //   description: "Preferences",
+  //   fields: [
+  //     "preferencePetType",
+  //     "preferencePetAge",
+  //     "preferencePetGender",
+  //     "preferencePetTraits",
+  //   ],
+  // },
+  { title: "Step 3", description: "Confirmation" },
 ];
 
 export default function Form() {
@@ -76,7 +75,7 @@ export default function Form() {
     }
     if (activeStep === steps.length - 1) {
       await handleSubmit(onSubmit)();
-      setActiveStep(4);
+      setActiveStep(3);
     }
   };
 
@@ -117,10 +116,8 @@ export default function Form() {
               {activeStep === 1 && (
                 <TraitsInterestsForm nextStep={next} prevStep={prev} />
               )}
+
               {activeStep === 2 && (
-                <PreferencesForm nextStep={next} prevStep={prev} />
-              )}
-              {activeStep === 3 && (
                 <ConfirmationForm nextStep={next} prevStep={prev} />
               )}
             </form>

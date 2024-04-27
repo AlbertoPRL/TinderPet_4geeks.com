@@ -4,12 +4,12 @@ export const signUpSchema = z.object({
   firstName: z.string().min(3, "First name must be at least 3 characters."),
   lastName: z.string().optional(), // Last name is optional for now
   email: z.string().email(),
-  password: z.string().min(10, "Password must be at least 10 characters"),
+  password: z.string().min(5, "Password must be at least 5 characters"),
 });
 
 export const signInSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(10, "Password must be at least 10 characters"),
+  password: z.string().min(5, "Password must be at least 5 characters"),
 });
 
 export type TSignUpSchema = z.infer<typeof signUpSchema>;
@@ -45,7 +45,7 @@ export interface PropsForms {
 export const petInfoSchema = z.object({
   petName: z.string().min(1, "Pet name is mandatory."),
   petType: z.string().min(1, "Please select the type of your pet"),
-  petAge: z
+  birthday: z
     .date({
       required_error: "Please select a date and time",
       invalid_type_error: "That's not a date!",
@@ -53,8 +53,8 @@ export const petInfoSchema = z.object({
     .refine((date) => {
       const now = new Date();
       return date < now;
-    }, "Please select a date in the future"),
-  petBreed: z.string().optional(),
+    }, "Please select a date in the past"),
+  petBreed: z.string().min(1, "Please select the breed of your pet"),
   petGender: z.string().min(1, "Please specify the gender of your pet"),
 });
 
@@ -68,16 +68,15 @@ export const petOtherInfoSchema = z.object({
 
 export type OtherInfoType = z.infer<typeof petOtherInfoSchema>;
 
-export const preferencesSchema = z.object({
-  preferencePetType: z.string().min(1, "Please select the type"),
-  preferencePetGender: z.string().min(1, "Please specify the gender"),
-  preferencePetTraits: z.string().array().length(3, "3 traits required"),
-});
+// export const preferencesSchema = z.object({
+//   preferencePetType: z.string().min(1, "Please select the type"),
+//   preferencePetGender: z.string().min(1, "Please specify the gender"),
+//   preferencePetTraits: z.string().array().length(3, "3 traits required"),
+// });
 
-export type PreferencesType = z.infer<typeof preferencesSchema>;
+// export type PreferencesType = z.infer<typeof preferencesSchema>;
 
-export const FormSchema = petInfoSchema
-  .extend(petOtherInfoSchema.shape)
-  .extend(preferencesSchema.shape);
+export const FormSchema = petInfoSchema.extend(petOtherInfoSchema.shape);
+// .extend(preferencesSchema.shape);
 
 export type FormDataType = z.infer<typeof FormSchema>;

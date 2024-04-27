@@ -32,6 +32,23 @@ export async function fetchInterests() {
   return data;
 }
 
+export async function fetchBreeds() {
+  let response: Response;
+  try {
+    response = await fetch(
+      "http://129.213.181.186/api/Resource/api/Resource/GetBreeds"
+    );
+    if (!response.ok) {
+      throw new Error("Failed to fetch data");
+    }
+  } catch (error) {
+    throw new Error("Failed to fetch data");
+  }
+  const data = await response.json();
+
+  return data;
+}
+
 // export async function savePetData(userId: string, data: FormDataType) {
 //   if (!data) {
 //     throw new Error("Invalid saving data");
