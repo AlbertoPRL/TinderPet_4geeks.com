@@ -4,22 +4,23 @@ import { TSignInSchema, TSignUpSchema } from "../types/schema";
 import { signIn, signUp } from "../actions/auth";
 
 interface AuthState {
-  token: null | string;
+  isAuthenticated: boolean;
+  token: string | null;
   login: (data: TSignInSchema) => Promise<void>;
   register: (userInfo: TSignUpSchema) => Promise<void>;
   logout: () => Promise<void>;
 }
 
-const useAuthStore = create<AuthState>()(
+export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      user: null,
       isAuthenticated: false,
       token: null,
       login: async (data) => {
         const access_token = await signIn(data);
 
-        sessionStorage.setItem("auth", access_token);
+        set({ isAuthenticated: true, token: access_token });
+        document.cookie = `isAuthenticated=${true}`;
       },
       register: async (userInfo) => {
         const result = await signUp(userInfo);
@@ -27,17 +28,18 @@ const useAuthStore = create<AuthState>()(
         const data: Partial<TSignUpSchema> = userInfo;
 
         const access_token = await signIn(data as TSignInSchema);
-        sessionStorage.setItem("auth", access_token);
+
+        set({ isAuthenticated: true, token: access_token });
+        document.cookie = `isAuthenticated=${true}`;
       },
       logout: async () => {
-        sessionStorage.clear();
+        set({ isAuthenticated: false, token: null });
+        document.cookie = "isAuthenticated=false; Max-Age=0;path=/;";
       },
     }),
     {
       name: "token",
-      storage: createJSONStorage(() => sessionStorage),
+      storage: createJSONStorage(() => localStorage),
     }
   )
 );
-
-export default useAuthStore;

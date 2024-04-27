@@ -3,15 +3,13 @@ import { User } from "../types/Dtos/userDto";
 
 interface UserState {
   user: null | User;
-   fetchUser: () => Promise<void>;
+  fetchUser: (token: string | null | undefined) => Promise<void>;
 }
 
 export const useUserStore = create<UserState>()((set) => ({
   user: null,
 
-  fetchUser: async () => {
-    const token = sessionStorage.getItem("auth");
-
+  fetchUser: async (token) => {
     const response = await fetch(
       `http://129.213.181.186/api/User/api/User/GetUserById`,
       {
@@ -20,6 +18,11 @@ export const useUserStore = create<UserState>()((set) => ({
         },
       }
     );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user");
+    }
+
     const user = await response.json();
     set({ user });
   },

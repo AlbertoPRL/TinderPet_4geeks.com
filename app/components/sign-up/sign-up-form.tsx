@@ -23,7 +23,7 @@ import Image from "next/image";
 import ErrorMessage from "../onboarding/error-message";
 import { useRouter } from "next/navigation";
 import { useStore } from "@/app/lib/hooks/zustandHook";
-import useAuthStore from "@/app/lib/stores/authStore";
+import { useAuthStore } from "@/app/lib/stores/authStore";
 
 export default function SignUpForm() {
   const route = useRouter();

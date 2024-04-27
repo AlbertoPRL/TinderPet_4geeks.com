@@ -24,7 +24,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { useStore } from "@/app/lib/hooks/zustandHook";
-import useAuthStore from "@/app/lib/stores/authStore";
+import { useAuthStore } from "@/app/lib/stores/authStore";
 
 export default function SignInForm() {
   const route = useRouter();
@@ -40,7 +40,7 @@ export default function SignInForm() {
   });
 
   const onSubmit = async (data: TSignInSchema) => {
-    store?.login(data);
+    await store?.login(data);
 
     reset();
     route.push("/tinderpet/chat");
