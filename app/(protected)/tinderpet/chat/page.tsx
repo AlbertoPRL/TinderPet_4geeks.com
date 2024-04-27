@@ -6,10 +6,10 @@ import Chat from "../../../components/chat/Chat";
 import ChatFiles from "../../../components/chat/ChatFiles";
 import ChatSideBar from "../../../components/chat/ChatSideBar";
 
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "../../../lib/stores/authStore";
 import { useUserStore } from "@/app/lib/stores/userStore";
 import { useStore } from "@/app/lib/hooks/zustandHook";
+import { LogoutButton } from "@/app/components/buttons";
 
 export default function ChatView() {
   const authStore = useStore(useAuthStore, (state) => state);
@@ -40,7 +40,7 @@ export default function ChatView() {
         <ChatSideBar />
         {/* <Button onClick={hanfleFn}>Console Log</Button> */}
 
-        <Button onClick={() => authStore?.logout()}>Logout</Button>
+        <LogoutButton />
       </Flex>
       <Flex
         as="main"
