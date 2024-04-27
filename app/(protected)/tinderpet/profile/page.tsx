@@ -1,5 +1,5 @@
 import { Flex, HStack } from "@chakra-ui/react";
-import Matches from "../components/Profile/Matches";
+import Matches from "../../../components/Profile/Matches";
 
 
 export default function ProfileView(){
