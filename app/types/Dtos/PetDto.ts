@@ -1,11 +1,11 @@
-export interface Pet{
-    Name: string | null;
-    Specie: string | null;
-    Breed: string | null;
-    BreedId : string | null,
-    Gender: 0 | 1;
-    Description?: string;
-    Birthday?: Date;
-    PetInterests: string[] | null;
-    Traits: string[] | null;
+export interface Pet {
+    name: string | null;
+    specie: string | null;
+    specieId: string | null;
+    breed: string | null;
+    gender: 0 | 1;
+    description?: string;
+    birthday?: Date;
+    petInterests: string[] | null;
+    traits: string[] | null;
 }

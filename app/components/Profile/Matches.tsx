@@ -5,21 +5,27 @@ import SwipeablePetCard from "./SwipeablePetCard";
 import { useDrag } from "react-use-gesture";
 import { animated, useSpring } from "react-spring";
 import { usePetStore } from "@/app/services/ZStores/petStore";
-import React from "react";
+import React, { useEffect } from "react";
 import { useMatchStore } from "@/app/services/ZStores/matchStore";
 
 
 export default function Matches() {
-    const pets = usePetStore((state) => state.pets)
-    console.log("Pets: retruned")
+    const pets = usePetStore((state) => state.pets);
     const selectedPet = usePetStore((state) => state.userSelectedPet);
     const matchingPets = useMatchStore((state) => state.matchingPets);
-    
+    const fetchMatchingPets = useMatchStore(state => state.fetchMatchingPets);
+
     React.useEffect(() => {
+        console.log(matchingPets);
         console.log(pets);
         console.log(selectedPet);
-        console.log(matchingPets);
-    }, [pets, selectedPet, matchingPets]);
+    }, [matchingPets, pets, selectedPet]);
+
+    React.useEffect(() => {
+        if (selectedPet !== null) {
+          fetchMatchingPets();
+        }
+      }, [selectedPet, fetchMatchingPets]);
 
     const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
 

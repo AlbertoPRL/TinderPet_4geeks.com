@@ -6,6 +6,7 @@ import MessageInput from './MessageInput';
 import { Flex, Stat, StatLabel, StatNumber, VStack } from '@chakra-ui/react';
 import { MessageItem } from '../../lib/types';
 import Connector from '../../services/signalRConnection'
+import { usePetStore } from '@/app/services/ZStores/petStore';
 
 const MockMessages = [
     {
@@ -74,6 +75,8 @@ export default function Chat() {
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState(MockMessages);
     const containerRef = useRef<HTMLDivElement>(null);
+    
+    const pets = usePetStore(state => state.pets);
 
     const handleSendMessage = () => {
         newMessage(message);
