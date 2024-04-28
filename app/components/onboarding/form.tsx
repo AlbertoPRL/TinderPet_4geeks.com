@@ -9,10 +9,15 @@ import TraitsInterestsForm from "./traits-interests-form";
 // import PreferencesForm from "./preferences-form";
 import ResponsiveSteps from "./responsive-steps";
 import { FormDataType, FormSchema } from "@/app/lib/types/schema";
-import { fetchInterests, fetchTraits } from "@/app/lib/actions/onboarding";
+import {
+  fetchInterests,
+  fetchTraits,
+  savePetData,
+} from "@/app/lib/actions/onboarding";
 import { useStore } from "@/app/lib/hooks/zustandHook";
 import { useAuthStore } from "@/app/lib/stores/authStore";
 import { useUserStore } from "@/app/lib/stores/userStore";
+import { PetForm } from "@/app/lib/types/Dtos/PetDto";
 
 const steps = [
   {
@@ -37,18 +42,6 @@ const steps = [
   // },
   { title: "Step 3", description: "Confirmation" },
 ];
-
-interface Pet {
-  userId: string | undefined;
-  name: string;
-  specieId: string;
-  breedId: string;
-  gender: number;
-  description?: string;
-  birthday?: Date;
-  interests: string[];
-  traits: string[];
-}
 
 export default function Form() {
   const { activeStep, setActiveStep, goToNext, goToPrevious } = useSteps({
@@ -96,7 +89,7 @@ export default function Form() {
       });
     }
 
-    const pet: Pet = {
+    const pet: PetForm = {
       userId: user?.userId,
       name: data.petName,
       specieId: data.petType,
@@ -107,8 +100,11 @@ export default function Form() {
       interests: interestsId,
       traits: traitsId,
     };
-
     console.log(pet);
+    const petId = await savePetData(pet, token);
+
+    console.log("pet saved", petId);
+
     reset();
   };
 

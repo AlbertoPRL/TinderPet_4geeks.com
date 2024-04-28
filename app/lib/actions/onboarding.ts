@@ -1,4 +1,6 @@
-import { FormDataType } from "../types/schema";
+"use server";
+
+import { PetForm } from "../types/Dtos/PetDto";
 
 export async function fetchTraits() {
   let response: Response;
@@ -49,7 +51,10 @@ export async function fetchBreeds() {
   return data;
 }
 
-export async function savePetData(data: any) {
+export async function savePetData(
+  data: PetForm,
+  token: string | null | undefined
+) {
   if (!data) {
     throw new Error("Invalid saving data");
   }
@@ -59,10 +64,19 @@ export async function savePetData(data: any) {
     response = await fetch("http://129.213.181.186/api/Pet", {
       method: "POST",
       headers: {
+        Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        ...data,
+        userId: data.userId,
+        name: data.name,
+        specieId: data.specieId,
+        breedId: data.breedId,
+        gender: data.gender,
+        description: data.description,
+        birthday: data.birthday,
+        traits: data.traits,
+        interests: data.interests,
       }),
     });
 
@@ -72,4 +86,6 @@ export async function savePetData(data: any) {
   } catch (error: any) {
     throw new Error("Failed to save data: " + error.message);
   }
+  const petId = await response.json();
+  return petId;
 }
