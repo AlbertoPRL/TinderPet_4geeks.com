@@ -1,5 +1,6 @@
 import { OtherInfoType, PropsForms } from "@/app/lib/types/schema";
 import {
+  Box,
   Button,
   Card,
   CardBody,
@@ -15,6 +16,7 @@ import {
   SimpleGrid,
   Stack,
   Text,
+  Textarea,
   VisuallyHidden,
   chakra,
 } from "@chakra-ui/react";
@@ -27,7 +29,7 @@ import {
   AutoCompleteTag,
 } from "@choc-ui/chakra-autocomplete";
 import { Key, useEffect, useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import ErrorMessage from "./error-message";
 import { fetchInterests, fetchTraits } from "@/app/lib/actions/onboarding";
 
@@ -57,12 +59,13 @@ import { fetchInterests, fetchTraits } from "@/app/lib/actions/onboarding";
 // ];
 
 function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
-  const [selectedTraits, setSelectedTraits] = useState<string[]>([]);
-  const [selectedInterests, setSelectedInterests] = useState<string[]>([]);
+  const [selectedTraits, setSelectedTraits] = useState<never[]>([]);
+  const [selectedInterests, setSelectedInterests] = useState<never[]>([]);
 
   const {
     register,
     setValue,
+    control,
     watch,
     formState: { errors },
   } = useFormContext<OtherInfoType>();
@@ -80,11 +83,8 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
 
   async function fetchTraitsHandler() {
     const result = await fetchTraits();
-    const traits = result?.map((item: { name: string }) =>
-      item.name.toLowerCase()
-    );
-    // console.log("traits", traits);
-    setSelectedTraits(traits);
+
+    setSelectedTraits(result);
   }
 
   async function fetchInterestsHandler() {
@@ -151,21 +151,29 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
                         key={tid}
                         label={tag.label}
                         onRemove={tag.onRemove}
+                        colorScheme="pink"
                       />
                     )
                   )
                 }
               </AutoCompleteInput>
               <AutoCompleteList m={0}>
-                {selectedTraits?.map((trait, cid) => (
-                  <AutoCompleteItem
-                    key={`option-${cid}`}
-                    value={trait}
-                    fontSize="x-small"
-                  >
-                    {trait}
-                  </AutoCompleteItem>
-                ))}
+                {selectedTraits?.map(
+                  (trait: { name: string; id: string }, cid) => (
+                    <AutoCompleteItem
+                      key={`option-${cid}`}
+                      value={trait.name}
+                      fontSize="x-small"
+                      _hover={{
+                        bg: "gray.100",
+                      }}
+                      sx={{ color: "pink.500" }}
+                    >
+                      {trait.name}
+                    </AutoCompleteItem>
+                  )
+                )}
+
                 <AutoCompleteCreatable fontSize="x-small" />
               </AutoCompleteList>
             </AutoComplete>
@@ -244,6 +252,47 @@ function TraitsInterestsForm({ nextStep, prevStep }: PropsForms) {
             {errors.petInterests && (
               <ErrorMessage message={errors.petInterests.message} />
             )}
+          </FormControl>
+
+          <FormControl as={GridItem} colSpan={[6]}>
+            <FormLabel htmlFor="petName" m={0} size="sm">
+              Description of your pet *
+            </FormLabel>
+            <Controller
+              control={control}
+              name="description"
+              render={({ field: { ref, ...rest } }) => (
+                <Textarea
+                  isInvalid={errors.description ? true : false}
+                  id="description"
+                  mt={1}
+                  bg="white"
+                  borderColor="#d8dee4"
+                  shadow="sm"
+                  size="sm"
+                  rounded="md"
+                  rows={3}
+                  {...rest}
+                />
+              )}
+            />
+            <Box display="flex" justifyContent="space-between">
+              {errors.description ? (
+                <ErrorMessage message={errors.description.message} />
+              ) : (
+                <FormHelperText fontSize={"x-small"}>
+                  Please provide a description of your pet
+                </FormHelperText>
+              )}
+              <Text
+                fontSize="x-small"
+                color="gray.500"
+                textAlign={"end"}
+                mt={2}
+              >
+                Characters left: {50 - watch("description")?.length || 50}
+              </Text>
+            </Box>
           </FormControl>
 
           <FormControl as={GridItem} colSpan={[6]}>

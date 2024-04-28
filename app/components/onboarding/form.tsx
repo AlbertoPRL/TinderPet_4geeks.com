@@ -6,9 +6,10 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import ConfirmationForm from "./confirmation-form";
 import PetInformationForm from "./pet-information-form";
 import TraitsInterestsForm from "./traits-interests-form";
-import PreferencesForm from "./preferences-form";
+// import PreferencesForm from "./preferences-form";
 import ResponsiveSteps from "./responsive-steps";
 import { FormDataType, FormSchema } from "@/app/lib/types/schema";
+import { fetchInterests, fetchTraits } from "@/app/lib/actions/onboarding";
 
 const steps = [
   {
@@ -19,7 +20,7 @@ const steps = [
   {
     title: "Step 2 ",
     description: "Traits & Interests",
-    fields: ["petTraits", "petInterests", "petPicture"],
+    fields: ["petTraits", "petInterests", "description", "petPicture"],
   },
   // {
   //   title: "Step 3",
@@ -35,14 +36,7 @@ const steps = [
 ];
 
 export default function Form() {
-  const {
-    activeStep,
-    setActiveStep,
-    goToNext,
-    goToPrevious,
-    isCompleteStep,
-    getStatus,
-  } = useSteps({
+  const { activeStep, setActiveStep, goToNext, goToPrevious } = useSteps({
     index: 0,
     count: steps?.length,
   });
@@ -56,9 +50,33 @@ export default function Form() {
 
   const { handleSubmit, reset, trigger } = methods;
 
-  const onSubmit: SubmitHandler<FormDataType> = (data) => {
-    console.log(data);
+  const onSubmit: SubmitHandler<FormDataType> = async (data) => {
+    const traits = data.petTraits;
+    const interests = data.petInterests;
+    const getTraits = await fetchTraits();
+    const getInterests = await fetchInterests();
 
+    let traitsId: string[] = [];
+    let interestsId: string[] = [];
+    if (traits) {
+      getTraits.map((item: { name: string; id: string }) => {
+        if (traits.includes(item.name)) {
+          return traitsId.push(item.id);
+        }
+      });
+    }
+
+    if (interests) {
+      getInterests.map((item: { name: string; id: string }) => {
+        if (interests.includes(item.name)) {
+          return interestsId.push(item.id);
+        }
+      });
+    }
+
+    console.log(data);
+    console.log(interestsId);
+    console.log(traitsId);
     reset();
   };
 

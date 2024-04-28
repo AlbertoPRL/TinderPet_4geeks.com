@@ -63,6 +63,12 @@ export type PetInfoType = z.infer<typeof petInfoSchema>;
 export const petOtherInfoSchema = z.object({
   petTraits: z.string().array().length(3, "3 traits required"),
   petInterests: z.string().array().length(3, " 3 interests required"),
+  description: z
+    .string({
+      required_error: "Please describe your pet",
+      invalid_type_error: "That's not a string!",
+    })
+    .max(50, "Description should be less than 50 characters"),
   // petPicture: z.string().min(1, "Please upload a photo of your pet"), traits required"),
 });
 
