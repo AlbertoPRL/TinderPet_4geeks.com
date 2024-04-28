@@ -21,13 +21,13 @@ export default function PetSelector() {
         if (token) {
             petState.fetchPets(token); // fetch pets using token
         }
-    }, [token,petState.fetchPets]);
+    }, [token]);
 
     useEffect(() => {
         if(petState.pets?.length === 1 && petState.userSelectedPet !== petState.pets[0]){
             handleSelectPet(petState.pets[0]);
         }
-    }, [petState.pets, handleSelectPet])
+    }, [petState.pets])
 
     return (
         <div>
