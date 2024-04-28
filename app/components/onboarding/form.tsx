@@ -1,13 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { Box, Flex, useSteps } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import ConfirmationForm from "./confirmation-form";
+
+import ResponsiveSteps from "./responsive-steps";
 import PetInformationForm from "./pet-information-form";
 import TraitsInterestsForm from "./traits-interests-form";
 // import PreferencesForm from "./preferences-form";
-import ResponsiveSteps from "./responsive-steps";
+import ConfirmationForm from "./confirmation-form";
+import CompletedForm from "./completed-form";
+
 import { FormDataType, FormSchema } from "@/app/lib/types/schema";
 import {
   fetchInterests,
@@ -18,6 +22,7 @@ import { useStore } from "@/app/lib/hooks/zustandHook";
 import { useAuthStore } from "@/app/lib/stores/authStore";
 import { useUserStore } from "@/app/lib/stores/userStore";
 import { PetForm } from "@/app/lib/types/Dtos/PetDto";
+import { useRouter } from "next/navigation";
 
 const steps = [
   {
@@ -44,10 +49,13 @@ const steps = [
 ];
 
 export default function Form() {
+  const router = useRouter();
   const { activeStep, setActiveStep, goToNext, goToPrevious } = useSteps({
     index: 0,
     count: steps?.length,
   });
+
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
 
   const authStore = useStore(useAuthStore, (state) => state);
   const store = useStore(useUserStore, (state) => state);
@@ -105,6 +113,10 @@ export default function Form() {
 
     console.log("pet saved", petId);
 
+    if (petId) {
+      setIsCompleted(true);
+    }
+
     reset();
   };
 
@@ -129,6 +141,14 @@ export default function Form() {
     if (activeStep > 0) {
       goToPrevious();
     }
+  };
+
+  const handleRouterToMain = () => {
+    setTimeout(() => {
+      router.push("/tinderpet/chat");
+    }, 5000);
+
+    return <CompletedForm />;
   };
 
   return (
@@ -166,6 +186,8 @@ export default function Form() {
               {activeStep === 2 && (
                 <ConfirmationForm nextStep={next} prevStep={prev} />
               )}
+
+              {isCompleted && handleRouterToMain()}
             </form>
           </FormProvider>
         </Box>
