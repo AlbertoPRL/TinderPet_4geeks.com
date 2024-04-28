@@ -10,6 +10,9 @@ import TraitsInterestsForm from "./traits-interests-form";
 import ResponsiveSteps from "./responsive-steps";
 import { FormDataType, FormSchema } from "@/app/lib/types/schema";
 import { fetchInterests, fetchTraits } from "@/app/lib/actions/onboarding";
+import { useStore } from "@/app/lib/hooks/zustandHook";
+import { useAuthStore } from "@/app/lib/stores/authStore";
+import { useUserStore } from "@/app/lib/stores/userStore";
 
 const steps = [
   {
@@ -35,14 +38,29 @@ const steps = [
   { title: "Step 3", description: "Confirmation" },
 ];
 
+interface Pet {
+  userId: string | undefined;
+  name: string;
+  specieId: string;
+  breedId: string;
+  gender: number;
+  description?: string;
+  birthday?: Date;
+  interests: string[];
+  traits: string[];
+}
+
 export default function Form() {
   const { activeStep, setActiveStep, goToNext, goToPrevious } = useSteps({
     index: 0,
     count: steps?.length,
   });
 
+  const authStore = useStore(useAuthStore, (state) => state);
+  const store = useStore(useUserStore, (state) => state);
+
   //   const isLastStep = activeStep === steps?.length - 1;
-  const hasCompletedAllSteps = activeStep === steps?.length;
+  // const hasCompletedAllSteps = activeStep === steps?.length;
 
   const methods = useForm<FormDataType>({
     resolver: zodResolver(FormSchema),
@@ -51,10 +69,14 @@ export default function Form() {
   const { handleSubmit, reset, trigger } = methods;
 
   const onSubmit: SubmitHandler<FormDataType> = async (data) => {
-    const traits = data.petTraits;
-    const interests = data.petInterests;
+    const token = authStore?.token;
+    const user = await store?.fetchUser(token);
+
     const getTraits = await fetchTraits();
     const getInterests = await fetchInterests();
+
+    const traits = data.petTraits;
+    const interests = data.petInterests;
 
     let traitsId: string[] = [];
     let interestsId: string[] = [];
@@ -74,9 +96,19 @@ export default function Form() {
       });
     }
 
-    console.log(data);
-    console.log(interestsId);
-    console.log(traitsId);
+    const pet: Pet = {
+      userId: user?.userId,
+      name: data.petName,
+      specieId: data.petType,
+      breedId: data.petBreed,
+      gender: Number(data.petGender),
+      description: data.description,
+      birthday: data.birthday,
+      interests: interestsId,
+      traits: traitsId,
+    };
+
+    console.log(pet);
     reset();
   };
 

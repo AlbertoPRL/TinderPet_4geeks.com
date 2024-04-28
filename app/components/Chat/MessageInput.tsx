@@ -1,5 +1,5 @@
 import { Input, Button, HStack } from "@chakra-ui/react";
-import { MessageInputProps } from "@/app/lib/types";
+import { MessageInputProps } from "@/app/lib/types/types";
 
 export default function MessageInput({ message, onInputChange, onSendMessage }: MessageInputProps) {
 

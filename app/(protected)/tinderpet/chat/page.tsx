@@ -15,14 +15,13 @@ export default function ChatView() {
   const authStore = useStore(useAuthStore, (state) => state);
   const store = useStore(useUserStore, (state) => state);
 
-  // const hanfleFn = async () => {
-  //   const token = authStore?.token;
+  const hanfleFn = async () => {
+    const token = authStore?.token;
 
-  //   const fn = await store?.fetchUser(token);
-  //   const user = store?.user;
+    const user = await store?.fetchUser(token);
 
-  //   console.log(user);
-  // };
+    console.log(user);
+  };
 
   return (
     <HStack h="100vh" spacing={0}>
@@ -38,7 +37,7 @@ export default function ChatView() {
         pt={8}
       >
         <ChatSideBar />
-        {/* <Button onClick={hanfleFn}>Console Log</Button> */}
+        <Button onClick={hanfleFn}>Console Log</Button>
 
         <LogoutButton />
       </Flex>

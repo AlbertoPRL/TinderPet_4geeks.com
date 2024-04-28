@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { TSignInSchema, TSignUpSchema } from "../types/schema";
 import { signIn, signUp } from "../actions/auth";
+import { User } from "../types/Dtos/userDto";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -20,6 +21,7 @@ export const useAuthStore = create<AuthState>()(
         const access_token = await signIn(data);
 
         set({ isAuthenticated: true, token: access_token });
+
         document.cookie = `isAuthenticated=${true}`;
       },
       register: async (userInfo) => {
