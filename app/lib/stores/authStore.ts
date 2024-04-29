@@ -33,7 +33,7 @@ export const useAuthStore = create<AuthState>()(
         const pets = await usePetStore.getState().fetchPets(access_token);
         if (pets.length === 0) {
           document.cookie = "pets=false";
-        }else{
+        } else {
           document.cookie = "pets=true";
         }
 
@@ -48,6 +48,8 @@ export const useAuthStore = create<AuthState>()(
 
         set({ isAuthenticated: true, token: access_token });
         document.cookie = `isAuthenticated=${true}`;
+        document.cookie = `userId=${result.userId}`;
+        document.cookie = `pets=false`;
       },
       logout: async () => {
         set({ isAuthenticated: false, token: null });
