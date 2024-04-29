@@ -1,12 +1,13 @@
 'use client'
 
-import { TabPanels, TabPanel } from "@chakra-ui/react";
+import { TabPanels, TabPanel, Flex } from "@chakra-ui/react";
+import PreferencesTab from "./PreferencesTab";
 
 const ProfileTabs: React.FC = () => {
   return (
-    <TabPanels>
-      <TabPanel>
-        <p>one!</p>
+    <TabPanels display='flex' w='100%'>
+      <TabPanel w='100%'>
+        <PreferencesTab></PreferencesTab>
       </TabPanel>
       <TabPanel>
         <p>two!</p>

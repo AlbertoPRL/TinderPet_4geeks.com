@@ -9,7 +9,6 @@ import { useDrag } from "react-use-gesture";
 import { animated, useSpring } from "react-spring";
 import { useAuthStore } from "@/app/lib/stores/authStore";
 import { useStore } from "zustand";
-import Profile from "./Profile";
 
 
 

@@ -18,23 +18,23 @@ export default function Profile() {
     return (
         <VStack flexGrow={1}>
             <HStack justifyContent="space-between" w='100%'>
-                <Flex justifyContent='center' alignItems='center'>
+                <Flex justifyContent='center' alignItems='center' gap={1} px='0.5rem'>
                     <Avatar name={petState?.userSelectedPet?.name || 'No pet selected'} src='https://bit.ly/dan-abramov' />
                     <Text isTruncated>{petState?.userSelectedPet?.name || 'No pet'}</Text>
                 </Flex>
                 <Flex>
                     <Tabs variant='unstyled' index={tabIndex} onChange={handleTabsChange}>
                         <TabList>
-                            <Tab><CiSettings /></Tab>
-                            <Tab><CiSettings /></Tab>
-                            <Tab><CiSettings /></Tab>
+                            {/* <Tab px={1}><CiSettings /></Tab>
+                            <Tab px={1}><CiSettings /></Tab> */}
+                            <Tab><CiSettings size='1.5rem'/></Tab>
                         </TabList>
                     </Tabs>
                 </Flex>
             </HStack>
 
-            <Tabs variant='unstyled' index={tabIndex} onChange={handleTabsChange}>
-                <ProfileTabs />
+            <Tabs variant='unstyled' display='flex' w='100%' index={tabIndex} onChange={handleTabsChange}>
+                <ProfileTabs/>
             </Tabs>
         </VStack>
     );
