@@ -52,7 +52,7 @@ export const useAuthStore = create<AuthState>()(
       logout: async () => {
         set({ isAuthenticated: false, token: null });
         document.cookie = "isAuthenticated=false; Max-Age=0;path=/;";
-        document.cookie = "pets=''; Max-Age=0;path=/;";
+        document.cookie = "pets='false'; Max-Age=0;path=/;";
         document.cookie = "userId=''; Max-Age=0;path=/;";
       },
     }),

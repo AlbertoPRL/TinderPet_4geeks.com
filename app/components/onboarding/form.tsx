@@ -145,6 +145,9 @@ export default function Form() {
 
   const handleRouterToMain = () => {
     setTimeout(() => {
+      document.cookie = "isAuthenticated=true";
+      document.cookie = "pets=true";
+      document.cookie = "userId=" + store?.user?.userId;
       router.push("/tinderpet/chat");
     }, 5000);
 
