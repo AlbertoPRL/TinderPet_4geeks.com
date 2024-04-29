@@ -2,29 +2,59 @@
 import { Pet } from "@/app/lib/types/Dtos/PetDto";
 import { create } from "zustand"
 import { usePetStore } from "./petStore";
+
 type MatchState = {
-    matchingPets : Pet[] | null,
-    fetchMatchingPets: () => void;
+    matchingPets: Pet[] | null,
+    excludedBreeds: string[] | null,
+    excludedInterest: string[] | null,
+    excludedTraits: string[] | null
+
+    fetchMatchingPets: (token: string) => void;
+    fetchMatchingPetsWithFilters: (token:string, excludedBreeds: string[], excludedInterests: string[], excludedTraits: string[]) => void;
 }
+
 export const useMatchStore = create<MatchState>((set) => ({
-    matchingPets : null,
-    fetchMatchingPets: async () => {
+    matchingPets: null,
+    excludedBreeds: null,
+    excludedInterest: null,
+    excludedTraits: null,
+
+    fetchMatchingPets: async (token: string) => {
         const userSelectedPet = usePetStore.getState().userSelectedPet;
-        if(userSelectedPet === null){
-            console.error('No pet selected');
+        if (userSelectedPet === null) {
+            console.log('No pet selected');
             return;
         }
-
         const specieId = userSelectedPet.specieId;
-        console.log(specieId);
-        const token = "eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1YjhkYWI1Yi03YjhhLTQyY2ItOGY5OC1iZjBlMzVhOWY4MGQiLCJ1bmlxdWVfbmFtZSI6ImFkZWNyb2NrZXQzQGdtYWlsLmNvbSIsIm5iZiI6MTcxNDE1OTg3MCwiZXhwIjoxNzE0MjQ2MjcwLCJpYXQiOjE3MTQxNTk4NzB9.fJ0loWhag1Qjzwz6-btKaK4kzmd_hRJm1rAyusiUG4xqFn_I_e-tDp1kPgL2eh0KkxNYpManRJBjrXpqaPTiJQ";
         const response = await fetch(`http://129.213.181.186/api/Pet/GetAllNonUserPetsBySpecieId/${specieId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
             },
         });
         const matchingPets = await response.json();
-        console.log(matchingPets);
         set({ matchingPets });
     },
+    fetchMatchingPetsWithFilters: async (token: string, excludedBreeds: string[], excludedInterests: string[], excludedTraits: string[]) => {
+        const userSelectedPet = usePetStore.getState().userSelectedPet;
+        if (userSelectedPet === null) {
+            console.log('No pet selected');
+            return;
+        }
+    
+        const specieId = userSelectedPet.specieId;
+        const params = new URLSearchParams();
+        excludedBreeds.forEach(breed => params.append('ExcludedBreeds', breed));
+        excludedTraits.forEach(trait => params.append('ExcludedTraits', trait));
+        excludedInterests.forEach(interest => params.append('ExcludedInterests', interest));
+    
+        const response = await fetch(`http://localhost:5126/api/Pet/GetAllNonUserPetsBySpecieWithFiltersQuery?specieId=${specieId}&${params.toString()}`, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            },
+        });
+    
+        // You can now use the response. For example, convert it to JSON:
+        const data = await response.json();
+        console.log(data);
+    }
 }));

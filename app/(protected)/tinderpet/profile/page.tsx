@@ -1,5 +1,6 @@
 import { Flex, HStack } from "@chakra-ui/react";
 import Matches from "../../../components/Profile/Matches";
+import Profile from "@/app/components/Profile/Profile";
 
 
 export default function ProfileView(){
@@ -17,6 +18,7 @@ export default function ProfileView(){
                 borderRightWidth={1}
                 pt={8}
             >
+                <Profile></Profile>
             </Flex>
             <Flex
                 as='main'

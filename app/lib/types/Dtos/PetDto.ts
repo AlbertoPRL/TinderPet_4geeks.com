@@ -8,4 +8,5 @@ export interface Pet {
     birthday?: Date;
     petInterests: string[] | null;
     traits: string[] | null;
+    id : string | null;
 }

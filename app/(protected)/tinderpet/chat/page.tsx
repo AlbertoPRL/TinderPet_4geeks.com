@@ -6,7 +6,6 @@ import Chat from "../../../components/chat/Chat";
 import ChatFiles from "../../../components/chat/ChatFiles";
 import ChatSideBar from "../../../components/chat/ChatSideBar";
 
-import { useRouter } from "next/navigation";
 import { useAuthStore } from "../../../lib/stores/authStore";
 import { useUserStore } from "@/app/lib/stores/userStore";
 import { useStore } from "@/app/lib/hooks/zustandHook";
@@ -14,15 +13,6 @@ import { useStore } from "@/app/lib/hooks/zustandHook";
 export default function ChatView() {
   const authStore = useStore(useAuthStore, (state) => state);
   const store = useStore(useUserStore, (state) => state);
-
-  // const hanfleFn = async () => {
-  //   const token = authStore?.token;
-
-  //   const fn = await store?.fetchUser(token);
-  //   const user = store?.user;
-
-  //   console.log(user);
-  // };
 
   return (
     <HStack h="100vh" spacing={0}>
@@ -38,8 +28,6 @@ export default function ChatView() {
         pt={8}
       >
         <ChatSideBar />
-        {/* <Button onClick={hanfleFn}>Console Log</Button> */}
-
         <Button onClick={() => authStore?.logout()}>Logout</Button>
       </Flex>
       <Flex
