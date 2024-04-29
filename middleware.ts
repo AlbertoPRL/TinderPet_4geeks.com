@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
   const userId = cookies().get("userId");
 
   if (isAuthenticated) {
-    if (!pets) {
+    if (!pets || pets.value === "false") {
       console.log("redirecting to onboarding");
       return NextResponse.redirect(new URL("/onboarding", request.url));
     }
