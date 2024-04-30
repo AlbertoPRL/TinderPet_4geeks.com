@@ -41,7 +41,7 @@ export default function StepsMobile({
   return (
     <Card shadow={"none"} w={{ base: "95%", sm: "80%" }} h={32}>
       <CardBody>
-        <Stepper index={activeStep} colorScheme="pink" mb={2}>
+        <Stepper index={activeStep} colorScheme="pink" mb={2} size={"lg"}>
           {steps?.map((_, index) => (
             <Step as="button" key={index} onClick={() => setActiveStep(index)}>
               <StepIndicator>

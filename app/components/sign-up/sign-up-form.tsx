@@ -39,8 +39,9 @@ export default function SignUpForm() {
   });
 
   const onSubmit = async (data: TSignUpSchema) => {
-    store?.register(data);
+    await store?.register(data);
 
+    route.push("/onboarding");
     reset();
   };
 

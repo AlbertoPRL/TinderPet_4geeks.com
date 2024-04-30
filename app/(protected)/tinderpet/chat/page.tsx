@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useEffect } from "react";
 import { HStack, Flex, Button } from "@chakra-ui/react";
+
 import Chat from "../../../components/chat/Chat";
 import ChatFiles from "../../../components/chat/ChatFiles";
 import ChatSideBar from "../../../components/chat/ChatSideBar";
@@ -9,10 +9,26 @@ import ChatSideBar from "../../../components/chat/ChatSideBar";
 import { useAuthStore } from "../../../lib/stores/authStore";
 import { useUserStore } from "@/app/lib/stores/userStore";
 import { useStore } from "@/app/lib/hooks/zustandHook";
+import { LogoutButton } from "@/app/components/buttons";
+import { usePetStore } from "@/app/lib/stores/petStore";
 
 export default function ChatView() {
   const authStore = useStore(useAuthStore, (state) => state);
   const store = useStore(useUserStore, (state) => state);
+  const petStore = useStore(usePetStore, (state) => state);
+
+  const hanfleFn = async () => {
+    const token = authStore?.token;
+
+
+    const user = await store?.fetchUser(token);
+
+    const pet = await petStore?.fetchPets(token);
+
+    console.log("user", user);
+    console.log("pet", pet);
+  };
+
 
   return (
     <HStack h="100vh" spacing={0}>
@@ -28,7 +44,11 @@ export default function ChatView() {
         pt={8}
       >
         <ChatSideBar />
-        <Button onClick={() => authStore?.logout()}>Logout</Button>
+
+        <Button onClick={hanfleFn}>Console Log</Button>
+
+        <LogoutButton />
+
       </Flex>
       <Flex
         as="main"

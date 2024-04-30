@@ -31,6 +31,7 @@ export default function Steps({
           index={activeStep}
           colorScheme="pink"
           orientation="vertical"
+          size={"lg"}
         >
           {steps?.map((step, index) => (
             <Step as="button" key={index} onClick={() => setActiveStep(index)}>
