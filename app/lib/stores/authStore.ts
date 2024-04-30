@@ -2,9 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { TSignInSchema, TSignUpSchema } from "../types/schema";
 import { signIn, signUp } from "../actions/auth";
-import { User } from "../types/Dtos/userDto";
 import { usePetStore } from "./petStore";
-import { redirect } from "next/navigation";
 import { useUserStore } from "./userStore";
 
 interface AuthState {

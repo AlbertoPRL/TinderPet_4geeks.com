@@ -1,5 +1,5 @@
 export interface Pet {
-
+  id: string | null;
   name: string | null;
   specie: string | null;
   specieId: string | null;
