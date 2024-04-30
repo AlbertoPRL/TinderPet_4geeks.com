@@ -5,21 +5,23 @@ export async function middleware(request: NextRequest) {
   const isAuthenticated = cookies().get("isAuthenticated");
   const pets = cookies().get("pets");
   const userId = cookies().get("userId");
-  //hola
 
   if (isAuthenticated) {
-    if (!pets || pets.value === "false") {
+    if ((!pets || pets.value === "false") && userId) {
       console.log("redirecting to onboarding");
       return NextResponse.redirect(new URL("/onboarding", request.url));
     }
 
     if (!userId) {
-      console.log("redirecting to sign-up");
+      console.log("redirecting to sign up");
       return NextResponse.redirect(new URL("/sign-up", request.url));
     }
+
+    return NextResponse.next();
   }
 
   if (!isAuthenticated && !userId) {
+    console.log("redirecting to sign in");
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 

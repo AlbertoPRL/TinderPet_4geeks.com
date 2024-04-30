@@ -1,46 +1,38 @@
 "use client";
 
+import { useEffect } from "react";
 import { VStack } from "@chakra-ui/react";
-import SwipeablePetCard from "./SwipeablePetCard";
-import { useMatchStore } from "@/app/lib/stores/matchStore";
-import { usePetStore } from "@/app/lib/stores/petStore";
-import React from "react";
 import { useDrag } from "react-use-gesture";
-
 import { useSpring, animated } from "react-spring";
 
-import { animated, useSpring } from "react-spring";
+import SwipeablePetCard from "./SwipeablePetCard";
+import { useStore } from "@/app/lib/hooks/zustandHook";
 import { useAuthStore } from "@/app/lib/stores/authStore";
-import { useStore } from "zustand";
-
-
-import React, { useEffect } from "react";
 import { useMatchStore } from "@/app/lib/stores/matchStore";
 import { usePetStore } from "@/app/lib/stores/petStore";
 
 export default function Matches() {
+  const tokenStore = useStore(useAuthStore, (state) => state);
+  const selectedPet = useStore(usePetStore, (state) => state.userSelectedPet);
+  const matchingStore = useStore(useMatchStore, (state) => state);
 
-    const token = useStore( useAuthStore, (state) => state.token)
-    const selectedPet = usePetStore((state) => state.userSelectedPet);
-    const fetchMatchingPets = useStore( useMatchStore, (state) => state.fetchMatchingPets);
-  
-    React.useEffect(() => {
-        if (selectedPet && token !== null)  {
-          fetchMatchingPets(token);
-        }
-      }, [selectedPet, fetchMatchingPets, token]);
+  useEffect(() => {
+    if (selectedPet && tokenStore?.token! !== null) {
+      matchingStore?.fetchMatchingPets(tokenStore?.token!);
+    }
+  }, [selectedPet, matchingStore, tokenStore]);
 
-    const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
+  const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
 
-    const bind = useDrag(({ down, movement: [mx, my] }) => {
-        api.start({ x: down ? mx : 0, y: down ? my : 0 });
-    });
+  const bind = useDrag(({ down, movement: [mx, my] }) => {
+    api.start({ x: down ? mx : 0, y: down ? my : 0 });
+  });
 
-    return (
-        <VStack>
-            <animated.div {...bind()} style={{ x, y, userSelect: 'none' }}>
-                <SwipeablePetCard></SwipeablePetCard>
-            </animated.div>
-        </VStack>
-    );
+  return (
+    <VStack>
+      <animated.div {...bind()} style={{ x, y, userSelect: "none" }}>
+        <SwipeablePetCard></SwipeablePetCard>
+      </animated.div>
+    </VStack>
+  );
 }
