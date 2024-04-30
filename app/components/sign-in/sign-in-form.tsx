@@ -43,7 +43,7 @@ export default function SignInForm() {
     await store?.login(data);
 
     reset();
-    route.push("/tinderpet/chat");
+    route.push("/tinderpet/petSelector");
   };
 
   return (

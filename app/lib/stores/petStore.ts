@@ -1,8 +1,9 @@
+
 import { Pet } from "@/app/lib/types/Dtos/PetDto";
 import { create } from "zustand";
+
 type PetState = {
   pets: Pet[] | null;
-
   fetchPets: (token: string | null | undefined) => Promise<Pet[]>;
 };
 
@@ -29,3 +30,6 @@ export const usePetStore = create<PetState>((set) => ({
     return pets;
   },
 }));
+    fetchPets:  (token: string) => void;
+    selectPet: (pet: Pet) => void;
+};

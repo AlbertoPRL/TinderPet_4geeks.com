@@ -20,6 +20,7 @@ export default function ChatView() {
   const hanfleFn = async () => {
     const token = authStore?.token;
 
+
     const user = await store?.fetchUser(token);
 
     const pet = await petStore?.fetchPets(token);
@@ -27,6 +28,7 @@ export default function ChatView() {
     console.log("user", user);
     console.log("pet", pet);
   };
+
 
   return (
     <HStack h="100vh" spacing={0}>
@@ -42,9 +44,11 @@ export default function ChatView() {
         pt={8}
       >
         <ChatSideBar />
+
         <Button onClick={hanfleFn}>Console Log</Button>
 
         <LogoutButton />
+
       </Flex>
       <Flex
         as="main"
