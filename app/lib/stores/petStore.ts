@@ -4,12 +4,15 @@ import { create } from "zustand";
 
 type PetState = {
   pets: Pet[] | null;
+  userSelectedPet: Pet | null;
+
   fetchPets: (token: string | null | undefined) => Promise<Pet[]>;
+  selectPet: (pet: Pet) => void;
 };
 
 export const usePetStore = create<PetState>((set) => ({
   pets: null,
-
+  userSelectedPet: null,
   fetchPets: async (token) => {
     if (!token) {
       throw new Error("Token not found");
@@ -29,7 +32,8 @@ export const usePetStore = create<PetState>((set) => ({
 
     return pets;
   },
+
+  selectPet: (pet: Pet) => {
+    set((state) => ({ ...state, userSelectedPet: pet }));
+  },
 }));
-    fetchPets:  (token: string) => void;
-    selectPet: (pet: Pet) => void;
-};
