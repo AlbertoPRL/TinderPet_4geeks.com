@@ -5,6 +5,7 @@ export async function middleware(request: NextRequest) {
   const isAuthenticated = cookies().get("isAuthenticated");
   const pets = cookies().get("pets");
   const userId = cookies().get("userId");
+  //hola
 
   if (isAuthenticated) {
     if (!pets || pets.value === "false") {
