@@ -47,13 +47,14 @@ export async function signIn(data: TSignInSchema) {
         password: data.password,
       }),
     });
-  } catch (error) {
-    throw new Error("Failed to sign in with password");
+
+    if (!response.ok) {
+      throw new Error(`Failed to sign in: ${response.statusText}`);
+    }
+  } catch (error: any) {
+    throw new Error(`Failed to sign in: ${error.message}`);
   }
 
-  if (!response.ok) {
-    throw new Error("Failed to sign in with password");
-  }
   const token = await response.text();
 
   return token;
