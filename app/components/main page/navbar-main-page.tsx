@@ -36,6 +36,7 @@ export default function NavbarMainPage() {
         }}
         py={4}
         sx={{
+          zIndex: 999,
           background:
             "linear-gradient(to top, rgba(0, 0, 0, 0), 30%, rgba(0, 0, 0, 1) 80%)",
         }}
@@ -120,7 +121,7 @@ export default function NavbarMainPage() {
                 ml={2}
                 fontWeight="600"
                 color="white"
-                fontSize="24px"
+                fontSize={{ base: "1rem", sm: "1.5rem", md: "2rem" }}
               >
                 tinderpet
               </Heading>
@@ -138,36 +139,40 @@ export default function NavbarMainPage() {
               <Button
                 variant="ghost"
                 leftIcon={<GrServices />}
-                size="sm"
+                size="lg"
                 color={"white"}
                 _hover={{ color: "white", bg: "pink.500" }}
+                px={2}
               >
                 Features
               </Button>
               <Button
                 variant="ghost"
                 leftIcon={<MdReviews />}
-                size="sm"
+                size="lg"
                 color={"white"}
                 _hover={{ color: "white", bg: "pink.500" }}
+                px={2}
               >
                 Testimonies
               </Button>
               <Button
                 variant="ghost"
                 leftIcon={<MdOutlinePriceCheck />}
-                size="sm"
+                size="lg"
                 color={"white"}
                 _hover={{ color: "white", bg: "pink.500" }}
+                px={2}
               >
                 Pricing
               </Button>
               <Button
                 variant="ghost"
                 leftIcon={<MdContactSupport />}
-                size="sm"
+                size="lg"
                 color={"white"}
                 _hover={{ color: "white", bg: "pink.500" }}
+                px={2}
               >
                 Support
               </Button>
@@ -183,11 +188,12 @@ export default function NavbarMainPage() {
               <Button
                 variant="ghost"
                 leftIcon={<AiOutlineInbox />}
-                size="sm"
+                size={{ base: "sm", md: "md" }}
                 w="100%"
                 color={"white"}
                 bg={"pink.500"}
                 _hover={{ bg: "pink.700" }}
+                px={3}
               >
                 Sign In
               </Button>

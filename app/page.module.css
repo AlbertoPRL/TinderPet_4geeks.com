@@ -1,24 +1,22 @@
 .main {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-
   .img {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    z-index: -1;
     height: 100vh;
+    z-index: -1;
     background-image: url("../public/images/background-dogs.jpg");
-    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    background-attachment: fixed;
+    background-repeat: no-repeat;
     filter: brightness(0.6);
   }
 }
 
-.container {
-  width: 100%;
+.container_text {
+  height: calc(100vh - 80px);
+  display: grid;
+  align-items: center;
+  justify-content: center;
 }
