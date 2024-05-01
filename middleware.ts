@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  if (!isAuthenticated && !userId) {
+  if (!isAuthenticated && !userId && !pets) {
     console.log("redirecting to sign in");
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
@@ -29,5 +29,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/tinderpet/:path*"],
+  matcher: ["/tinderpet/:path*", "/onboarding"],
 };
