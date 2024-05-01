@@ -17,11 +17,11 @@ import BottomCardForm from "../card";
 import { signInSchema, TSignInSchema } from "@/app/lib/types/schema";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 import { ButtonSubmitForm } from "../buttons";
 import tindog from "@/public/tindog.svg";
-import Image from "next/image";
-
-import { useRouter } from "next/navigation";
 
 import { useStore } from "@/app/lib/hooks/zustandHook";
 import { useAuthStore } from "@/app/lib/stores/authStore";
