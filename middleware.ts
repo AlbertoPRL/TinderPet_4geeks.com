@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
   if (isAuthenticated) {
     if (!pets || pets.value === "false") {
       console.log("redirecting to onboarding");
-      return NextResponse.redirect(new URL("/onboarding", request.url));
+      // return NextResponse.redirect(new URL("/onboarding", request.url));
     }
 
     if (!userId) {

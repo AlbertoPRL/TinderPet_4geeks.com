@@ -1,6 +1,4 @@
-import Matches from "@/app/components/profile/Matches";
-import { Flex, HStack } from "@chakra-ui/react";
-
+import { HStack, Flex } from "@chakra-ui/react";
 import Matches from "../../../components/Profile/Matches";
 import Profile from "@/app/components/Profile/Profile";
 
@@ -34,8 +32,6 @@ export default function ProfileView(){
             >
                 <Matches />
             </Flex>
-
         </HStack>
-
     )
 }

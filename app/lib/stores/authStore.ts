@@ -10,6 +10,7 @@ import { useUserStore } from "./userStore";
 interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
+  
   login: (data: TSignInSchema) => Promise<void>;
   register: (userInfo: TSignUpSchema) => Promise<void>;
   logout: () => Promise<void>;
@@ -30,15 +31,16 @@ export const useAuthStore = create<AuthState>()(
           document.cookie = `userId=${user.userId}`;
         }
 
-        const pets = await usePetStore.getState().fetchPets(access_token);
-        if (pets.length === 0) {
-          document.cookie = "pets=false";
-        } else {
-          document.cookie = "pets=true";
-        }
+        // const pets = await usePetStore.getState().fetchPets(access_token);
+        // if (pets.length === 0) {
+        //   document.cookie = "pets=false";
+        // } else {
+        //   document.cookie = "pets=true";
+        // }
 
         document.cookie = `isAuthenticated=${true}`;
       },
+
       register: async (userInfo) => {
         const result = await signUp(userInfo);
 
@@ -51,6 +53,7 @@ export const useAuthStore = create<AuthState>()(
         document.cookie = `userId=${result.userId}`;
         document.cookie = `pets=false`;
       },
+
       logout: async () => {
         set({ isAuthenticated: false, token: null });
         document.cookie = "isAuthenticated=false; Max-Age=0;path=/;";
