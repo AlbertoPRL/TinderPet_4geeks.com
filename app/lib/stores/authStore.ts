@@ -38,16 +38,16 @@ export const useAuthStore = create<AuthState>()(
         document.cookie = `isAuthenticated=${true}`;
       },
       register: async (userInfo) => {
-        const result = await signUp(userInfo);
+        const userId = await signUp(userInfo);
 
         const data: Partial<TSignUpSchema> = userInfo;
 
         const access_token = await signIn(data as TSignInSchema);
 
         set({ isAuthenticated: true, token: access_token });
-        document.cookie = `isAuthenticated=${true}`;
-        document.cookie = `userId=${result.userId}`;
-        document.cookie = `pets=false`;
+        document.cookie = "isAuthenticated = true";
+        document.cookie = `userId=${userId}`;
+        document.cookie = "pets=false";
       },
       logout: async () => {
         set({ isAuthenticated: false, token: null });

@@ -1,4 +1,3 @@
-
 import { Pet } from "@/app/lib/types/Dtos/PetDto";
 import { create } from "zustand";
 
