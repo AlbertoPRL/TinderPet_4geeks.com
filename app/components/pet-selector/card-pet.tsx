@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { useStore } from "@/app/lib/hooks/zustandHook";
-import { useAuthStore } from "@/app/lib/stores/authStore";
-import { usePetStore } from "@/app/lib/stores/petStore";
-import { Pet } from "@/app/lib/types/Dtos/PetDto";
 import {
   Box,
   Button,
@@ -19,6 +15,11 @@ import {
   StackDivider,
   Text,
 } from "@chakra-ui/react";
+
+import { useStore } from "@/app/lib/hooks/zustandHook";
+import { useAuthStore } from "@/app/lib/stores/authStore";
+import { usePetStore } from "@/app/lib/stores/petStore";
+import { Pet } from "@/app/lib/types/Dtos/PetDto";
 
 export default function CardPet() {
   const router = useRouter();
@@ -57,39 +58,47 @@ export default function CardPet() {
 
       <CardBody>
         <Stack divider={<StackDivider />} spacing="3">
-          {petState?.pets &&
-            petState?.pets.map((pet) => {
-              let description: string | undefined = "";
+          <Suspense fallback={<div>Loading...</div>}>
+            {petState?.pets
+              ? petState?.pets.map((pet) => {
+                  let description: string | undefined = "";
 
-              if (pet && pet.description) {
-                description =
-                  pet.description?.charAt(0).toUpperCase() +
-                  pet.description?.slice(1);
-              }
+                  if (pet && pet.description) {
+                    description =
+                      pet.description?.charAt(0).toUpperCase() +
+                      pet.description?.slice(1);
+                  }
 
-              return (
-                <Button
-                  key={pet?.id}
-                  onClick={() => handleSelectPet(pet)}
-                  variant="ghost"
-                  textAlign={"left"}
-                  h={"full"}
-                  p={1}
-                >
-                  <Box w={"full"}>
-                    <HStack alignItems={"end"}>
-                      <Heading size="md">{pet?.name}:</Heading>
-                      <Text fontSize="sm">
-                        {pet?.specie}, {pet?.breed}{" "}
-                      </Text>
-                    </HStack>
-                    <Text pt={1} fontSize="sm" color="gray.500" noOfLines={2}>
-                      {description !== "" ? description : "No description"}
-                    </Text>
-                  </Box>
-                </Button>
-              );
-            })}
+                  return (
+                    <Button
+                      key={pet?.id}
+                      onClick={() => handleSelectPet(pet)}
+                      variant="ghost"
+                      textAlign={"left"}
+                      h={"full"}
+                      p={1}
+                    >
+                      <Box w={"full"}>
+                        <HStack alignItems={"end"}>
+                          <Heading size="md">{pet?.name}:</Heading>
+                          <Text fontSize="sm">
+                            {pet?.specie}, {pet?.breed}{" "}
+                          </Text>
+                        </HStack>
+                        <Text
+                          pt={1}
+                          fontSize="sm"
+                          color="gray.500"
+                          noOfLines={2}
+                        >
+                          {description !== "" ? description : "No description"}
+                        </Text>
+                      </Box>
+                    </Button>
+                  );
+                })
+              : "Loading..."}
+          </Suspense>
         </Stack>
       </CardBody>
     </Card>
