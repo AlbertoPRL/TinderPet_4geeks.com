@@ -45,7 +45,7 @@ export default function PetInformationForm({
 
   async function fetchBreedsHandler() {
     const response = await fetchBreeds();
-    console.log("response", response);
+    // console.log("response", response);
     return response;
   }
 
@@ -71,7 +71,7 @@ export default function PetInformationForm({
   useEffect(() => {
     if (valueOfPetType !== undefined) {
       fetchBreedsBySpecieHandler();
-      console.log("selectedBreedBySpecie", selectedBreedBySpecie);
+      // console.log("selectedBreedBySpecie", selectedBreedBySpecie);
     }
   }, [valueOfPetType]);
 

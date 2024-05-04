@@ -143,6 +143,10 @@ export default function Form() {
     return <CompletedForm />;
   };
 
+  if (isCompleted) {
+    return handleRouterToMain();
+  }
+
   return (
     <Flex height="100vh" alignItems={"center"} justifyContent={"center"}>
       <Box
@@ -178,8 +182,6 @@ export default function Form() {
               {activeStep === 2 && (
                 <ConfirmationForm nextStep={next} prevStep={prev} />
               )}
-
-              {isCompleted && handleRouterToMain()}
             </form>
           </FormProvider>
         </Box>

@@ -23,14 +23,15 @@ import { Pet } from "@/app/lib/types/Dtos/PetDto";
 
 export default function CardPet() {
   const router = useRouter();
-  const token = useAuthStore((state) => state.token);
+
+  const token = useStore(useAuthStore, (state) => state.token);
   const petState = useStore(usePetStore, (state) => state);
 
   useEffect(() => {
     if (token) {
       petState?.fetchPets(token); // fetch pets using token
     }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     if (
