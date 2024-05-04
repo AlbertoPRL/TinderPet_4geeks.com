@@ -37,7 +37,7 @@ export default function PetInformationForm({
   nextStep,
   prevStep,
 }: PropsForms) {
-  const [selectedBreeds, setSelectedBreeds] = useState<[]>([]);
+  const [selectedBreedBySpecie, setSelectedBreedBySpecie] = useState<[]>([]);
 
   useEffect(() => {
     fetchBreedsHandler();
@@ -45,15 +45,35 @@ export default function PetInformationForm({
 
   async function fetchBreedsHandler() {
     const response = await fetchBreeds();
+    console.log("response", response);
+    return response;
+  }
 
-    setSelectedBreeds(response);
+  async function fetchBreedsBySpecieHandler() {
+    const response = await fetchBreedsHandler();
+
+    const selectedBreedsBySpecie = response?.filter(
+      (breed: { name: string; id: string; specieId: string }) =>
+        breed.specieId === valueOfPetType
+    );
+    setSelectedBreedBySpecie(selectedBreedsBySpecie);
   }
 
   const {
     register,
     control,
+    watch,
     formState: { errors },
   } = useFormContext<PetInfoType>();
+
+  const valueOfPetType = watch("petType");
+
+  useEffect(() => {
+    if (valueOfPetType !== undefined) {
+      fetchBreedsBySpecieHandler();
+      console.log("selectedBreedBySpecie", selectedBreedBySpecie);
+    }
+  }, [valueOfPetType]);
 
   return (
     <Card h={"full"} w={"100%"} shadow={"none"}>
@@ -153,15 +173,17 @@ export default function PetInformationForm({
               <option value="" disabled>
                 Select a pet breed...
               </option>
-              {selectedBreeds?.map(
+              {selectedBreedBySpecie?.map(
                 (
-                  breed: { name: string; id: string },
+                  breed: { name: string; id: string; specieId: string },
                   index: Key | null | undefined
-                ) => (
-                  <option key={index} value={breed.id}>
-                    {breed.name}
-                  </option>
-                )
+                ) => {
+                  return (
+                    <option key={index} value={breed.id}>
+                      {breed.name}
+                    </option>
+                  );
+                }
               )}
             </Select>
             {errors.petBreed && (
