@@ -31,7 +31,7 @@ export default function Matches() {
   return (
     <VStack>
       <animated.div {...bind()} style={{ x, y, userSelect: "none" }}>
-        <SwipeablePetCard></SwipeablePetCard>
+        <SwipeablePetCard />
       </animated.div>
     </VStack>
   );
