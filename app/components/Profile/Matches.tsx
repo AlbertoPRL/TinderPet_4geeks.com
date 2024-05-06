@@ -1,26 +1,32 @@
 "use client";
 
-import { useEffect } from "react";
-import { VStack } from "@chakra-ui/react";
-import { useDrag } from "react-use-gesture";
-import { useSpring, animated } from "react-spring";
-
 import SwipeablePetCard from "./SwipeablePetCard";
-import { useStore } from "@/app/lib/hooks/zustandHook";
-import { useAuthStore } from "@/app/lib/stores/authStore";
 import { useMatchStore } from "@/app/lib/stores/matchStore";
 import { usePetStore } from "@/app/lib/stores/petStore";
+import React from "react";
+import { useDrag } from "react-use-gesture";
+import { animated, useSpring } from "react-spring";
+import { useAuthStore } from "@/app/lib/stores/authStore";
+import { useStore } from "zustand";
+import { HStack, IconButton, VStack } from "@chakra-ui/react";
+import MatchModal from "./MatchModal";
+import { CiSettings } from "react-icons/ci";
 
-export default function Matches() {
-  const tokenStore = useStore(useAuthStore, (state) => state);
-  const selectedPet = useStore(usePetStore, (state) => state.userSelectedPet);
-  const matchingStore = useStore(useMatchStore, (state) => state);
+type Props = {
+    onProfileOpen: () => void;
+}
 
-  useEffect(() => {
-    if (selectedPet && tokenStore?.token! !== null) {
-      matchingStore?.fetchMatchingPets(tokenStore?.token!);
-    }
-  }, [selectedPet, matchingStore, tokenStore]);
+export default function Matches({ onProfileOpen }: Props) {
+    const token = useStore(useAuthStore, (state) => state.token)
+    const selectedPet = usePetStore((state) => state.userSelectedPet);
+    const fetchMatchingPets = useStore(useMatchStore, (state) => state.fetchMatchingPets);
+    const isMatchModalVisible = useStore(useMatchStore, (state) => state.isMatchModalVisible);
+
+    React.useEffect(() => {
+        if (selectedPet && token !== null) {
+            fetchMatchingPets(token, selectedPet?.specieId);
+        }
+    }, [selectedPet?.specieId, token]);
 
   const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
 
@@ -28,11 +34,20 @@ export default function Matches() {
     api.start({ x: down ? mx : 0, y: down ? my : 0 });
   });
 
-  return (
-    <VStack>
-      <animated.div {...bind()} style={{ x, y, userSelect: "none" }}>
-        <SwipeablePetCard />
-      </animated.div>
-    </VStack>
-  );
+    return (
+        <VStack alignItems='start' justifyContent="start">
+            <HStack alignItems='start' justifyContent="start" paddingLeft='16px'>
+                <IconButton
+                    onClick={onProfileOpen}
+                    display={{ base: "inherit", lg: "none" }}
+                    icon={<CiSettings />}
+                    aria-label="Toggle Profile Drawer"
+                />
+            </HStack>
+            {isMatchModalVisible && <MatchModal isOpen={isMatchModalVisible} />}
+            <animated.div {...bind()} style={{ x, y, userSelect: 'none' }}>
+                <SwipeablePetCard></SwipeablePetCard>
+            </animated.div>
+        </VStack>
+    );
 }

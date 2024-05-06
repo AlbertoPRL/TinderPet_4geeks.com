@@ -8,6 +8,7 @@ import { useUserStore } from "./userStore";
 interface AuthState {
   isAuthenticated: boolean;
   token: string | null;
+  
   login: (data: TSignInSchema) => Promise<void>;
   register: (userInfo: TSignUpSchema) => Promise<void>;
   logout: () => Promise<void>;
@@ -37,6 +38,7 @@ export const useAuthStore = create<AuthState>()(
 
         document.cookie = `isAuthenticated=${true}`;
       },
+
       register: async (userInfo) => {
         const userId = await signUp(userInfo);
 
@@ -49,6 +51,7 @@ export const useAuthStore = create<AuthState>()(
         document.cookie = `userId=${userId}`;
         document.cookie = "pets=false";
       },
+
       logout: async () => {
         set({ isAuthenticated: false, token: null });
         usePetStore.setState({ pets: null, userSelectedPet: null });

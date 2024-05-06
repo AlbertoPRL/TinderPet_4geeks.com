@@ -1,53 +1,74 @@
-"use client";
+'use client';
 
-import { useSwipeable } from "react-swipeable";
-import {
-  Card,
-  CardBody,
-  Stack,
-  Heading,
-  CardFooter,
-  Text,
-  Image,
-  HStack,
-} from "@chakra-ui/react";
-import { useStore } from "@/app/lib/hooks/zustandHook";
-import { usePetStore } from "@/app/lib/stores/petStore";
+import React, {useState } from 'react';
+import { useMatchStore } from '@/app/lib/stores/matchStore';
+import { useStore } from 'zustand';
+import { useSwipeable } from 'react-swipeable';
+import { Card, CardBody, Stack, Heading, CardFooter, Text, Image, useBoolean } from "@chakra-ui/react";
+import { useAuthStore } from '@/app/lib/stores/authStore';
 
 export default function SwipeablePetCard() {
-  const petState = useStore(usePetStore, (state) => state);
+    const matchingPets = useStore(useMatchStore, (state) => state.matchingPets);
+    const likePet = useStore(useMatchStore, (state) => state.likePet);
+    const token = useStore(useAuthStore, (state) => state.token);
+    const [currentPetIndex, setCurrentPetIndex] = useState(0);
+    const [endOfList, setEndOfList] = useBoolean(false);
 
-  const handlers = useSwipeable({
-    onSwipedRight: () => console.log("swiped right"),
-    onSwipedLeft: () => console.log("swiped left"),
-    trackMouse: true,
-  });
+    const handlers = useSwipeable({
+        onSwipedLeft: () => {
+            if (!matchingPets) return;
+            console.log('Swiped left:', matchingPets[currentPetIndex]);
+            const nextIndex = (currentPetIndex + 1) % matchingPets.length;
+            if (nextIndex === 0) {
+                setEndOfList.toggle();
+            } else {
+                setCurrentPetIndex(nextIndex);
+            }
+        },
+        onSwipedRight: () => {
+            if (!matchingPets || !token || !matchingPets[currentPetIndex].id) return;
+            console.log('Swiped right:', matchingPets[currentPetIndex]);
+            const likedId = matchingPets[currentPetIndex].id;
+            if (token && likedId) {
+                likePet(token, likedId);
+            }
+            const nextIndex = (currentPetIndex + 1) % matchingPets.length;
+            if (nextIndex === 0) {
+                setEndOfList.toggle();
+            } else {
+                setCurrentPetIndex(nextIndex);
+            }
+        },
+        trackMouse: true
+    });
 
-  return (
-    <Card maxW="md" {...handlers}>
-      <CardBody>
-        <Image
-          src="/images/testDog.jpg"
-          alt="Pictures showing the pet"
-          borderRadius="lg"
-          style={{ pointerEvents: "none" }}
-        />
-        <HStack mt="6" spacing="3" alignItems={"flex-end"}>
-          <Heading size="md">
-            {petState?.userSelectedPet?.name || "No pet"}
-            {","}
-          </Heading>
-          <Text fontSize="sm">
-            {petState?.userSelectedPet?.breed || "No breed"}
-          </Text>
-        </HStack>
+    if (!matchingPets) {
+        return <div>Loading...</div>;
+    }
+    if(endOfList) {
+        return <div>End of the list. Remember to check your search filters if you have any issue.</div>;
+    }
 
-        <Stack mt="2" spacing="3">
-          <Text fontSize="md">{petState?.userSelectedPet?.description}</Text>
-        </Stack>
-      </CardBody>
-      {/* <CardFooter></CardFooter> */}
-    </Card>
-  );
+    const pet = matchingPets[currentPetIndex];
+
+    return (
+        <Card maxW='md' {...handlers}>
+            <CardBody>
+                <Image
+                    src='/images/testDog.jpg'
+                    alt='Pictures showing the pet'
+                    borderRadius='lg'
+                    style={{ pointerEvents: 'none' }}
+                />
+                <Stack mt='6' spacing='3'>
+                    <Heading size='md'>{pet.name}</Heading>
+                    <Text>
+                        {pet.description}
+                    </Text>
+                </Stack>
+            </CardBody>
+            <CardFooter>
+            </CardFooter>
+        </Card>
+    );
 }
-// https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80

@@ -6,6 +6,7 @@ export async function middleware(request: NextRequest) {
   const pets = cookies().get("pets")?.value;
   const userId = cookies().get("userId")?.value;
 
+
   if (request.nextUrl.pathname.startsWith("/tinderpet")) {
     if (isAuthenticated === "true" && pets === "false" && userId !== "") {
       console.log("redirecting to onboarding");

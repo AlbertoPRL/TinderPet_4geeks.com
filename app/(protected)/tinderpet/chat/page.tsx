@@ -1,32 +1,38 @@
 "use client";
 
-import { HStack, Flex, Button } from "@chakra-ui/react";
-
-import ChatSideBar from "@/app/components/chat/ChatSideBar";
-import Chat from "@/app/components/chat/Chat";
-import ChatFiles from "@/app/components/chat/ChatFiles";
-
-import { useStore } from "@/app/lib/hooks/zustandHook";
-
-import { useAuthStore } from "@/app/lib/stores/authStore";
-import { useUserStore } from "@/app/lib/stores/userStore";
+import { HStack, Flex, useDisclosure } from "@chakra-ui/react";
+import Chat from "../../../components/chat/Chat";
+import ChatSideBar from "../../../components/chat/ChatSideBar";
+import { useAuthStore } from "../../../lib/stores/authStore";
 import { usePetStore } from "@/app/lib/stores/petStore";
-import { LogoutButton } from "@/app/components/buttons";
+import { useConversationStore } from "@/app/lib/stores/conversationStore";
+import { useEffect } from "react";
+import { useStore } from "@/app/lib/hooks/zustandHook";
+import ChatFilesDrawer from "../../../components/chat/ChatFilesDrawer";
+import ChatSideBarDrawer from "../../../components/chat/ChatSideBarDrawer";
+
 
 export default function ChatView() {
   const authStore = useStore(useAuthStore, (state) => state);
-  const store = useStore(useUserStore, (state) => state);
-  const petStore = useStore(usePetStore, (state) => state);
+  const conversationState = useStore(useConversationStore, (state) => state);
+  const selectedPet = useStore(usePetStore, (state) => state.userSelectedPet);
 
-  const hanfleFn = async () => {
-    const token = authStore?.token;
+  const {
+    isOpen: isChatSideBarOpen,
+    onOpen: onChatSideBarOpen,
+    onClose: onChatSideBarClose,
+  } = useDisclosure({defaultIsOpen: !conversationState?.selectedConversation ? true : false});
 
-    const user = await store?.fetchUser(token);
-    const pet = await petStore?.fetchPets(token);
+  const {
+    isOpen: isChatFilesOpen,
+    onOpen: onChatFilesOpen,
+    onClose: onChatFilesClose,
+  } = useDisclosure({defaultIsOpen: false});
 
-    console.log("user", user);
-    console.log("pet", pet);
-  };
+  useEffect(() => {    
+    conversationState?.fetchConversations(authStore?.token, selectedPet?.id );
+    console.log(authStore?.token);
+  }, [authStore?.token, selectedPet?.id]);
 
   return (
     <HStack h="100vh" spacing={0}>
@@ -39,12 +45,9 @@ export default function ChatView() {
         w="full"
         borderRightColor="gray.100"
         borderRightWidth={1}
-        pt={8}
+        pt={0}
       >
         <ChatSideBar />
-
-        <Button onClick={hanfleFn}>Console Log</Button>
-        <LogoutButton />
       </Flex>
       <Flex
         as="main"
@@ -53,17 +56,20 @@ export default function ChatView() {
         borderRightColor="gray.100"
         borderRightWidth={1}
       >
-        <Chat />
+        {conversationState && conversationState.selectedConversation ? <Chat onChatSideBarOpen={onChatSideBarOpen} onChatFilesOpen={onChatFilesOpen}/> : <></>}
       </Flex>
-      <Flex
+      {/* <Flex
         as="aside"
         h="full"
         maxW={{ base: "xs", xl: "sm" }}
         display={{ base: "none", lg: "flex" }}
         w="full"
       >
-        <ChatFiles />
-      </Flex>
+        <ChatFiles onChatFilesBarOpen={onChatFilesOpen}  onChatFilesClose={onChatFilesClose}></ChatFiles>
+      </Flex> */}
+
+      <ChatSideBarDrawer isOpen={isChatSideBarOpen} onClose={onChatSideBarClose} />
+      <ChatFilesDrawer isOpen={isChatFilesOpen} onClose={onChatFilesClose} />
     </HStack>
   );
 }

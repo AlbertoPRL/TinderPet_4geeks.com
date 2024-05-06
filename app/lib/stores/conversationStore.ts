@@ -1,28 +1,56 @@
-import { create } from "zustand";
-import { useUserStore } from "./userStore";
-import { ConversationDto } from "@/app/lib/types/Dtos/conversationsDto";
+import { create, useStore } from "zustand";
+import { ConversationDto, MessageDto } from "@/app/lib/types/Dtos/conversationsDto";
+import { createJSONStorage, persist } from "zustand/middleware";
+import { use } from "react";
 
-async function fetchFromAPI(userId: string) {
-  const response = await fetch(
-    `https://api.example.com/api/Conversation/${encodeURIComponent(userId)}`
-  );
-  const data = await response.json();
-  return data;
-}
 
 type ConversationState = {
-  conversations: ConversationDto | null;
-  fetchData: () => void;
+  conversations: ConversationDto[] | null;
+  selectedConversation: ConversationDto | null;
+
+  fetchConversations: (token: string, selectedPetId: string) => void;
+  setSelectedConversation: (conversation: ConversationDto) => void;
+  addMessageToConversation: (conversationId: string, message: any) => void;
 };
 
-export const useStore = create<ConversationState>((set) => ({
-  conversations: null,
-  fetchData: async () => {
-    const user = useUserStore.getState().user;
-    if (user) {
-      const conversations = await fetchFromAPI(user.id);
-      console.log(conversations);
-      //set({ conversations });
-    } else console.log("No user found");
-  },
-}));
+
+export const useConversationStore = create<ConversationState>()(
+  persist(
+    (set) => ({
+      conversations: [],
+      selectedConversation: null,
+      fetchConversations: async (token: string, selectedPetId: string) => {
+        const response = await fetch(`http://129.213.181.186/api/Conversation/GetConversationByPetId?petId=${selectedPetId}`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          const conversations = await response.json();
+          set({ conversations });
+          console.log(conversations);
+        } else {
+          console.error(`HTTP error! status: ${response.status}`);
+        }
+      },
+
+      setSelectedConversation: (conversation: ConversationDto) => set({ selectedConversation: conversation }),
+
+      addMessageToConversation: (conversationId: string, message: MessageDto) => {
+        const conversations = useConversationStore.getState().conversations;
+        if (conversations) {
+          const conversation = conversations.find(c => c.id === conversationId);
+          if (conversation) {
+            conversation.messages = [...conversation.messages, message];
+            set({ conversations: [...conversations] });
+          }
+        }
+      },
+    }
+    ),
+    {
+      name: 'conversationStore',
+      storage: createJSONStorage(() => (localStorage)),
+    }
+  )
+);

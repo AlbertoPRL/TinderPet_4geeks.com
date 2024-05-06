@@ -1,47 +1,44 @@
-import { Pet } from "@/app/lib/types/Dtos/PetDto";
-import { create } from "zustand";
-import { createJSONStorage, persist } from "zustand/middleware";
+import { Pet } from '@/app/lib/types/Dtos/PetDto';
+import { use } from 'react';
+import { create } from 'zustand';
+import { persist, createJSONStorage, devtools } from 'zustand/middleware';
 
 type PetState = {
-  pets: Pet[] | null;
-  userSelectedPet: Pet | null;
+    pets: Pet[] | null;
+    userSelectedPet: Pet | null;
 
-  fetchPets: (token: string | null | undefined) => Promise<Pet[]>;
-  selectPet: (pet: Pet) => void;
+
+    fetchPets: (token: string) => Promise<Pet[]>;
+    selectPet: (pet: Pet) => void;
 };
 
 export const usePetStore = create<PetState>()(
-  persist(
-    (set) => ({
-      pets: null,
-      userSelectedPet: null,
-      fetchPets: async (token) => {
-        if (!token) {
-          throw new Error("Token not found");
-        }
-        const response = await fetch(
-          `http://129.213.181.186/api/Pet/api/Pet/GetAllPetsByUserId`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    persist(
+        (set) => ({
+
+            pets: null,
+            userSelectedPet: null,
+
+            fetchPets: async (token: string) => {
+                const response = await fetch(`http://129.213.181.186/api/Pet/api/Pet/GetAllPetsByUserId`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+
+                const pets  : Pet[] = await response.json();
+                console.log(pets);
+                set({ pets });
+                return pets;
             },
-          }
-        );
 
-        const pets: Pet[] = await response.json();
-
-        set({ pets });
-
-        return pets;
-      },
-
-      selectPet: (pet) => {
-        set((state) => ({ ...state, userSelectedPet: pet }));
-      },
-    }),
-    {
-      name: "pets",
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-);
+            selectPet: (pet: Pet) => {
+                set((state) => ({ ...state, userSelectedPet: pet }));
+            }
+            }),
+            {
+            name: 'petStore',
+            storage: createJSONStorage(() => (localStorage)),
+            partialize: (state) => ({userSelectedPet: state.userSelectedPet}),
+            }
+        ));

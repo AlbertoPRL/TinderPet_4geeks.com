@@ -2,15 +2,17 @@
 
 import { TabPanels, TabPanel, Flex } from "@chakra-ui/react";
 import PreferencesTab from "./PreferencesTab";
+import ProfileSettingsTab from "./ProfileSettingsTab";
 
-const ProfileTabs: React.FC = () => {
+export default function ProfileTabs() {
+  
   return (
     <TabPanels display='flex' w='100%'>
       <TabPanel w='100%'>
-        <PreferencesTab></PreferencesTab>
+        <ProfileSettingsTab></ProfileSettingsTab>
       </TabPanel>
-      <TabPanel>
-        <p>two!</p>
+      <TabPanel w='100%'>
+        <PreferencesTab></PreferencesTab>
       </TabPanel>
       <TabPanel>
         <p>three!</p>
@@ -19,4 +21,3 @@ const ProfileTabs: React.FC = () => {
   );
 }
 
-export default ProfileTabs;
