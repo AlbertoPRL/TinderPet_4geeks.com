@@ -1,5 +1,6 @@
 import { Pet } from "@/app/lib/types/Dtos/PetDto";
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type PetState = {
   pets: Pet[] | null;
@@ -9,30 +10,38 @@ type PetState = {
   selectPet: (pet: Pet) => void;
 };
 
-export const usePetStore = create<PetState>((set) => ({
-  pets: null,
-  userSelectedPet: null,
-  fetchPets: async (token) => {
-    if (!token) {
-      throw new Error("Token not found");
+export const usePetStore = create<PetState>()(
+  persist(
+    (set) => ({
+      pets: null,
+      userSelectedPet: null,
+      fetchPets: async (token) => {
+        if (!token) {
+          throw new Error("Token not found");
+        }
+        const response = await fetch(
+          `http://129.213.181.186/api/Pet/api/Pet/GetAllPetsByUserId`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        const pets: Pet[] = await response.json();
+
+        set({ pets });
+
+        return pets;
+      },
+
+      selectPet: (pet) => {
+        set((state) => ({ ...state, userSelectedPet: pet }));
+      },
+    }),
+    {
+      name: "pets",
+      storage: createJSONStorage(() => localStorage),
     }
-    const response = await fetch(
-      `http://129.213.181.186/api/Pet/api/Pet/GetAllPetsByUserId`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const pets: Pet[] = await response.json();
-
-    set({ pets });
-
-    return pets;
-  },
-
-  selectPet: (pet: Pet) => {
-    set((state) => ({ ...state, userSelectedPet: pet }));
-  },
-}));
+  )
+);

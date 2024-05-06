@@ -2,10 +2,9 @@
 
 import { HStack, Flex, Button } from "@chakra-ui/react";
 
-
-import ChatSideBar from "@/app/components/Chat/ChatSideBar";
-import Chat from "@/app/components/Chat/Chat";
-import ChatFiles from "@/app/components/Chat/ChatFiles";
+import ChatSideBar from "@/app/components/chat/ChatSideBar";
+import Chat from "@/app/components/chat/Chat";
+import ChatFiles from "@/app/components/chat/ChatFiles";
 
 import { useStore } from "@/app/lib/hooks/zustandHook";
 
@@ -29,7 +28,6 @@ export default function ChatView() {
     console.log("pet", pet);
   };
 
-
   return (
     <HStack h="100vh" spacing={0}>
       <Flex
@@ -47,7 +45,6 @@ export default function ChatView() {
 
         <Button onClick={hanfleFn}>Console Log</Button>
         <LogoutButton />
-
       </Flex>
       <Flex
         as="main"
