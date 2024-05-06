@@ -6,6 +6,8 @@ import { useState } from "react";
 import { usePetStore } from "@/app/lib/stores/petStore";
 import ProfileTabs from "./ProfileTabs";
 import { CiSettings } from "react-icons/ci";
+import { MdOutlinePets } from "react-icons/md";
+
 
 export default function Profile() {
     const petState = useStore(usePetStore, (state) => state);
@@ -25,8 +27,7 @@ export default function Profile() {
                 <Flex>
                     <Tabs variant='unstyled' index={tabIndex} onChange={handleTabsChange}>
                         <TabList>
-                            {/* <Tab px={1}><CiSettings /></Tab>
-                            <Tab px={1}><CiSettings /></Tab> */}
+                            <Tab><MdOutlinePets size='1.5rem'/></Tab>
                             <Tab><CiSettings size='1.5rem'/></Tab>
                         </TabList>
                     </Tabs>

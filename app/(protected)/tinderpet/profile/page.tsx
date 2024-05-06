@@ -1,11 +1,12 @@
-import { HStack, Flex } from "@chakra-ui/react";
+"use client"
+
+import { HStack, Flex, useBoolean, useDisclosure} from "@chakra-ui/react";
 import Matches from "../../../components/Profile/Matches";
 import Profile from "@/app/components/Profile/Profile";
-
-
+import ProfileDrawer from "@/app/components/Profile/ProfileDrawer";
 
 export default function ProfileView(){
-
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     return(
         <HStack h='100vh' spacing={0}>
@@ -30,8 +31,9 @@ export default function ProfileView(){
                 align = 'center'
                 justify = 'center'
             >
-                <Matches />
+                <Matches onProfileOpen={onOpen}/>
             </Flex>
+            <ProfileDrawer  isOpen={isOpen} onClose={onClose} />
         </HStack>
     )
 }

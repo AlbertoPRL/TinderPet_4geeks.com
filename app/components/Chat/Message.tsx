@@ -1,22 +1,24 @@
+import { useStore } from "@/app/lib/hooks/zustandHook";
+import { useConversationStore } from "@/app/lib/stores/conversationStore";
+import { useUserStore } from "@/app/lib/stores/userStore";
 import { Box, Text, VStack } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
-type Props = {
+interface MessageProps {
+    isCurrentPet: boolean;
     message: string;
     dateSent: string;
-    from: "me" | "others";
-};
+}
 
-export default function Message({ message, dateSent, from }: Props) {
-
-    const isCurrentUser = from === "me";
-    const alignment = isCurrentUser ? "flex-end" : "flex-start";
-    const bottomRightRadius = isCurrentUser ? 0 : 32;
-    const bottomLeftRadius = isCurrentUser ? 32 : 0;
+export default function Message({isCurrentPet, message, dateSent}: MessageProps) {
+    const alignment = isCurrentPet ? "flex-end" : "flex-start";
+    const bottomRightRadius = isCurrentPet ? 0 : 32;
+    const bottomLeftRadius = isCurrentPet ? 32 : 0;
 
     return (
         <VStack mt={6} alignItems={alignment} alignSelf={alignment}>
             <Box
-                bg={isCurrentUser ? "blue.50" : "gray.100"}
+                bg={isCurrentPet ? "blue.50" : "gray.100"}
                 borderRadius="lg"
                 px={6}
                 py={4}

@@ -1,113 +1,53 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import Message from "./Message";
 import MessageInput from "./MessageInput";
-import { Flex, Stat, StatLabel, StatNumber, VStack } from "@chakra-ui/react";
-import { MessageItem } from "../../lib/types/types";
+import { Flex, HStack, IconButton, Stat, StatLabel, StatNumber, VStack } from "@chakra-ui/react";
+import { useStore } from "@/app/lib/hooks/zustandHook";
+import { useConversationStore } from "@/app/lib/stores/conversationStore";
+import { useUserStore } from "@/app/lib/stores/userStore";
+import Message from "./Message";
 import Connector from "../../lib/services/signalRConnection";
-
-const MockMessages = [
-  {
-    message: "Hey Travis! Would you like to go out for a coffee?",
-    from: "others",
-    dateSent: "20:21",
-  },
-  {
-    message: "Sure! At 11:00 am?",
-    from: "me",
-    dateSent: "20:22",
-  },
-  {
-    message: "That's too early! How about at noon?",
-    from: "others",
-    dateSent: "20:22",
-  },
-  {
-    message: "That sounds good as well. Where should we meet?",
-    from: "me",
-    dateSent: "20:23",
-  },
-  {
-    message: "Meet me at the hardware store on 21 Duck Street.",
-    from: "others",
-    dateSent: "20:23",
-  },
-  {
-    message: "Sounds good. I'll bring my friend with me as well!",
-    from: "me",
-    dateSent: "20:24",
-  },
-  {
-    message: "Which one? The developer or the designer?",
-    from: "others",
-    dateSent: "20:24",
-  },
-  {
-    message: "The developer. You remember Tony, right?",
-    from: "me",
-    dateSent: "20:24",
-  },
-  {
-    message: "Yeah! Tony's a great guy!",
-    from: "others",
-    dateSent: "20:25",
-  },
-  {
-    message: "Indeed he is! Alright, see you later 👋!",
-    from: "me",
-    dateSent: "20:25",
-  },
-];
+import { MessageDto } from "@/app/lib/types/Dtos/conversationsDto";
+import { usePetStore } from "@/app/lib/stores/petStore";
+import { HiChat } from "react-icons/hi";
+import { IoDocuments } from "react-icons/io5";
 
 const containerStyle: React.CSSProperties = {
-  overflowY: "scroll", // Enable vertical scrolling
-  msOverflowStyle: "none", // IE and Edge
-  scrollbarWidth: "none", // Firefox
-  // '&::-webkit-scrollbar': {
-  //     display: 'none',
-  // }
+  overflowY: "scroll", 
+  msOverflowStyle: "none", 
+  scrollbarWidth: "none", 
 };
 
-export default function Chat() {
-  const { newMessage, events } = Connector();
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState(MockMessages);
-  const containerRef = useRef<HTMLDivElement>(null);
+type Props = {
+  onChatSideBarOpen: () => void;
+  onChatFilesOpen: () => void;
+};
 
-  const handleSendMessage = () => {
-    newMessage(message);
-    const newMessageObj = {
-      message: message,
-      from: "me",
-      dateSent: new Date().toLocaleTimeString(),
-    };
-    setMessages((prevMessages) => [...prevMessages, newMessageObj]);
-    console.log(messages);
-    setMessage("");
-  };
+export default function Chat({ onChatSideBarOpen, onChatFilesOpen }: Props) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const conversationState = useStore(useConversationStore, (state) => state);
+  const petState = useStore(usePetStore, (state) => state);
+  const [messages, setMessages] = useState(conversationState?.selectedConversation?.messages);
+  const { events } = Connector();
 
   useEffect(() => {
-    events((message) => {
-      const newMessageObj = {
-        message: message,
-        from: "others",
-        dateSent: new Date().toLocaleTimeString(),
+    const handleEvent = (message: string, groupId: string, date: string, receiverId: string) => {
+      const newMessage: MessageDto = {
+        text: message,
+        creationDate: date,
+        receiverUserId: receiverId,
+        messageState: "",
       };
-      setMessages((prevMessages) => [...prevMessages, newMessageObj]);
-      console.log("message received: ", message);
-    });
+      setMessages(prevMessages => [...(prevMessages || []), newMessage]);
+    };
+    events(handleEvent);
   }, []);
 
   useEffect(() => {
-    if (containerRef.current) {
-      containerRef.current.scrollTop = containerRef.current.scrollHeight;
-    }
-  }, [messages]);
+    setMessages(conversationState?.selectedConversation?.messages);
+  }, [conversationState?.selectedConversation?.messages]);
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setMessage(event.target.value);
-  };
 
   return (
     <Flex w="full" flexDirection="column">
@@ -120,25 +60,45 @@ export default function Chat() {
         flex={1}
         alignSelf={"flex-start"}
       >
+        <HStack px={4} py={4} borderBottomColor='gray.100' borderBottomWidth={1} justifyContent="space-between">
+          <IconButton
+            onClick={onChatSideBarOpen}
+            display={{ base: "inherit", lg: "none" }}
+            icon={<HiChat />}
+            aria-label="Toggle Chat History Drawer"
+          />
+          <IconButton
+            alignSelf="flex-end"
+            onClick={onChatFilesOpen}
+            display={{ base: "inherit"}}
+            icon={<IoDocuments />}
+            aria-label="Toggle Chat Files Drawer"
+          />
+        </HStack>
         <Stat mt={1}>
-          <StatLabel color="gray.500">Chatting with</StatLabel>
-          <StatNumber>user2.Name</StatNumber>
-          <StatLabel color="gray.500">Owner of</StatLabel>
-          <StatNumber>user2.Pet.Name</StatNumber>
+          <StatLabel color="gray.500">Chatting With</StatLabel>
+          <StatNumber>
+            {conversationState?.selectedConversation?.pet1.id === petState?.userSelectedPet?.id
+              ? conversationState?.selectedConversation?.pet2.user.firstName
+              : conversationState?.selectedConversation?.pet1.user.firstName}
+          </StatNumber>
+          <StatLabel color="gray.500">Owner Of</StatLabel>
+          <StatNumber>
+            {conversationState?.selectedConversation?.pet1.id === petState?.userSelectedPet?.id
+              ? conversationState?.selectedConversation?.pet2.name
+              : conversationState?.selectedConversation?.pet1.name}
+          </StatNumber>
         </Stat>
-        {messages.map(({ message, from, dateSent }: MessageItem, index) => (
+        {messages && messages.map((message, index) => (
           <Message
             key={index}
-            message={message}
-            from={from as "me" | "others"} // me : others
-            dateSent={dateSent}
+            message={message?.text}
+            isCurrentPet={message.receiverUserId === petState?.userSelectedPet?.id}
+            dateSent={message.creationDate}
           />
         ))}
       </Flex>
       <MessageInput
-        message={message}
-        onInputChange={handleInputChange}
-        onSendMessage={handleSendMessage}
       />
     </Flex>
   );

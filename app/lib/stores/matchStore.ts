@@ -1,6 +1,7 @@
 "use client"
+
 import { Pet } from "@/app/lib/types/Dtos/PetDto";
-import { create } from "zustand"
+import { create, useStore } from "zustand"
 import { usePetStore } from "./petStore";
 import { useAuthStore } from "./authStore";
 
@@ -12,8 +13,8 @@ type MatchState = {
     excludedTraits: string[] | null,
     isMatchModalVisible: boolean,
 
-    fetchMatchingPets: (token: string) => void;
-    fetchMatchingPetsWithFilters: (token:string, excludedBreeds: string[], excludedInterests: string[], excludedTraits: string[]) => void;
+    fetchMatchingPets: (token: string, specieId : string) => void;
+    fetchMatchingPetsWithFilters: (token:string, specieId:string, excludedBreeds: string[], excludedInterests: string[], excludedTraits: string[]) => void;
     likePet: ( token:string, likedId : string) => void;
     showMatchModal: () => void;
     hideMatchModal: () => void;
@@ -32,13 +33,12 @@ export const useMatchStore = create<MatchState>((set) => ({
 
     hideMatchModal: () => set({ isMatchModalVisible: false }),
 
-    fetchMatchingPets: async (token: string) => {
-        const userSelectedPet = usePetStore.getState().userSelectedPet;
-        if (userSelectedPet === null) {
+    fetchMatchingPets: async (token: string, specieId : string) => 
+    {
+        if (specieId === null) {
             console.log('No pet selected');
             return;
         }
-        const specieId = userSelectedPet.specieId;
         const response = await fetch(`http://129.213.181.186/api/Pet/GetAllNonUserPetsBySpecieId/${specieId}`, {
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -48,14 +48,14 @@ export const useMatchStore = create<MatchState>((set) => ({
         set({ matchingPets });
     },
 
-    fetchMatchingPetsWithFilters: async (token: string, excludedBreeds: string[], excludedInterests: string[], excludedTraits: string[]) => {
+    fetchMatchingPetsWithFilters: async (token: string,specieId: string, excludedBreeds: string[], excludedInterests: string[], excludedTraits: string[]) => {
         const userSelectedPet = usePetStore.getState().userSelectedPet;
         if (userSelectedPet === null) {
             console.log('No pet selected');
             return;
         }
     
-        const specieId = userSelectedPet.specieId;
+        
         const params = new URLSearchParams();
         excludedBreeds.forEach(breed => params.append('ExcludedBreeds', breed));
         excludedTraits.forEach(trait => params.append('ExcludedTraits', trait));

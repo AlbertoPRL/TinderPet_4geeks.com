@@ -1,16 +1,25 @@
-import { Avatar, AvatarGroup, HStack, Text } from "@chakra-ui/react";
+import { useConversationStore } from "@/app/lib/stores/conversationStore";
+import { Avatar, AvatarGroup, HStack, Text, VStack } from "@chakra-ui/react";
+import { use } from "react";
 
+type SideBarMessagesProps = {
+    name: string;
+    lastMessagePreview: string;
+    creationDate: string;
+};
 
-export default function SideBarMessages() {
+export default function SideBarMessages({ name, lastMessagePreview, creationDate }: SideBarMessagesProps) {
 
     return (
-        <HStack>
+        <HStack maxWidth="full" overflow="hidden">
             <AvatarGroup size='md' max={2}>
-                <Avatar name='Ryan Florence' src='https://bit.ly/ryan-florence' />
-                <Avatar name='Segun Adebayo' src='https://bit.ly/sage-adebayo' />
+                <Avatar name={name} src='https://bit.ly/ryan-florence' />
+                <Avatar name={name} src='https://bit.ly/sage-adebayo' />
             </AvatarGroup>
-            <Text fontSize='sm' fontWeight="bold" color='gray.500'>Last Message Preview</Text>
-            <Text fontSize='xs' color='gray.500'>01/01/1001</Text>
-        </HStack>        
+            <VStack justify="start" align="start">
+                <Text isTruncated fontSize='xs' fontWeight="bold" color='gray.500'>{name} </Text>
+                <Text isTruncated fontSize='xs' color='gray.500'>{lastMessagePreview}</Text>
+            </VStack>
+        </HStack>
     )
 };

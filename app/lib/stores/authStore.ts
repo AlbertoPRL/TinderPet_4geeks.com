@@ -31,12 +31,12 @@ export const useAuthStore = create<AuthState>()(
           document.cookie = `userId=${user.userId}`;
         }
 
-        // const pets = await usePetStore.getState().fetchPets(access_token);
-        // if (pets.length === 0) {
-        //   document.cookie = "pets=false";
-        // } else {
-        //   document.cookie = "pets=true";
-        // }
+        const pets = await usePetStore.getState().fetchPets(access_token);
+        if (pets.length === 0) {
+          document.cookie = "pets=false";
+        } else {
+          document.cookie = "pets=true";
+        }
 
         document.cookie = `isAuthenticated=${true}`;
       },

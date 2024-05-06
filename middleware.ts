@@ -5,6 +5,7 @@ export async function middleware(request: NextRequest) {
   const isAuthenticated = cookies().get("isAuthenticated");
   const pets = cookies().get("pets");
   const userId = cookies().get("userId");
+  const selectedPetid = cookies().get("userSelectedPetId");
   //hola
 
   if (isAuthenticated) {
@@ -21,6 +22,11 @@ export async function middleware(request: NextRequest) {
 
   if (!isAuthenticated && !userId) {
     return NextResponse.redirect(new URL("/sign-in", request.url));
+  }
+
+  if (selectedPetid) {
+    console.log("selectedPetid", selectedPetid);
+    return NextResponse.redirect(new URL("/tinderpet/petSelector", request.url));
   }
 
   return NextResponse.next();
