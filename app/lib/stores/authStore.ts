@@ -2,9 +2,7 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";
 import { TSignInSchema, TSignUpSchema } from "../types/schema";
 import { signIn, signUp } from "../actions/auth";
-import { User } from "../types/Dtos/userDto";
 import { usePetStore } from "./petStore";
-import { redirect } from "next/navigation";
 import { useUserStore } from "./userStore";
 
 interface AuthState {
@@ -42,20 +40,21 @@ export const useAuthStore = create<AuthState>()(
       },
 
       register: async (userInfo) => {
-        const result = await signUp(userInfo);
+        const userId = await signUp(userInfo);
 
         const data: Partial<TSignUpSchema> = userInfo;
 
         const access_token = await signIn(data as TSignInSchema);
 
         set({ isAuthenticated: true, token: access_token });
-        document.cookie = `isAuthenticated=${true}`;
-        document.cookie = `userId=${result.userId}`;
-        document.cookie = `pets=false`;
+        document.cookie = "isAuthenticated = true";
+        document.cookie = `userId=${userId}`;
+        document.cookie = "pets=false";
       },
 
       logout: async () => {
         set({ isAuthenticated: false, token: null });
+        usePetStore.setState({ pets: null, userSelectedPet: null });
         document.cookie = "isAuthenticated=false; Max-Age=0;path=/;";
         document.cookie = "pets='false'; Max-Age=0;path=/;";
         document.cookie = "userId=''; Max-Age=0;path=/;";

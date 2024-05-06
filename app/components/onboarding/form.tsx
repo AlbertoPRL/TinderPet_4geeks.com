@@ -1,14 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import { Box, Flex, useSteps } from "@chakra-ui/react";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import ResponsiveSteps from "./responsive-steps";
 import PetInformationForm from "./pet-information-form";
 import TraitsInterestsForm from "./traits-interests-form";
-// import PreferencesForm from "./preferences-form";
 import ConfirmationForm from "./confirmation-form";
 import CompletedForm from "./completed-form";
 
@@ -22,7 +24,6 @@ import { useStore } from "@/app/lib/hooks/zustandHook";
 import { useAuthStore } from "@/app/lib/stores/authStore";
 import { useUserStore } from "@/app/lib/stores/userStore";
 import { PetForm } from "@/app/lib/types/Dtos/PetDto";
-import { useRouter } from "next/navigation";
 
 const steps = [
   {
@@ -35,16 +36,6 @@ const steps = [
     description: "Traits & Interests",
     fields: ["petTraits", "petInterests", "description", "petPicture"],
   },
-  // {
-  //   title: "Step 3",
-  //   description: "Preferences",
-  //   fields: [
-  //     "preferencePetType",
-  //     "preferencePetAge",
-  //     "preferencePetGender",
-  //     "preferencePetTraits",
-  //   ],
-  // },
   { title: "Step 3", description: "Confirmation" },
 ];
 
@@ -59,9 +50,6 @@ export default function Form() {
 
   const authStore = useStore(useAuthStore, (state) => state);
   const store = useStore(useUserStore, (state) => state);
-
-  //   const isLastStep = activeStep === steps?.length - 1;
-  // const hasCompletedAllSteps = activeStep === steps?.length;
 
   const methods = useForm<FormDataType>({
     resolver: zodResolver(FormSchema),
@@ -81,6 +69,7 @@ export default function Form() {
 
     let traitsId: string[] = [];
     let interestsId: string[] = [];
+
     if (traits) {
       getTraits.map((item: { name: string; id: string }) => {
         if (traits.includes(item.name)) {
@@ -108,7 +97,7 @@ export default function Form() {
       interests: interestsId,
       traits: traitsId,
     };
-    console.log(pet);
+    console.log("pet", pet);
     const petId = await savePetData(pet, token);
 
     console.log("pet saved", petId);
@@ -148,11 +137,15 @@ export default function Form() {
       document.cookie = "isAuthenticated=true";
       document.cookie = "pets=true";
       document.cookie = "userId=" + store?.user?.userId;
-      router.push("/tinderpet/chat");
+      router.push("/tinderpet/pet-selector");
     }, 5000);
 
     return <CompletedForm />;
   };
+
+  if (isCompleted) {
+    return handleRouterToMain();
+  }
 
   return (
     <Flex height="100vh" alignItems={"center"} justifyContent={"center"}>
@@ -189,8 +182,6 @@ export default function Form() {
               {activeStep === 2 && (
                 <ConfirmationForm nextStep={next} prevStep={prev} />
               )}
-
-              {isCompleted && handleRouterToMain()}
             </form>
           </FormProvider>
         </Box>

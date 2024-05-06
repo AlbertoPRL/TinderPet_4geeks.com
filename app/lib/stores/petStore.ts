@@ -26,7 +26,7 @@ export const usePetStore = create<PetState>()(
                     },
                 });
 
-                const pets = await response.json();
+                const pets  : Pet[] = await response.json();
                 console.log(pets);
                 set({ pets });
                 return pets;

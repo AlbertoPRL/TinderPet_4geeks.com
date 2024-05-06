@@ -33,7 +33,7 @@ export const useMatchStore = create<MatchState>((set) => ({
 
     hideMatchModal: () => set({ isMatchModalVisible: false }),
 
-    fetchMatchingPets: async (token: string, specieId : string) => 
+    fetchMatchingPets: async (token: string, specieId : string) =>
     {
         if (specieId === null) {
             console.log('No pet selected');

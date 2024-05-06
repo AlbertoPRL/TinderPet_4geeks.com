@@ -28,11 +28,11 @@ export default function Matches({ onProfileOpen }: Props) {
         }
     }, [selectedPet?.specieId, token]);
 
-    const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
+  const [{ x, y }, api] = useSpring(() => ({ x: 0, y: 0 }));
 
-    const bind = useDrag(({ down, movement: [mx, my] }) => {
-        api.start({ x: down ? mx : 0, y: down ? my : 0 });
-    });
+  const bind = useDrag(({ down, movement: [mx, my] }) => {
+    api.start({ x: down ? mx : 0, y: down ? my : 0 });
+  });
 
     return (
         <VStack alignItems='start' justifyContent="start">
