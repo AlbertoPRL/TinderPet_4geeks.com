@@ -39,6 +39,5 @@ export const usePetStore = create<PetState>()(
             {
             name: 'petStore',
             storage: createJSONStorage(() => (localStorage)),
-            partialize: (state) => ({userSelectedPet: state.userSelectedPet}),
             }
         ));
