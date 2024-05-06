@@ -1,4 +1,5 @@
 import { useStore } from "@/app/lib/hooks/zustandHook";
+import { useAuthStore } from "@/app/lib/stores/authStore";
 import { usePetStore } from "@/app/lib/stores/petStore";
 import { HStack, VStack, Text, Button } from "@chakra-ui/react";
 import { useRouter } from "next/navigation";
@@ -8,15 +9,16 @@ import { PiUserSwitchFill } from "react-icons/pi";
 
 export default function ProfileSettingsTab() {
     const petState = useStore(usePetStore, (state) => state);
+    const authState = useStore(useAuthStore, (state) => state)
     const router = useRouter();
 
-    const logOut = () => {
-        localStorage.clear();
+    const logOut = async () => {
+        await authState?.logout();
         router.push('/sign-in');
     }
 
     const switchPet = () => {
-        router.push('/tinderpet/petSelector');
+        router.push('/tinderpet/pet-selector');
     }
 
     return (

@@ -1,13 +1,19 @@
 import { Flex, HStack, IconButton, Avatar, AvatarBadge, Heading, Text, Box, Button, Divider, List, ListItem, VStack } from "@chakra-ui/react";
 import ChatFile from "./ChatFile";
 import ChatLink from "./ChatLink";
+import { useStore } from "@/app/lib/hooks/zustandHook";
+import { useConversationStore } from "@/app/lib/stores/conversationStore";
+import { usePetStore } from "@/app/lib/stores/petStore";
 
 
 export default function ChatFiles() {
+    const conversationState = useStore(useConversationStore, (state) => state);
+    const petState = useStore(usePetStore, (state) => state);
+
     return (
         <Flex h="full" flexDirection="column" alignItems="center" w="full" pt={8}>
             <HStack justify="space-between" w="full" px={8} mb={8}>
-                <Text color="gray.500">20 March 2021</Text>
+                <Text color="gray.500"></Text>
                 <IconButton
                     rounded="full"
                     // icon={<FaBell />}
@@ -16,11 +22,17 @@ export default function ChatFiles() {
                     aria-label="Notifications"
                 />
             </HStack>
-            <Avatar size="2xl" name="Dina Harrison">
+            <Avatar size="2xl" name={conversationState?.selectedConversation?.pet1.id === petState?.userSelectedPet?.id 
+                    ? conversationState?.selectedConversation?.pet2.name
+                    : conversationState?.selectedConversation?.pet1.name}
+                >
                 <AvatarBadge boxSize={8} borderWidth={4} bg="green.400" />
             </Avatar>
             <Heading size="md" mt={3}>
-                Dina Harrison
+                {conversationState?.selectedConversation?.pet1.id === petState?.userSelectedPet?.id 
+                    ? conversationState?.selectedConversation?.pet2.name
+                    : conversationState?.selectedConversation?.pet1.name
+                }
             </Heading>
             <Box px={8} w="full">
                 <Divider mt={6} color="gray.100" />
