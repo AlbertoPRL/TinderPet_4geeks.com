@@ -31,7 +31,7 @@ export default function CardPet() {
     if (token) {
       petState?.fetchPets(token); // fetch pets using token
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     if (

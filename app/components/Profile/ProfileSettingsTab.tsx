@@ -14,7 +14,7 @@ export default function ProfileSettingsTab() {
 
     const logOut = async () => {
         await authState?.logout();
-        router.push('/tinderpet/sign-in');
+        router.push('/sign-in');
     }
 
     const switchPet = () => {
